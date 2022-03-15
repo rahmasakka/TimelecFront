@@ -1,0 +1,37 @@
+<div class="col-md-6 offset-md-3">
+    <h3> Update User</h3>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Username</label>
+            <input tpe="text" class="form-control" id="username" [(ngModel)]="user1.username"
+                [(ngModel)]="user.username" name="username">
+            <!--div class="alert-danger" *ngIf="submitted && username.invalid">
+                <div *ngIf="username.errors?.['required']">Username is required</div>
+                <div *ngIf="username.errors?.['minlength']">
+                    Username must be at least 3 characters
+                </div>
+                <div *ngIf="username.errors?.['maxlength']">
+                    Username must be at most 20 characters
+                </div>
+            </div-->
+            <label>Email</label>
+            <input tpe="text" class="form-control" id="email" [(ngModel)]="user1.email" [(ngModel)]="user.email"
+                name="email">
+
+            <!--label>Password</label>
+            <input tpe="text" class="form-control" id="password" [(ngModel)]="user.password" [(ngModel)]="user.password"
+                name="password"-->
+
+
+            <strong>Roles:</strong>
+            <ul>
+                <li *ngFor="let role of currentUser.roles">
+                    {{ role }}
+                    
+                </li>
+            </ul>
+            <br />
+            <button class="btn btn-success" type="submit"> Update </button>
+        </div>
+    </form>
+</div>

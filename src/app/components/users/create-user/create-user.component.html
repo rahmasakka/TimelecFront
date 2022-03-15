@@ -1,0 +1,48 @@
+<div class="col-md-6 offset-md-3">
+    <h3> Create User</h3>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+
+
+            <label>Username</label>
+            <input type="text" class="form-control" name="username" id="username" [(ngModel)]="user.username"
+                required minlength="3" #username="ngModel" />
+
+            <div class="alert-danger" *ngIf="submitted && username.invalid">
+                <div *ngIf="password.errors?.['required']">Username is required</div>
+                <div *ngIf="password.errors?.['minlength']">
+                    username must be at least 3 characters
+                </div>
+            </div>
+
+
+            
+
+            <label>Email</label>
+            <input type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email">
+
+
+
+
+
+            <label>Password</label>
+            <input type="password" class="form-control" name="password" id="password" [(ngModel)]="user.password"
+                required minlength="6" #password="ngModel" />
+
+            <div class="alert-danger" *ngIf="submitted && password.invalid">
+                <div *ngIf="password.errors?.['required']">Password is required</div>
+                <div *ngIf="password.errors?.['minlength']">
+                    Password must be at least 6 characters
+                </div>
+            </div>    
+            
+            
+            
+
+            <br />
+            <button class="btn btn-success" type="submit"> Add </button>
+        </div>
+
+    </form>
+
+</div>

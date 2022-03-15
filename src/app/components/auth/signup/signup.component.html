@@ -1,0 +1,66 @@
+
+<div class="container card col-lg-6 col-sm-10 align-items-left bg-info">
+    <h1 class="text-white">Sign Up </h1>
+
+    <form name="form" (ngSubmit)=" onSubmit()">
+
+        <div class="form-group">
+            <label class="control-label text-white">
+                <h4>Username:</h4>
+            </label>
+            <div>
+                <input type="text" class="form-control" placeholder="Enter" name="username" [(ngModel)]="form.username"
+                    required #username="ngModel">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && username.invalid">
+                    Username is required
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label text-white">
+                <h4>Email:</h4>
+            </label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                placeholder=" Your email" #email="ngModel"/>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['required']">
+                Email is required
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['pattern']">
+                Email must be a valid email address
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label text-white">
+                <h4>Password:</h4>
+            </label>
+            <div>
+                <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
+                    minlength="6" #password="ngModel" placeholder=" Your password"/>
+
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['required']">Password
+                    is required</div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['minlength']">
+                    Password must be at least
+                    6 characters
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-light">
+            Register
+        </button>
+        <br/>
+        <div class="alert alert-warning" *ngIf="isSignUpFailed">
+            Signup failed! {{ errorMessage }}
+        </div>
+        <br/>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+    </div>
+</div>
