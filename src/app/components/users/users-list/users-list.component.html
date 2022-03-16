@@ -1,26 +1,44 @@
-<div class="container">
+<div class="container card col-lg-8 col-md-10 col-sm-12 " style="margin-top: 3%;">
     <h2> Users List</h2>
-    <!--button (click)="open(content)"></button-->
+    <br />
+    <button *ngIf=isAdmin() class="btn btn1" routerLink="/create-user" style="background-color: #1335a1;">
+        <i class="fa fa-user-plus" aria-hidden="true" style="color: white;"></i>
+        <span style="color: white;"> Add New User</span>
+    </button>
+    <br />
+    <!--app-search></app-search-->
     <table class="table table-striped">
         <thead>
             <tr>
                 <th> Username </th>
                 <th> Email </th>
-                <th> Actions </th>
+                <th *ngIf=isAdmin()> Role </th>
+                <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
-                <td>
-                    <button (click)="updateUser(user.id)" class="btn btn-info"> Update </button>
-                    
-                    <button (click)="deleteUser(user.id)" class="btn btn-danger"> Delete </button>
-                    <button class="btn"><i class="fa fa-trash"></i> Trash</button>
-
+                <td *ngIf=isAdmin()> {{user.roles[0].name}} </td>
+                <td *ngIf=isAdmin()>
+                    <button (click)="updateUser(user.id)" class="btn" style="background-color: #1335a1;">
+                        <i class="fa fa-pencil" aria-hidden="true" style="color: white;"></i>
+                    </button>
+                    <button (click)="deleteUser(user.id)" class="btn btn-danger">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
+    <div class="footer-pagination">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize" [collectionSize]="theTotalElements"
+                [maxSize]="5" [boundaryLinks]="true" (pageChange)="getUsers()"></ngb-pagination>
+        </div>
+    </div>
+</div>
 </div>

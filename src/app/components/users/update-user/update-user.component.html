@@ -1,37 +1,65 @@
-<div class="col-md-6 offset-md-3">
-    <h3> Update User</h3>
-    <form (ngSubmit)="onSubmit()">
+<div class="container card col-lg-6 col-sm-10 align-items-left" style="margin-top: 2%;">
+    <h1 class="text-blue"  style="margin-top: 2%;">New User </h1>
+    <form name="form" (ngSubmit)=" onSubmit()">
         <div class="form-group">
-            <label>Username</label>
-            <input tpe="text" class="form-control" id="username" [(ngModel)]="user1.username"
-                [(ngModel)]="user.username" name="username">
-            <!--div class="alert-danger" *ngIf="submitted && username.invalid">
-                <div *ngIf="username.errors?.['required']">Username is required</div>
-                <div *ngIf="username.errors?.['minlength']">
-                    Username must be at least 3 characters
+            <label class="control-label">
+                <h4>Username:</h4>
+            </label>
+            <div>
+                <input type="text" class="form-control" name="username" [(ngModel)]="user.username" required
+                    #username="ngModel" minlength="3" maxlength="20">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.invalid">
+                    Username is required
                 </div>
-                <div *ngIf="username.errors?.['maxlength']">
-                    Username must be at most 20 characters
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['minlength']">
+                    Password must be at least 3 characters
+                </div>                
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['maxlength']">
+                    Password must be at  20 characters
                 </div>
-            </div-->
-            <label>Email</label>
-            <input tpe="text" class="form-control" id="email" [(ngModel)]="user1.email" [(ngModel)]="user.email"
-                name="email">
-
-            <!--label>Password</label>
-            <input tpe="text" class="form-control" id="password" [(ngModel)]="user.password" [(ngModel)]="user.password"
-                name="password"-->
-
-
-            <strong>Roles:</strong>
-            <ul>
-                <li *ngFor="let role of currentUser.roles">
-                    {{ role }}
-                    
-                </li>
-            </ul>
-            <br />
-            <button class="btn btn-success" type="submit"> Update </button>
+            </div>
         </div>
+
+        <div class="form-group">
+            <label class="control-label">
+                <h4>Email:</h4>
+            </label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="user.email" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel" />
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['required']">
+                Email is required
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['pattern']">
+                Email must be a valid email address
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">
+                <h4>Role:</h4>
+            </label>
+            <div>
+                <select class="form-control" aria-label="">
+                    <option *ngFor="let role of roles" id="role" name="roles" [(ngModel)]="user.roles"> {{role.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <br />
+
+        <button class="btn" style="background-color: #1335a1; ">
+            <span style="color: white;"> Update </span>
+        </button>
+        <br />
+
+        <div class="alert alert-warning" *ngIf="isUpdateFailed">
+            Creation failed! {{ errorMessage }}
+        </div>
+        <br/>
+
     </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+        Your update is successful!
+    </div>
 </div>

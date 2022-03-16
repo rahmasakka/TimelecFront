@@ -1,25 +1,26 @@
 
-<div class="container card col-lg-6 col-sm-10 align-items-left bg-info">
-    <h1 class="text-white">Sign Up </h1>
-
+<div class="container card col-lg-6 col-sm-10 align-items-left" style="margin-top: 4%;">
+    <h1 class="text-blue" style="margin-top: 2%;">Sign Up </h1>
     <form name="form" (ngSubmit)=" onSubmit()">
-
         <div class="form-group">
-            <label class="control-label text-white">
+            <label class="control-label">
                 <h4>Username:</h4>
             </label>
             <div>
                 <input type="text" class="form-control" placeholder="Enter" name="username" [(ngModel)]="form.username"
-                    required #username="ngModel">
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && username.invalid">
+                    required #username="ngModel" pattern="[a-z]">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['required']">
                     Username is required
+                </div>
+
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['pattern']">
+                    Username must contain only alphabet
                 </div>
             </div>
         </div>
 
-
         <div class="form-group">
-            <label class="control-label text-white">
+            <label class="control-label">
                 <h4>Email:</h4>
             </label>
             <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
@@ -32,32 +33,34 @@
             </div>
         </div>
 
-
         <div class="form-group">
-            <label class="control-label text-white">
+            <label class="control-label">
                 <h4>Password:</h4>
             </label>
             <div>
                 <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
                     minlength="6" #password="ngModel" placeholder=" Your password"/>
 
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['required']">Password
-                    is required</div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['required']">
+                    Password is required
+                </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['minlength']">
-                    Password must be at least
-                    6 characters
+                    Password must be at least 6 characters
                 </div>
             </div>
         </div>
 
-        <button class="btn btn-light">
-            Register
+        <!--select class="form-select" aria-label="">
+            <option *ngFor="let role of roles"> {{role.name}}</option>
+        </select-->
+
+        <button class="btn" style="background-color: #1335a1; margin-bottom: 3%;" >
+            <span style="color: white;"> Register</span>
         </button>
-        <br/>
+
         <div class="alert alert-warning" *ngIf="isSignUpFailed">
             Signup failed! {{ errorMessage }}
         </div>
-        <br/>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">

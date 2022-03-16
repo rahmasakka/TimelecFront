@@ -15,6 +15,9 @@ import { ProfilComponent } from './components/auth/profil/profil.component';
 import { authInterceptorProviders } from './_helpers/auth-interceptor.interceptor';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
+import { PopupComponent } from './popup/popup.component';
+import { SearchComponent } from './components/users/search/search.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,14 +30,18 @@ import { CreateUserComponent } from './components/users/create-user/create-user.
     UsersListComponent,
     ProfilComponent,
     UpdateUserComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    PopupComponent,
+    SearchComponent
    ],
+   
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
-  ],
+    HttpClientModule,
+    NgbModule, 
+    ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })

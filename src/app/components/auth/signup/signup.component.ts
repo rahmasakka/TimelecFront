@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Roles } from 'src/app/model/roles';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,10 +15,14 @@ export class SignupComponent implements OnInit {
   errorMessage = '';
   submitted = false;
 
-  constructor(private authService: AuthService) { }
+  roles!: Roles[];
+
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
+  //  this.getRoles()
   }
+ 
 
   onSubmit(): void {
    this.submitted= true;
@@ -24,7 +30,6 @@ export class SignupComponent implements OnInit {
    console.log(this.form)
     this.authService.register(this.form).subscribe(
       data => {
-
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
@@ -36,4 +41,12 @@ export class SignupComponent implements OnInit {
     );
   }
 
+  getRoles() {
+    this.userService.getListRole().subscribe(
+      data => {
+        this.roles = data;
+        console.log(this.roles[2].name);
+      }
+    )
+  }
 }

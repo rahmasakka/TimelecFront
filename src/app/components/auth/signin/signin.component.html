@@ -1,17 +1,16 @@
-<br/>
-<div class="container card col-lg-6 col-sm-10 align-items-left bg-info">
-  <h1 class="text-white">Sign In </h1>
-  
+<div class="container card col-lg-6 col-sm-10 align-items-left" style="margin-top: 4%;">
+  <h1 class="text-blue" style="margin-top: 2%;">Sign In </h1>
+
   <form class="form-horizontal" *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"
     novalidate>
-    
+
     <div class="form-group">
-      <label class="control-label text-white">
+      <label class="control-label">
         <h4>Username:</h4>
       </label>
       <div>
-        <input type="username" class="form-control" placeholder="Your username" name="username" [(ngModel)]="form.username"
-          required #username="ngModel">
+        <input type="username" class="form-control" placeholder="Your username" name="username"
+          [(ngModel)]="form.username" required #username="ngModel">
         <div class="alert alert-danger" role="alert" *ngIf="f.submitted && username.invalid">
           Username is required!
         </div>
@@ -20,7 +19,7 @@
 
 
     <div class="form-group">
-      <label class="control-label text-white">
+      <label class="control-label">
         <h4>Password:</h4>
       </label>
       <div>
@@ -36,10 +35,11 @@
     </div>
 
 
-    <button class="btn btn-light align-items-sm-center">
-      Login
+
+    <button class="btn" style="background-color: #1335a1; ">
+      <span style="color: white;"> Register</span>
     </button>
-    <br/>
+    <br />
 
     <div class="form-group">
       <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
