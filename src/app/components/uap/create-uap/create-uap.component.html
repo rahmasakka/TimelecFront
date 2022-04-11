@@ -1,0 +1,44 @@
+<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
+    <h1 class="text-blue pt-2">New UAP </h1>
+
+    <form name="form" (ngSubmit)=" onSubmit()" class="mt-2b pb-3">
+        <div class="form-group">
+            <label class="control-label">
+                <h4>UAP name:</h4>
+            </label>
+            <div>
+                <input type="text" class="form-control" placeholder="UAP's name" name="uapname"
+                    [(ngModel)]="form.uapName" required #uapName="ngModel" minlength="3">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.invalid">
+                    UAP name is required
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.['minlength']">
+                    uap' name must be at least 3 characters
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">
+                <h4>Description:</h4>
+            </label>
+            <input type="text" class="form-control" name="description" [(ngModel)]="form.email" required
+                placeholder=" UAP description" #uapDescription="ngModel" />
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && uapDescription.errors?.['required']">
+                UAP's description is required
+            </div>
+        </div>
+
+        <button class="btn bg-info">
+            <span> Create </span>
+        </button>
+        <br />
+        <div class="alert alert-warning" *ngIf="isSignUpFailed">
+            Creation failed! {{ errorMessage }}
+        </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+    </div>
+</div>

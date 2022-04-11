@@ -16,10 +16,16 @@ import { authInterceptorProviders } from './_helpers/auth-interceptor.intercepto
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { PopupComponent } from './popup/popup.component';
-import { SearchComponent } from './components/users/search/search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MachineListComponent } from './components/machine/machine-list/machine-list.component';
+import { LoadChargeUpdateComponent } from './components/load-charge/load-charge-update/load-charge-update.component';
+import { LoadChargeListComponent } from './components/load-charge/load-charge-list/load-charge-list.component';
+import { CreateUapComponent } from './components/uap/create-uap/create-uap.component';
+import { LoadChargeByUapComponent } from './components/load-charge/load-charge-by-uap/load-charge-by-uap.component';
+import { UapListComponent } from './components/uap/uap-list/uap-list.component';
+import { UapUpdateComponent } from './components/uap/uap-update/uap-update.component';
 
-@NgModule({
+@NgModule({    
   declarations: [
     AppComponent,
     NavbarComponent,
@@ -32,7 +38,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UpdateUserComponent,
     CreateUserComponent,
     PopupComponent,
-    SearchComponent
+    MachineListComponent,
+    LoadChargeUpdateComponent, 
+    LoadChargeListComponent,
+    UapUpdateComponent,
+    CreateUapComponent,
+    LoadChargeByUapComponent,
+    UapListComponent,
    ],
    
   imports: [

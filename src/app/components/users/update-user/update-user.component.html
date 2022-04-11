@@ -1,6 +1,6 @@
-<div class="container card col-lg-6 col-sm-10 align-items-left" style="margin-top: 2%;">
-    <h1 class="text-blue"  style="margin-top: 2%;">New User </h1>
-    <form name="form" (ngSubmit)=" onSubmit()">
+<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
+    <h1 class="text-blue mt-2"> Update User </h1>
+    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3">
         <div class="form-group">
             <label class="control-label">
                 <h4>Username:</h4>
@@ -13,9 +13,9 @@
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['minlength']">
                     Password must be at least 3 characters
-                </div>                
+                </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['maxlength']">
-                    Password must be at  20 characters
+                    Password must be at 20 characters
                 </div>
             </div>
         </div>
@@ -47,16 +47,14 @@
         </div>
         <br />
 
-        <button class="btn" style="background-color: #1335a1; ">
-            <span style="color: white;"> Update </span>
+        <button class="btn  bg-info">
+            <span> Update </span>
         </button>
         <br />
 
         <div class="alert alert-warning" *ngIf="isUpdateFailed">
             Creation failed! {{ errorMessage }}
         </div>
-        <br/>
-
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">

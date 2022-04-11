@@ -3,31 +3,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Roles } from '../model/roles';
 import { User } from '../model/user';
-import { TokenStorageService } from './token-storage.service';
 import { map } from 'rxjs/operators';
 
 
-const API_URL = 'http://localhost:9001/api/test/';
-const baseURL = "http://localhost:9001/api/users/";
+const API_URL = 'http://localhost:9003/api/test/';
+const baseURL = "http://localhost:9003/api/users/";
 
-interface GetResponseUsers {
-  _embedded: {
-    users: User[];
-  },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
-  }
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private tokenInfo: TokenStorageService) { }
+  constructor(private http: HttpClient) { }
 
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
@@ -50,7 +38,6 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<User> {
-    console.log(baseURL + id)
     return this.http.get<User>(baseURL + id)
   }
 
@@ -66,18 +53,10 @@ export class UserService {
     return this.http.get<Roles[]>(baseURL + 'roles/all')
   }
 
-  getUsersListPaginate(thePage: number, thePageSize: number): Observable<GetResponseUsers> {
-    const searchUrl = `${baseURL}all?page=${thePage}&size=${thePageSize}`;
-    return this.http.get<GetResponseUsers>(searchUrl);
+  getUsersListPaginate(pageNumber: number, sizeNumber: number): Observable<User[]> {
+    const url = baseURL + 'all?page=' + pageNumber + '&size=' + sizeNumber
+    console.log(url);
+    return this.http.get<User[]>(url).pipe(map(response => response));
+    //  return this.http.get<Student[]>(baseURL + `all?page=${page}&size=${size}`).pipe(
   }
-
-  searchUsers(theKeyword: string): Observable<User[]> {
-    const searchUrl = `${baseURL}search/findByUsername?username=${theKeyword}`;
-    return this.getUsers(searchUrl);
-  }
-
-  private getUsers(searchUrl: string): Observable<User[]> {
-    return this.http.get<GetResponseUsers>(searchUrl).pipe(map(response => response._embedded.users))
-  }
-
 }

@@ -1,48 +1,63 @@
-<nav class="navbar navbar-expand-md" style="background-color: #1335a1">
-  <a class="navbar-brand"></a>
-
-  <div class="collapse navbar-collapse" id="navbarNav">
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <!--a class="navbar-brand" href="#">Navbar</a-->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
         <button class="btn navbar-brand" routerLink="home" routerLinkActive="active">
-          <i class="fa fa-home" aria-hidden="true"style="color:white"></i> <b style="color: white"> Home</b>
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span> Home</span>
         </button>
       </li>
-    </ul>
-    <ul class="navbar-nav" *ngIf="isLoggedIn">
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isLoggedIn">
         <button class="btn navbar-brand" routerLink="list-users" routerLinkActive="active">
-          <i class="fa fa-users" aria-hidden="true"style="color:white"></i> <b style="color: white"> Users</b> 
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span> Users</span>
         </button>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isLoggedIn">
+        <button class="btn navbar-brand dropdown-toggle" data-toggle="dropdown">
+          <span> UAP </span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <button class="dropdown-item " data-toggle="dropdown" routerLink="uap-list">
+            <i class="fa fa-building" aria-hidden="true"></i>
+            <span> UAP </span>
+          </button>
+          <a class="dropdown-item" routerLink="load-charge-list" routerLinkActive="active">Load charge list</a>
+          <a class="dropdown-item" routerLink="machine-list" routerLinkActive="active" >Machine list</a>
+        </div>
       </li>
     </ul>
-  </div>
 
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <button class="btn navbar-brand" routerLink="signup" routerLinkActive="active" >
-          <i class="fa fa-sign-in" aria-hidden="true" style="color:white"></i> <b style="color: white"> Sign up</b>
+        <button class="btn" routerLink="signup" routerLinkActive="active" *ngIf="!isLoggedIn">
+          <i class="fa fa-user-plus" aria-hidden="true"></i>
+          <span> Sign up</span>
         </button>
       </li>
       <li class="nav-item">
-        <button class="btn navbar-brand" routerLink="signin" routerLinkActive="active">
-          <i class="fa fa-sign-in" aria-hidden="true" style="color:white"></i> <b style="color: white"> Sign in</b>
+        <button class="btn" routerLink="signin" routerLinkActive="active" *ngIf="!isLoggedIn">
+          <i class="fa fa-unlock" aria-hidden="true"></i>
+          <span> Sign in</span>
         </button>
       </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <button class="btn navbar-brand" routerLink="profil" routerLinkActive="active">
-          <i class="fa fa-user" aria-hidden="true"style="color:white"></i> <b style="color: white"> {{ username}}</b> 
-
-        </button>
-      </li>
-      <li class="nav-item">
-        <button (click)="logout()" class="btn navbar-brand" routerLink="signin" routerLinkActive="active">
-          <i class="fa fa-sign-out" aria-hidden="true" style="color:white"></i><b style="color: white"> Log out</b>
-        </button>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" *ngIf="isLoggedIn">
+          Hi, {{ username}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" routerLink="profil">Profil</button>
+          <button (click)="logout()" class="dropdown-item" routerLink="/signin">
+            <i class="fa fa-power-off" aria-hidden="true"></i>
+            <span> Log out</span>
+          </button>
+        </div>
       </li>
     </ul>
   </div>
