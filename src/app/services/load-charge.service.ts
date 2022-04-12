@@ -11,6 +11,7 @@ const baseURL = "http://localhost:9003/api/cc/";
 export class LoadChargeService {
 
   constructor(private http: HttpClient) { }
+ 
   getLoadCharge(): Observable<LaodCharge[]> {
     return this.http.get<LaodCharge[]>(baseURL + 'all')
   }
@@ -20,14 +21,18 @@ export class LoadChargeService {
   }
 
   addNewLoadCharge(loadCharge : LaodCharge) : Observable<Object>{
-    return this.http.post(baseURL + 'CreateCC', loadCharge);
+    return this.http.post(baseURL + 'createCC', loadCharge);
   }
 
   getLoadChargeById(id: number) : Observable<LaodCharge>{
     return this.http.get<LaodCharge>(baseURL+id);
   }
 
-  updateUAP(id: number, loadCharge: LaodCharge): Observable<Object> {
+  updateLoadCharge(id: number, loadCharge: LaodCharge): Observable<Object> {
     return this.http.put(baseURL + 'update/' + id, loadCharge)
+  }
+
+  listLoadChargeByUAP(id: number): Observable<LaodCharge[]>{
+    return this.http.get<LaodCharge[]>(baseURL+'listCCByUAP/'+id)
   }
 }

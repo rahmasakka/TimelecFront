@@ -1,0 +1,82 @@
+<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
+    <h1 class="text-blue pt-2">New machine </h1>
+
+    <form name="form" (ngSubmit)=" onSubmit()" class="mt-2b pb-3">
+        <div class="form-group">
+            <label class="control-label">
+                <h4>Machine name:</h4>
+            </label>
+            <div>
+                <input type="text" class="form-control" placeholder="Machine's name" name="machineName"
+                    [(ngModel)]="form.machineName" required #machineName="ngModel" minlength="3" maxlength="20">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.invalid">
+                    Machine's name is required
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['minlength']">
+                    Machine name must be at least 3 characters
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['maxlength']">
+                    Machine name must be at most 20 characters
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">
+                <h4>Description:</h4>
+            </label>
+            <textarea type="text" class="form-control" name="description" [(ngModel)]="form.machineDescription" required
+                placeholder="Machine's description" #machineDescription="ngModel"></textarea>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && machineDescription.errors?.['required']">
+                Machine's description is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">
+                <h4>Machine Category:</h4>
+            </label>
+            <div class="container">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="form-check col-4 col-sm-4">
+                        <input class="form-check-input" type="radio" name="Testeur" value="Testeur" [(ngModel)]="form.machineCategory">
+                        <label class="form-check-label"> Testeur </label>
+                    </div>
+
+                    <div class="form-check col-4 col-sm-4">
+                        <input class="form-check-input" type="radio" name="Gabarie" value="Gabarie" [(ngModel)]="form.machineCategory">
+                        <label class="form-check-label"> Gabarie</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">
+                <h4>Load Charge </h4>
+            </label>
+            <div>
+                <select class="form-control" aria-label="Load Charge affected to machine" id="loadCharges" name="loadCharge" 
+                [(ngModel)]="form.loadCharge" >
+                    <option> -- Affecte this machine to a Load Charge --</option>
+                    <option *ngFor="let loadCharge of loadCharges" [value]="loadCharge.idCC">
+                        {{loadCharge.ccname}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn bg-info">
+            <span> Create </span>
+        </button>
+        <br />
+        <div class="alert alert-warning" *ngIf="isSignUpFailed">
+            Creation failed! {{ errorMessage }}
+        </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+    </div>
+</div>

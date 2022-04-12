@@ -18,17 +18,24 @@
           <span> Users</span>
         </button>
       </li>
-      <li class="nav-item dropdown" *ngIf="isLoggedIn">
-        <button class="btn navbar-brand dropdown-toggle" data-toggle="dropdown">
+      <li class="nav-item dropdown" *ngIf="isLoggedIn" >
+        <button class="btn navbar-brand dropdown-toggle" data-toggle="dropdown" >
+          <i aria-hidden="true"  class="fa fa-building"></i>
           <span> UAP </span>
         </button>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <button class="dropdown-item " data-toggle="dropdown" routerLink="uap-list">
-            <i class="fa fa-building" aria-hidden="true"></i>
+          <button class="dropdown-item " data-toggle="dropdown" routerLink="uap-list" routerLinkActive="active">
+            <i aria-hidden="true"></i>
             <span> UAP </span>
+          </button> 
+          <button class="dropdown-item " data-toggle="dropdown" routerLink="load-charge-list" routerLinkActive="active">
+            <i aria-hidden="true"></i>
+            <span> Load Charge </span>
+          </button> 
+          <button class="dropdown-item " data-toggle="dropdown" routerLink="machine-list" routerLinkActive="active">
+            <i aria-hidden="true"></i>
+            <span> Machine </span>
           </button>
-          <a class="dropdown-item" routerLink="load-charge-list" routerLinkActive="active">Load charge list</a>
-          <a class="dropdown-item" routerLink="machine-list" routerLinkActive="active" >Machine list</a>
         </div>
       </li>
     </ul>

@@ -12,10 +12,10 @@
                     Username is required
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['minlength']">
-                    Password must be at least 3 characters
+                    Username must be at least 3 characters
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['maxlength']">
-                    Password must be at 20 characters
+                    Username must be at most 20 characters
                 </div>
             </div>
         </div>
@@ -36,21 +36,21 @@
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Role:</h4>
+                <h4>Role: {{user.roles[0].name}}</h4> 
             </label>
             <div>
-                <select class="form-control" aria-label="">
-                    <option *ngFor="let role of roles" id="role" name="roles" [(ngModel)]="user.roles"> {{role.name}}
+                <select class="form-control" aria-label="Role affected to user" id="role" name="roles"
+                    [(ngModel)]="user.roles[0].name">
+                    <option *ngFor="let role of roles" [value]="user.roles[0].id">
+                        {{role.name}}
                     </option>
                 </select>
             </div>
         </div>
-        <br />
 
         <button class="btn  bg-info">
             <span> Update </span>
         </button>
-        <br />
 
         <div class="alert alert-warning" *ngIf="isUpdateFailed">
             Creation failed! {{ errorMessage }}

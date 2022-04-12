@@ -29,7 +29,7 @@ export class LoadChargeListComponent implements OnInit {
     this.loadChargeService.getLoadCharge().subscribe(
       data => {
         this.loadCharge = data;
-        console.log(data)
+       // console.log(data)
       }
     )
   }
@@ -37,7 +37,7 @@ export class LoadChargeListComponent implements OnInit {
   deleteLoadCharge(id: number){
     this.loadChargeService.deleteLoadCharge(id).subscribe(
       data => {
-        console.log(data);
+     //   console.log(data);
         this.getListLoadCharge();
       }
     )

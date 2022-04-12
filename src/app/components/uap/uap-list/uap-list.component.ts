@@ -15,8 +15,8 @@ export class UapListComponent implements OnInit {
   uapName: String = '';
   uapDescription: String = '';
   constructor(private uapService: UapService,
-    private token: TokenStorageService,
-    private router: Router) { }
+              private token: TokenStorageService,
+              private router: Router) { }
 
   isAdmin() { return this.token.getUser().roles[0] == "ROLE_ADMIN" }
   isUser() { return this.token.getUser().roles[0] == "ROLE_USER" }
@@ -29,7 +29,7 @@ export class UapListComponent implements OnInit {
     this.uapService.getUAPList().subscribe(
       data => {
         this.uaps = data;
-        console.log(this.uaps);
+      //  console.log(this.uaps);
       }
     )
   }
@@ -37,7 +37,7 @@ export class UapListComponent implements OnInit {
   deleteUAP(id: number) {
     this.uapService.deleteUAP(id).subscribe(
       data => {
-        console.log(data);
+       // console.log(data);
         this.getListOfUAP();
       }
     )

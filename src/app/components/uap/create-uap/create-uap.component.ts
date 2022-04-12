@@ -17,9 +17,7 @@ export class CreateUapComponent implements OnInit {
 
   constructor(private uapservice: UapService, private router: Router) { }
 
-  ngOnInit(): void {
-  }
- 
+  ngOnInit(): void {} 
 
   onSubmit(): void {
    this.submitted= true;
@@ -41,5 +39,4 @@ export class CreateUapComponent implements OnInit {
   goToUAPList() {
     this.router.navigate(['/uap-list']);
   }
-
 }

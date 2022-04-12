@@ -24,6 +24,10 @@ import { CreateUapComponent } from './components/uap/create-uap/create-uap.compo
 import { LoadChargeByUapComponent } from './components/load-charge/load-charge-by-uap/load-charge-by-uap.component';
 import { UapListComponent } from './components/uap/uap-list/uap-list.component';
 import { UapUpdateComponent } from './components/uap/uap-update/uap-update.component';
+import { CreateLoadChargeComponent } from './components/load-charge/create-load-charge/create-load-charge.component';
+import { CreateMachineComponent } from './components/machine/create-machine/create-machine.component';
+import { UpdateMachineComponent } from './components/machine/update-machine/update-machine.component';
+import { LoadChargeDetailsComponent } from './components/load-charge/load-charge-details/load-charge-details.component';
 
 @NgModule({    
   declarations: [
@@ -45,6 +49,10 @@ import { UapUpdateComponent } from './components/uap/uap-update/uap-update.compo
     CreateUapComponent,
     LoadChargeByUapComponent,
     UapListComponent,
+    CreateLoadChargeComponent,
+    CreateMachineComponent,
+    UpdateMachineComponent,
+    LoadChargeDetailsComponent,
    ],
    
   imports: [
