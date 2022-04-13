@@ -1,10 +1,9 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
-    <h2 class="text-blue pt-3"> {{loadChargeID.uap.uapName}}</h2>
+    <!--h2 class="text-blue pt-3">{{uap.uapName}}</h2-->
 
     <div class="input-group mt-3 mb-3">
         <button *ngIf=isAdmin() class="btn col-lg-4 col-md-6 col-sm-12 btn btn-outline-info" routerLink="/create-load-charge">
-            <i class="fa fa-user-plus" aria-hidden="true"></i>
-            <span> Add New Load Charge</span>
+            <span> Ajouter centre de charge</span>
         </button>
         <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
             placeholder="Search an uap..." [(ngModel)]="ccname" [(ngModel)]="ccdescription" (input)="Search()">

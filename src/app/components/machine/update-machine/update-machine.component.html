@@ -53,12 +53,12 @@
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Load Charge </h4>
+                <h4> Centre de charge </h4>
             </label>
             <div>
-                <select class="form-control" aria-label="Load Charge affected to machine"
+                <select class="form-control" aria-label="Affecter la machine à un centre de charge"
                 [(ngModel)]="machine.loadCharge" id="loadCharges" name="loadCharge">
-                    <option> -- Affecte this machine to a Load Charge --</option>
+                    <option> -- Affecter la machine à un centre de charge --</option>
                     <option *ngFor="let loadCharge of listLoadCharge"
                        [value]="loadCharge.idCC">
                         {{loadCharge.ccname}}

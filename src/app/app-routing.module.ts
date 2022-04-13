@@ -15,11 +15,15 @@ import { UpdateMachineComponent } from './components/machine/update-machine/upda
 import { CreateUapComponent } from './components/uap/create-uap/create-uap.component';
 import { UapListComponent } from './components/uap/uap-list/uap-list.component';
 import { UapUpdateComponent } from './components/uap/uap-update/uap-update.component';
+import { UapComponent } from './components/uap/uap/uap.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
 
 const routes: Routes = [
+  { path: 'uap', component: UapComponent},
+
+
   { path: 'machine-list', component: MachineListComponent},
   { path: 'create-machine', component: CreateMachineComponent},
   { path: 'update-machine/:id', component: UpdateMachineComponent},

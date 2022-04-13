@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LaodCharge } from 'src/app/model/LaodCharge';
 import { UAP } from 'src/app/model/uap';
-import { LoadChargeService } from 'src/app/services/load-charge.service';
+import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { UapService } from 'src/app/services/uap.service';
 
 @Component({
@@ -11,14 +12,14 @@ import { UapService } from 'src/app/services/uap.service';
 })
 export class CreateLoadChargeComponent implements OnInit {
 
-  form : any = {}
+  form : LaodCharge = new LaodCharge
   isSuccessful = false;
-  isSignUpFailed = false;
+  isCreatedFailed = false;
   errorMessage = '';
   submitted = false;
   uaps!:UAP[];
 
-  constructor(private loadChargeService: LoadChargeService, 
+  constructor(private loadChargeService: CentreChargeService, 
               private router : Router, 
               private uapService : UapService) { }
 
@@ -32,12 +33,12 @@ export class CreateLoadChargeComponent implements OnInit {
       data => {
         this.goToLoadChargeList()
         console.log(data)
-        this.isSignUpFailed = false;
+        this.isCreatedFailed = false;
         this.isSuccessful = true;
       },
       error=>{
         this.errorMessage = error.error.message
-        this.isSignUpFailed = true
+        this.isCreatedFailed = true
       }
     )
   }
@@ -50,7 +51,7 @@ export class CreateLoadChargeComponent implements OnInit {
     this.uapService.getUAPList().subscribe(
       data=>{
         this.uaps = data
-        console.log(data)
+      //  console.log(data)
       }
     )
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LaodCharge } from 'src/app/model/LaodCharge';
-import { LoadChargeService } from 'src/app/services/load-charge.service';
+import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { MachineService } from 'src/app/services/machine.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class CreateMachineComponent implements OnInit {
 
   constructor(private machineService: MachineService,
     private router: Router,
-    private loadChargeService: LoadChargeService) { }
+    private loadChargeService: CentreChargeService) { }
 
   ngOnInit(): void {
     this.getListLoadCharge()

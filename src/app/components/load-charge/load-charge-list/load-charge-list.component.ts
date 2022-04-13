@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LaodCharge } from 'src/app/model/LaodCharge';
-import { LoadChargeService } from 'src/app/services/load-charge.service';
+import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class LoadChargeListComponent implements OnInit {
   ccname: String = '';
   ccdescription : String='';
 
-  constructor(private loadChargeService : LoadChargeService, 
+  constructor(private loadChargeService : CentreChargeService, 
               private token: TokenStorageService,
               private router: Router) { }
 

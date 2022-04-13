@@ -4,8 +4,7 @@
     <div class="input-group mt-3 mb-3">
         <button *ngIf=isAdmin() class="btn col-lg-4 col-md-6 col-sm-12 btn btn-outline-info"
             routerLink="/create-machine">
-            <i class="fa fa-user-plus" aria-hidden="true"></i>
-            <span> Add New Machine</span>
+            <span> Ajouter machine</span>
         </button>
         <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
             placeholder="Search a machine..." [(ngModel)]="machineName" [(ngModel)]="machineDescription"
@@ -21,7 +20,7 @@
             <tr>
                 <th> Name </th>
                 <th> Description </th>
-                <th> Load Charge </th>
+                <th> Centre de Charge </th>
                 <th> Category </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
@@ -33,9 +32,9 @@
                 <td>{{loadCharge.ccname}}</td>
                 <td>{{machine.machineCategory}}</td>
                 <td>
-                    <button (click)="machineByLoadCharge(machine.idMachine)" class="btn btn-outline-info">
+                    <!-- (click)="machineByLoadCharge(machine.idMachine)" class="btn btn-outline-info">
                         <i class="fa fa-file" aria-hidden="true"></i>
-                    </button>
+                    </button-->
                     <button (click)="updateMachine(machine.idMachine)" class="btn btn-outline-secondary"
                         *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>

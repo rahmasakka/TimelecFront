@@ -1,13 +1,11 @@
-<div class="container card col-lg-10 col-md-10 col-sm-12 mt-4">
+<div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
     <h2 class="text-blue pt-3"> Machine List</h2>
 
     <div class="input-group mt-3 mb-3">
-        <button *ngIf=isAdmin() class="btn col-4 col-md-6 col-sm-12 btn btn-outline-info"
-            routerLink="/create-machine">
-            <i class="fa fa-user-plus" aria-hidden="true"></i>
-            <span> Add New Machine</span>
+        <button *ngIf=isAdmin() class="btn col-4 col-md-4 col-sm-12 btn btn-outline-info" routerLink="/create-machine">
+            <span> Ajouter machineDescription</span>
         </button>
-        <input #myInput class="form-control border col-8 col-md-6 col-sm-12" type="text"
+        <input #myInput class="form-control border col-8 col-md-8 col-sm-12" type="text"
             placeholder="Search a machine..." [(ngModel)]="machineName" [(ngModel)]="machineDescription"
             (input)="Search()">
         <span class="input-group-append">
@@ -21,8 +19,8 @@
             <tr>
                 <th> Name </th>
                 <th> Description </th>
-                <th> Load Charge </th>
-                <th> UAP </th>
+                <!--th> Centre de charge </th>
+                <th> UAP </th-->
                 <th> Category </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
@@ -31,16 +29,38 @@
             <tr *ngFor="let machine of machines">
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
-                <td>{{machine.loadCharge}}</td>
-                <td>{{machine.loadCharge}}</td>
+                <!--td>{{machine.loadCharge}}</td>
+                <td>{{machine.loadCharge}}</td-->
                 <td>{{machine.machineCategory}}</td>
                 <td>
                     <button (click)="updateMachine(machine.idMachine)" class="btn btn-outline-secondary"
                         *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
                     </button>
-                    <button (click)="deleteMachine(machine.idMachine)" class="btn btn-outline-danger" *ngIf=isAdmin()>
+                    <!--button (click)="deleteMachine(machine.idMachine)" class="btn btn-outline-danger" *ngIf=isAdmin()>
                         <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button-->
+                    <button class="btn btn-outline-danger" (click)="open(content)" *ngIf=isAdmin()>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        <ng-template #content let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title">Suppression {{machine.machineName}}</h4>
+                                <button class="btn-close" (click)="modal.dismiss()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group-append">
+                                    Voulez-vous vraiment supprimer cette machine?
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                    Annuler
+                                </button>
+                                <button class="btn btn-outline-danger" (click)="deleteMachine(machine.idMachine)">
+                                    Supprimer
+                                </button>
+                            </div>
+                        </ng-template>
                     </button>
                 </td>
             </tr>

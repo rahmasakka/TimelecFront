@@ -3,8 +3,7 @@
 
     <div class="input-group mt-3 mb-3">
         <button *ngIf=isAdmin() class="btn col-lg-4 col-md-6 col-sm-12 btn btn-outline-info" routerLink="/create-uap">
-            <i class="fa fa-user-plus" aria-hidden="true"></i>
-            <span> Add New UAP</span>
+            <span> Ajouter UAP</span>
         </button>
         <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
             placeholder="Search an uap..." [(ngModel)]="uapName" [(ngModel)]="uapDescription" (input)="Search()">

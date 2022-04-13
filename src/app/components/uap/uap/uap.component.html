@@ -1,0 +1,15 @@
+<div id="accordion" >
+    <div class="card m-5 border" *ngFor="let uap of uaps">
+        <div class="card-header" id="headingOne">
+            <button class="btn" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true">
+                <h2>{{uap.uapName}}</h2>
+            </button>
+        </div>
+
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <app-centre-charge [data]="uap.idUAP"></app-centre-charge>
+            </div>
+        </div>
+    </div>
+</div>

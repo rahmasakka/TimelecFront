@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { machine } from 'src/app/model/machine';
-import { LoadChargeService } from 'src/app/services/load-charge.service';
+import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { MachineService } from 'src/app/services/machine.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -20,7 +20,7 @@ export class LoadChargeDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private token: TokenStorageService,
-    private loadChargeService: LoadChargeService,
+    private loadChargeService: CentreChargeService,
     private machineService: MachineService,
     private router: Router) { }
 
@@ -40,7 +40,7 @@ export class LoadChargeDetailsComponent implements OnInit {
     this.machineService.listMachineByLoadCharge(this.id).subscribe(
       data => {
         this.machines = data
-        console.log(data)
+       // console.log(data)
       }
     )
   }
@@ -49,6 +49,7 @@ export class LoadChargeDetailsComponent implements OnInit {
     this.machineService.deleteMachine(id).subscribe(
       data => {
         console.log(data);
+        window.location.reload()
        // this.getListOfMachine();
       }
     )

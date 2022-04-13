@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LaodCharge } from 'src/app/model/LaodCharge';
 import { UAP } from 'src/app/model/uap';
-import { LoadChargeService } from 'src/app/services/load-charge.service';
+import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { UapService } from 'src/app/services/uap.service';
 
 @Component({
@@ -14,7 +14,6 @@ export class LoadChargeUpdateComponent implements OnInit {
   id!: number;
   uaps!: UAP[];
   loadCharge: LaodCharge = new LaodCharge();
-//  currentLoadCharge: any;
   isUpdateFailed = false;
   submitted = false;
   isSuccessful = false;
@@ -23,7 +22,7 @@ export class LoadChargeUpdateComponent implements OnInit {
   constructor(private uapService: UapService,
     private router: Router,
     private route: ActivatedRoute,
-    private loadChargeService: LoadChargeService
+    private loadChargeService: CentreChargeService
   ) { }
 
   ngOnInit(): void {

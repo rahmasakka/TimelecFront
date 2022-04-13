@@ -1,18 +1,18 @@
 <div class="container card col-lg-6 col-sm-10 mt-4">
-    <h1 class="text-blue mt-2"> Update Load Charge </h1>
+    <h1 class="text-blue mt-2"> Modifier centre de charge </h1>
     <form name="form" (ngSubmit)=" onSubmit()" class="pb-3">
         <div class="form-group">
             <label class="control-label">
-                <h4>Load Charge Name:</h4>
+                <h4>Nom centre de charge:</h4>
             </label>
             <div>
                 <input type="text" class="form-control" name="loadChargeName" [(ngModel)]="loadCharge.ccname" required
                     #name="ngModel" minlength="3" maxlength="20">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['minlength']">
-                    Load Charge must be at least 3 characters
+                    Nom centre de charge doit contenir au moins 3 charactères
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['maxlength']">
-                    Load Charge must be at most 20 characters
+                    Nom centre de charge doit contenir au plus 20 charactères
                 </div>
             </div>
         </div>
@@ -33,9 +33,9 @@
                 <h4>UAP: </h4>
             </label>
             <div>
-                <select class="form-control" aria-label="UAP affected to Load Charge" id="iduap" name="iduap"
+                <select class="form-control" aria-label="Affecter un UAP à un centre de charge" id="iduap" name="iduap"
                     [(ngModel)]="loadCharge.uap.idUAP">
-                    <option>--Affecte an UAP to Load Charge--</option>
+                    <option>--Affecter un UAP à un centre de charge--</option>
                     <option *ngFor="let uap of uaps" [value]="uap.idUAP">
                         {{uap.uapName}}
                     </option>

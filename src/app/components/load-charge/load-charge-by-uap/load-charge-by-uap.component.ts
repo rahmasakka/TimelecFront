@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LaodCharge } from 'src/app/model/LaodCharge';
 import { UAP } from 'src/app/model/uap';
-import { LoadChargeService } from 'src/app/services/load-charge.service';
+import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-load-charge-by-uap',
@@ -16,9 +17,11 @@ export class LoadChargeByUapComponent implements OnInit {
   ccname: String = '';
   ccdescription : String='';
   loadChargeID!: LaodCharge;
+  uap!: UAP
 
 
-  constructor(private loadChargeService: LoadChargeService,
+  constructor(private loadChargeService: CentreChargeService,
+    private uapService : UapService,
     private token: TokenStorageService,
     private router: Router,
     private route: ActivatedRoute) {}
@@ -28,19 +31,21 @@ export class LoadChargeByUapComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
     this.getListLoadCharge(this.id)
-    this.loadChargeService.getLoadChargeById(this.id).subscribe(
+   
+    this.uapService.getUAPById(this.id).subscribe(
       data => {
-        this.loadChargeID = data
-        console.log(data)
+        this.uap = data
+       // console.log(data)
       }
     )
   }
+
 
   getListLoadCharge(id: number){
     this.loadChargeService.listLoadChargeByUAP(id).subscribe(
       data => {
         this.loadCharge = data
-      //  console.log(data)
+       // console.log(data)
       }
     )
   }
@@ -51,6 +56,7 @@ export class LoadChargeByUapComponent implements OnInit {
       data => {
      //   console.log(data);
         this.getListLoadCharge(id);
+        window.location.reload()
       }
     )
   }

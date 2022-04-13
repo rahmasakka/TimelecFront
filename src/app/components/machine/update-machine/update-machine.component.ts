@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LaodCharge } from 'src/app/model/LaodCharge';
 import { machine } from 'src/app/model/machine';
-import { LoadChargeService } from 'src/app/services/load-charge.service';
+import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { MachineService } from 'src/app/services/machine.service';
 
 @Component({
@@ -20,36 +20,36 @@ export class UpdateMachineComponent implements OnInit {
   errorMessage = '';
 
 
-  constructor(private machineService: MachineService, 
-              private router: Router,
-              private route:ActivatedRoute,
-              private loadChargeService: LoadChargeService) { }
+  constructor(private machineService: MachineService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private loadChargeService: CentreChargeService) { }
 
   ngOnInit(): void {
-    this.id=this.route.snapshot.params['id']
+    this.id = this.route.snapshot.params['id']
     this.machineService.getMachineById(this.id).subscribe(
       data => {
         this.machine = data
         console.log(data)
       },
-      error=> console.log(error) 
+      error => console.log(error)
     )
     this.getListLoadCharge();
   }
 
-  getListLoadCharge(){
+  getListLoadCharge() {
     this.loadChargeService.getLoadCharge().subscribe(
-      data=>{
+      data => {
         this.listLoadCharge = data
       }
     )
   }
 
-  goToListMachine(){
+  goToListMachine() {
     this.router.navigate(['/machine-list'])
   }
 
-  onSubmit(){
+  onSubmit() {
     this.machineService.updateMachine(this.id, this.machine).subscribe(
       data => {
         this.goToListMachine()

@@ -1,0 +1,14 @@
+<div id="accordion1">
+    <div class="card m-4 p-2 border border-info" *ngFor="let cc of CCs">
+        <div class="card-header" id="headingtwo">
+            <button class="btn" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true">
+                <h5>{{cc.ccname}}</h5>
+            </button>
+        </div>
+        <div id="collapseTwo" class="collapse show" data-parent="#accordion1">
+            <div class="card-body">
+                <app-machine [data]="cc.idCC"></app-machine>
+            </div>
+        </div>
+    </div>
+</div>
