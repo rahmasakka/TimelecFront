@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UAP } from 'src/app/model/uap';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UapService } from 'src/app/services/uap.service';
@@ -14,9 +15,15 @@ export class UapListComponent implements OnInit {
   uaps!: UAP[];
   uapName: String = '';
   uapDescription: String = '';
+  closeResult = '';
+  isDeletedFailed: boolean = false
+  isSuccessful: boolean = false
+  errorMessage!: ''
+
   constructor(private uapService: UapService,
               private token: TokenStorageService,
-              private router: Router) { }
+              private router: Router,
+              private modalService: NgbModal) { }
 
   isAdmin() { return this.token.getUser().roles[0] == "ROLE_ADMIN" }
   isUser() { return this.token.getUser().roles[0] == "ROLE_USER" }
@@ -37,8 +44,14 @@ export class UapListComponent implements OnInit {
   deleteUAP(id: number) {
     this.uapService.deleteUAP(id).subscribe(
       data => {
-       // console.log(data);
-        this.getListOfUAP();
+        //   console.log(data);
+        window.location.reload();
+        this.isDeletedFailed = false;
+        this.isSuccessful = true;
+      },
+      error => {
+        this.errorMessage = error.error.message
+        this.isDeletedFailed = true
       }
     )
   }
@@ -63,6 +76,29 @@ export class UapListComponent implements OnInit {
     }
     else if (this.uapDescription == "" && this.uapName == "") {
       this.ngOnInit();
+    }
+  }
+
+
+
+  
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      window.location.reload();
+
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
     }
   }
 }

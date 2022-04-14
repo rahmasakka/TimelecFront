@@ -1,12 +1,26 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
-    <h2 class="text-blue pt-3"> Machine List</h2>
+    <h2 class="pt-3 text-info"> Liste des machines</h2>
 
     <div class="input-group mt-3 mb-3">
-        <button *ngIf=isAdmin() class="btn col-4 col-md-4 col-sm-12 btn btn-outline-info" routerLink="/create-machine">
-            <span> Ajouter machineDescription</span>
+        <button class="btn col-4 col-md-4 col-sm-12 btn btn-outline-info" (click)="open(content)" *ngIf=isAdmin()>
+            <span> Ajouter machine</span>
+            <ng-template #content let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title text-info">Ajouter nouvelle machine</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group-append">
+                        <app-create-machine></app-create-machine>
+                    </div>
+                </div>
+            </ng-template>
         </button>
+
         <input #myInput class="form-control border col-8 col-md-8 col-sm-12" type="text"
-            placeholder="Search a machine..." [(ngModel)]="machineName" [(ngModel)]="machineDescription"
+            placeholder="Chercher une machine..." [(ngModel)]="machineName" [(ngModel)]="machineDescription"
             (input)="Search()">
         <span class="input-group-append">
             <button class="btn btn-outline-secondary" type="button">
@@ -17,11 +31,11 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th> Name </th>
+                <th> Nom </th>
                 <th> Description </th>
                 <!--th> Centre de charge </th>
                 <th> UAP </th-->
-                <th> Category </th>
+                <th> Catégorie </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
@@ -44,8 +58,10 @@
                         <i class="fa fa-trash" aria-hidden="true"></i>
                         <ng-template #content let-modal>
                             <div class="modal-header">
-                                <h4 class="modal-title">Suppression {{machine.machineName}}</h4>
-                                <button class="btn-close" (click)="modal.dismiss()"></button>
+                                <h4 class="modal-title text-danger">Suppression {{machine.machineName}}</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body">
                                 <div class="input-group-append">
@@ -56,7 +72,7 @@
                                 <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
                                     Annuler
                                 </button>
-                                <button class="btn btn-outline-danger" (click)="deleteMachine(machine.idMachine)">
+                                <button class="btn btn-danger" (click)="deleteMachine(machine.idMachine)">
                                     Supprimer
                                 </button>
                             </div>

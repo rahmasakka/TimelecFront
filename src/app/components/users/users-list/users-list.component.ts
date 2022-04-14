@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/model/user';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -18,9 +19,12 @@ export class UsersListComponent implements OnInit {
   size: number = 1;
   numElement: number = 4;
 
+  closeResult:string =''
+
   constructor(private userService: UserService,
               private token: TokenStorageService,
-              private router: Router) { }
+              private router: Router,
+              private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getUsersPagination();
@@ -46,6 +50,7 @@ export class UsersListComponent implements OnInit {
       data => {
         console.log(data);
         this.getUsers();
+        window.location.reload();
       }
     )
   }
@@ -68,4 +73,24 @@ export class UsersListComponent implements OnInit {
       }
     )
   } 
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      window.location.reload();
+
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

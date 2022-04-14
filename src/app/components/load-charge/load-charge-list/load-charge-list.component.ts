@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LaodCharge } from 'src/app/model/LaodCharge';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -11,43 +12,53 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class LoadChargeListComponent implements OnInit {
 
-  loadCharge! : LaodCharge[];
+  loadCharge!: LaodCharge[];
   ccname: String = '';
-  ccdescription : String='';
+  ccdescription: String = '';
+  closeResult = '';
+  isDeletedFailed: boolean = false
+  isSuccessful: boolean = false
+  errorMessage!: ''
 
-  constructor(private loadChargeService : CentreChargeService, 
-              private token: TokenStorageService,
-              private router: Router) { }
+  constructor(private loadChargeService: CentreChargeService,
+    private token: TokenStorageService,
+    private router: Router,
+    private modalService: NgbModal) { }
 
-  isAdmin() { return this.token.getUser().roles[0] == "ROLE_ADMIN" }                  
+  isAdmin() { return this.token.getUser().roles[0] == "ROLE_ADMIN" }
   ngOnInit(): void {
     this.getListLoadCharge();
   }
 
-
-  getListLoadCharge(){
+  getListLoadCharge() {
     this.loadChargeService.getLoadCharge().subscribe(
       data => {
         this.loadCharge = data;
-       // console.log(data)
+        // console.log(data)
       }
     )
   }
 
-  deleteLoadCharge(id: number){
+  deleteLoadCharge(id: number) {
     this.loadChargeService.deleteLoadCharge(id).subscribe(
       data => {
-     //   console.log(data);
-        this.getListLoadCharge();
+        //   console.log(data);
+        window.location.reload();
+        this.isDeletedFailed = false;
+        this.isSuccessful = true;
+      },
+      error => {
+        this.errorMessage = error.error.message
+        this.isDeletedFailed = true
       }
     )
   }
 
-  updateLoadCharge(id: number){
-    this.router.navigate(['load-charge-update',id])
+  updateLoadCharge(id: number) {
+    this.router.navigate(['load-charge-update', id])
   }
 
-  loadChargeDetails(id: number){
+  loadChargeDetails(id: number) {
     this.router.navigate(['load-charge-details', id])
   }
 
@@ -65,5 +76,26 @@ export class LoadChargeListComponent implements OnInit {
     else if (this.ccdescription == "" && this.ccname == "") {
       this.ngOnInit();
     }
-  }  
+  }
+
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      window.location.reload();
+
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

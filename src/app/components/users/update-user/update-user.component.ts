@@ -16,7 +16,7 @@ export class UpdateUserComponent implements OnInit {
   user: User = new User();
   currentUser: any;
   roles!: Roles[];
-  isUpdateFailed = false;
+  isFailed = false;
   submitted = false;
   isSuccessful = false;
   errorMessage = '';
@@ -48,7 +48,7 @@ export class UpdateUserComponent implements OnInit {
       },
       err => {
         this.errorMessage = err.error.message;
-        this.isUpdateFailed = true;
+        this.isFailed = true;
       }
     );
   }

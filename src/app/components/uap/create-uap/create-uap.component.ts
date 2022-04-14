@@ -11,7 +11,7 @@ export class CreateUapComponent implements OnInit {
 
   form: any = {};
   isSuccessful = false;
-  isSignUpFailed = false;
+  isFailed = false;
   errorMessage = '';
   submitted = false;
 
@@ -27,11 +27,11 @@ export class CreateUapComponent implements OnInit {
       data => {
         this.goToUAPList()
         this.isSuccessful = true;
-        this.isSignUpFailed = false;
+        this.isFailed = false;
       },
       err => {
         this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
+        this.isFailed = true;
       }
     );
   }

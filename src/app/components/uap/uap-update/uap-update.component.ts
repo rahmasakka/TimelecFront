@@ -15,7 +15,7 @@ export class UapUpdateComponent implements OnInit {
   submitted = false;
   isSuccessful = false;
   errorMessage = '';
-  isUpdateFailed = false;
+  isFailed = false;
 
   constructor(private uapService: UapService, 
               private route: ActivatedRoute,
@@ -42,7 +42,7 @@ export class UapUpdateComponent implements OnInit {
       },
       err => {
         this.errorMessage = err.error.message;
-        this.isUpdateFailed = true;
+        this.isFailed = true;
       }
     )
   }

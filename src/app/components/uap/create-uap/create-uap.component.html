@@ -1,47 +1,47 @@
-<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
-    <h1 class="text-blue pt-2">New UAP </h1>
-
-    <form name="form" (ngSubmit)=" onSubmit()" class="mt-2b pb-3">
+<div class="container">
+    <form name="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label class="control-label">
-                <h4>UAP name:</h4>
+                <h5>Nom UAP:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" placeholder="UAP's name" name="uapname"
+                <input type="text" class="form-control" placeholder="Le nom de l'UAP" name="uapname"
                     [(ngModel)]="form.uapName" required #uapName="ngModel" minlength="3" maxlength="20">
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.invalid">
-                    UAP name is required
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.['required']">
+                    Le nom de l'UAP est obligatoire
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.['minlength']">
-                    uap' name must be at least 3 characters
+                    Le nom de l'UAP doit contenir au moins 3 caractères
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.['maxlength']">
-                    Machine name must be at most 20 characters
+                    Le nom de l'UAP doit contenir au plus 20 caractères
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Description:</h4>
+                <h5>Description:</h5>
             </label>
             <textarea type="text" class="form-control" name="description" [(ngModel)]="form.uapDescription" required
-                placeholder=" UAP description" #uapDescription="ngModel"></textarea>
+                placeholder=" La description de l'UAP" #uapDescription="ngModel" minlength="10"></textarea>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && uapDescription.errors?.['required']">
-                UAP's description is required
+                La description de l'UAP est obligatoire
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && uapDescription.errors?.['minlength']">
+                La description de l'UAP doit contenir au moins 10 caractères
             </div>
         </div>
 
-        <button class="btn bg-info">
-            <span> Create </span>
+        <button class="btn bg-info text-white">
+            <span> Créer </span>
         </button>
-        <br />
-        <div class="alert alert-warning" *ngIf="isSignUpFailed">
-            Creation failed! {{ errorMessage }}
+        <div class="alert alert-warning mt-2" *ngIf="isFailed">
+            Création échouée!
         </div>
     </form>
 
-    <div class="alert alert-success" *ngIf="isSuccessful">
-        Your registration is successful!
+    <div class="alert alert-success mt-2" *ngIf="isSuccessful">
+        Création avec succées!
     </div>
 </div>

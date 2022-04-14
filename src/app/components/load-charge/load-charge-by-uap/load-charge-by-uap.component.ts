@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LaodCharge } from 'src/app/model/LaodCharge';
 import { UAP } from 'src/app/model/uap';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
@@ -18,13 +19,18 @@ export class LoadChargeByUapComponent implements OnInit {
   ccdescription : String='';
   loadChargeID!: LaodCharge;
   uap!: UAP
+  closeResult=''
+  isDeletedFailed: boolean = false
+  isSuccessful: boolean = false
+  errorMessage!: ''
 
 
   constructor(private loadChargeService: CentreChargeService,
     private uapService : UapService,
     private token: TokenStorageService,
     private router: Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private modalService : NgbModal) {}
 
   isAdmin() { return this.token.getUser().roles[0] == "ROLE_ADMIN" }
 
@@ -51,12 +57,17 @@ export class LoadChargeByUapComponent implements OnInit {
   }
 
   
-  deleteLoadCharge(id: number){
+  deleteLoadCharge(id: number) {
     this.loadChargeService.deleteLoadCharge(id).subscribe(
       data => {
-     //   console.log(data);
-        this.getListLoadCharge(id);
-        window.location.reload()
+        //   console.log(data);
+        window.location.reload();
+        this.isDeletedFailed = false;
+        this.isSuccessful = true;
+      },
+      error => {
+        this.errorMessage = error.error.message
+        this.isDeletedFailed = true
       }
     )
   }
@@ -84,4 +95,24 @@ export class LoadChargeByUapComponent implements OnInit {
       this.ngOnInit();
     }
   }  
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      window.location.reload();
+
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

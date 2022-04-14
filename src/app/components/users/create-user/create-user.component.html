@@ -1,78 +1,76 @@
-<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
-    <h1 class="text-blue mt-2">New User </h1>
-
-    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3">
-
+<div class="container">
+    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
         <div class="form-group">
             <label class="control-label">
-                <h4>Username:</h4>
+                <h5>Username:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" placeholder="Your username" name="username"
+                <input type="text" class="form-control" placeholder="Ton username" name="username"
                     [(ngModel)]="form.username" required #username="ngModel" minlength="3">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.invalid">
-                    Username is required
+                     L'username est obligatoire
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['minlength']">
-                    Username must be at least 3 characters
+                    L'username doit contenir au moins 3 caractères
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Email:</h4>
+                <h5>Email:</h5>
             </label>
             <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder=" Your email" #email="ngModel" />
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="nom@gmail.com" #email="ngModel" />
             <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['required']">
-                Email is required
+                L'adresse mail est obligatoire
             </div>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['pattern']">
-                Email must be a valid email address
+                L'adresse mail doit respecter la forme ***@****.**
             </div>
         </div>
 
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Password:</h4>
+                <h5>Mot de passe:</h5>
             </label>
             <div>
                 <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
                     minlength="6" #password="ngModel" placeholder=" Your password" />
 
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['required']">
-                    Password is required
+                    Le mot de passe est obligatoire!
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['minlength']">
-                    Password must be at least 6 characters
+                    Le mot de passe doit contenir au moins 3 caractères.
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Role:</h4>
+                <h5>Role:</h5>
             </label>
             <div>
-                <select class="form-control" aria-label="" [(ngModel)]="form.roles">
+                <select class="form-control" aria-label="Role" [(ngModel)]="form.roles">
                     <option *ngFor="let role of roles" id="role" name="roles"> {{role.name}}
                     </option>
                 </select>
             </div>
         </div>
 
-        <button class="btn bg-info">
-            <span> Register</span>
+        <button class="btn bg-info text-white">
+            <span> Enregistrer</span>
         </button>
         <br />
         <div class="alert alert-warning" *ngIf="isSignUpFailed">
-            Creation failed! {{ errorMessage }}
+            Création erroné! <br/> {{ errorMessage }}
+            
         </div>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">
-        Your registration is successful!
+        Création avec succés!
     </div>
 </div>

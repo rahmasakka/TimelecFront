@@ -32,10 +32,9 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.tokenStorageService.signOut();
     this.router.navigate(['/signin']);
-    window.location.reload();
-
+   // window.location.reload();
   }
-
+  
   ngOnDestroy(): void {
     sessionStorage.clear();
   }

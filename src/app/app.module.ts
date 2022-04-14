@@ -15,7 +15,6 @@ import { ProfilComponent } from './components/auth/profil/profil.component';
 import { authInterceptorProviders } from './_helpers/auth-interceptor.interceptor';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
-import { PopupComponent } from './popup/popup.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MachineListComponent } from './components/machine/machine-list/machine-list.component';
 import { LoadChargeUpdateComponent } from './components/load-charge/load-charge-update/load-charge-update.component';
@@ -45,7 +44,6 @@ import { MachineComponent } from './components/machine/machine/machine.component
     ProfilComponent,
     UpdateUserComponent,
     CreateUserComponent,
-    PopupComponent,
     MachineListComponent,
     LoadChargeUpdateComponent, 
     LoadChargeListComponent,

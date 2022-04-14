@@ -14,7 +14,7 @@ export class LoadChargeUpdateComponent implements OnInit {
   id!: number;
   uaps!: UAP[];
   loadCharge: LaodCharge = new LaodCharge();
-  isUpdateFailed = false;
+  isFailed = false;
   submitted = false;
   isSuccessful = false;
   errorMessage = '';
@@ -46,7 +46,7 @@ export class LoadChargeUpdateComponent implements OnInit {
       },
       error => {
         this.errorMessage = error.errorMessage
-        this.isUpdateFailed = true
+        this.isFailed = true
       }
     )
   }

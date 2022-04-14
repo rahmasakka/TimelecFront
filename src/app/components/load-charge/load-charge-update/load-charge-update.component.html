@@ -1,9 +1,9 @@
 <div class="container card col-lg-6 col-sm-10 mt-4">
-    <h1 class="text-blue mt-2"> Modifier centre de charge </h1>
-    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3">
+    <h1 class="mt-2 text-info"> Modifier centre de charge </h1>
+    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
         <div class="form-group">
             <label class="control-label">
-                <h4>Nom centre de charge:</h4>
+                <h5>Nom centre de charge:</h5>
             </label>
             <div>
                 <input type="text" class="form-control" name="loadChargeName" [(ngModel)]="loadCharge.ccname" required
@@ -19,18 +19,21 @@
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Description:</h4>
+                <h5>Description:</h5>
             </label>
             <input type="text" class="form-control" name="text" [(ngModel)]="loadCharge.ccdescription" required
-                #description="ngModel" />
+                #description="ngModel" minlength="10"/>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && description.errors?.['required']">
-                Description is required
+                La description de centre de charge est obligatoire
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && description.errors?.['minlength']">
+                La description de centre de charge doit contenir au moins 10 caractères 
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h4>UAP: </h4>
+                <h5>UAP: </h5>
             </label>
             <div>
                 <select class="form-control" aria-label="Affecter un UAP à un centre de charge" id="iduap" name="iduap"
@@ -43,16 +46,16 @@
             </div>
         </div>
 
-        <button class="btn bg-info">
-            <span> Update </span>
+        <button class="btn bg-info text-white">
+            <span> Modifier </span>
         </button>
 
-        <div class="alert alert-warning" *ngIf="isUpdateFailed">
-            Creation failed! {{ errorMessage }}
+        <div class="alert alert-warning" *ngIf="isFailed">
+            Modification échoué! {{ errorMessage }}
         </div>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">
-        Your update is successful!
+        Modification avec succés!
     </div>
 </div>

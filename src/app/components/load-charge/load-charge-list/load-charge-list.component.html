@@ -1,12 +1,26 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
-    <h2 class="text-blue pt-3"> List de Centre de Charge</h2>
+    <h2 class="pt-3 text-info"> List de centre de charge</h2>
 
     <div class="input-group mt-3 mb-3">
-        <button *ngIf=isAdmin() class="btn col-lg-4 col-md-6 col-sm-12 btn btn-outline-info" routerLink="/create-load-charge">
-            <span> Ajouter Centre de Charge</span>
+        <button class="btn col-4 col-md-4 col-sm-12 btn btn-outline-info" (click)="open(content)" *ngIf=isAdmin()>
+            <span> Ajouter centre de charge</span>
+            <ng-template #content let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title text-info">Ajouter nouveau centre de charge</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group-append">
+                        <app-create-load-charge></app-create-load-charge>
+                    </div>
+                </div>
+            </ng-template>
         </button>
         <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
-            placeholder="Search an uap..." [(ngModel)]="ccname" [(ngModel)]="ccdescription" (input)="Search()">
+            placeholder="Saisir nom d'un centre de charge..." [(ngModel)]="ccname" [(ngModel)]="ccdescription"
+            (input)="Search()">
         <span class="input-group-append">
             <button class="btn btn-outline-secondary" type="button">
                 <i class="fa fa-search"></i>
@@ -17,7 +31,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th> Name </th>
+                <th> Nom </th>
                 <th> Description </th>
                 <th> UAP </th>
                 <th *ngIf=isAdmin()> Actions </th>
@@ -32,11 +46,39 @@
                     <button (click)="loadChargeDetails(cc.idCC)" class="btn btn-outline-info">
                         <i class="fa fa-file" aria-hidden="true"></i>
                     </button>
-                    <button (click)="updateLoadCharge(cc.idCC)" class="btn btn-outline-secondary" *ngIf=isAdmin() >
+                    <button (click)="updateLoadCharge(cc.idCC)" class="btn btn-outline-secondary" *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
                     </button>
-                    <button (click)="deleteLoadCharge(cc.idCC)" class="btn btn-outline-danger" *ngIf=isAdmin()>
+                    <button class="btn btn-outline-danger" (click)="open(content)" *ngIf=isAdmin()>
                         <i class="fa fa-trash" aria-hidden="true"></i>
+                        <ng-template #content let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title text-danger">Suppression {{cc.ccname}}</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group-append">
+                                    Voulez-vous vraiment supprimer ce centre de charge?
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                    Annuler
+                                </button>
+                                <button class="btn btn-danger" (click)="deleteLoadCharge(cc.idCC)">
+                                    Supprimer
+                                </button>
+                            </div>
+                            <!--div class=" alert alert-success" *ngIf="isSuccessful">
+                                Suppression avec succées.
+                            </div-->
+                            <div *ngIf=isDeletedFailed class="alert alert-danger">
+                                Ce centre de charge contient des machines. <br />
+                                Pour le supprimer, il faut supprimer toutes les machines qu'il
+                            </div>
+                        </ng-template>
                     </button>
                 </td>
             </tr>

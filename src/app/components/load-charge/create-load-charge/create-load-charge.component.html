@@ -1,9 +1,8 @@
-<div class="container card col-lg-6 col-sm-10 mt-4">
-    <h1 class="text-blue mt-2"> Créer centre de charge </h1>
-    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3">
+<div class="container">
+    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
         <div class="form-group">
             <label class="control-label">
-                <h4>Nom centre de charge:</h4>
+                <h5>Nom centre de charge:</h5>
             </label>
             <div>
                 <input type="text" class="form-control" name="loadChargeName" [(ngModel)]="form.ccname" required
@@ -19,7 +18,7 @@
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Description:</h4>
+                <h5>Description:</h5>
             </label>
             <input type="text" class="form-control" name="text" [(ngModel)]="form.ccdescription" required
                 #description="ngModel" />
@@ -30,7 +29,7 @@
 
         <div class="form-group">
             <label class="control-label">
-                <h4>UAP: </h4>
+                <h5>UAP: </h5>
             </label>
             <div>
                 <select class="form-control" aria-label="Affecter un UAP à un centre de charge" id="iduap" name="iduap"
@@ -43,16 +42,16 @@
             </div>
         </div>
 
-        <button class="btn bg-info">
-            <span> Update </span>
+        <button class="btn bg-info text-white">
+            <span> Créer </span>
         </button>
 
         <div class="alert alert-warning" *ngIf="isCreatedFailed">
-            Creation failed! {{ errorMessage }}
+            Création échoue! {{ errorMessage }}
         </div>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">
-        Your update is successful!
+        Création avec succées!
     </div>
 </div>

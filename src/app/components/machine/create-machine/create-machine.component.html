@@ -1,40 +1,38 @@
-<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
-    <h1 class="text-blue pt-2">New machine </h1>
-
-    <form name="form" (ngSubmit)=" onSubmit()" class="mt-2b pb-3">
+<div class="container">
+    <form name="form" (ngSubmit)=" onSubmit()">
         <div class="form-group">
             <label class="control-label">
-                <h4>Machine name:</h4>
+                <h5>Nom machine:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" placeholder="Machine's name" name="machineName"
+                <input type="text" class="form-control" placeholder="Nom de la machine" name="machineName"
                     [(ngModel)]="form.machineName" required #machineName="ngModel" minlength="3" maxlength="20">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.invalid">
-                    Machine's name is required
+                    Le nom de la machine est obligatoire
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['minlength']">
-                    Machine name must be at least 3 characters
+                    Le nom de la machine doit contenir au moins 3 charactères
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['maxlength']">
-                    Machine name must be at most 20 characters
+                    Le nom de la machine doit contenir au plus 20 charactères
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Description:</h4>
+                <h5>Description:</h5>
             </label>
             <textarea type="text" class="form-control" name="description" [(ngModel)]="form.machineDescription" required
-                placeholder="Machine's description" #machineDescription="ngModel"></textarea>
+                placeholder="Description de la machine" #machineDescription="ngModel"></textarea>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && machineDescription.errors?.['required']">
-                Machine's description is required
+                La description de la machine est obligatoire
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Machine Category:</h4>
+                <h5>Catégorie:</h5>
             </label>
             <div class="container">
                 <div class="row">
@@ -54,7 +52,7 @@
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Centre de charge</h4>
+                <h5>Centre de charge:</h5>
             </label>
             <div>
                 <select class="form-control" aria-label="Affecter la machine à un centre de charge" id="loadCharges" name="loadCharge" 
@@ -67,16 +65,15 @@
             </div>
         </div>
 
-        <button class="btn bg-info">
-            <span> Create </span>
+        <button class="btn bg-info text-white">
+            <span> Créer </span>
         </button>
-        <br />
-        <div class="alert alert-warning" *ngIf="isSignUpFailed">
-            Creation failed! {{ errorMessage }}
+        <div class="alert alert-warning mt-2" *ngIf="isSignUpFailed">
+            Création échoue! {{ errorMessage }}
         </div>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">
-        Your registration is successful!
+        Création avec succées
     </div>
 </div>

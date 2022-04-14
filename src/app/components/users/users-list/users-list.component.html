@@ -1,14 +1,28 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
-    <h2 class="text-blue pt-3"> User's List</h2>
+    <h2 class="pt-3 text-info"> Liste des utilisateurs</h2>
 
     <div class="input-group mt-3 mb-3">
-        <button *ngIf=isAdmin() class="btn col-lg-4 col-md-6 col-sm-12 btn btn-outline-info" routerLink="/create-user">
+        <button class="btn col-lg-4 col-md-4 col-sm-12 btn btn-outline-info" (click)="open(content)" *ngIf=isAdmin()>
             <i class="fa fa-user-plus" aria-hidden="true"></i>
-            <span> Add New User</span>
+            <span> Ajouter utilisateur</span>
+            <ng-template #content let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title">Ajouter nouveau utilisateur</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group-append">
+                        <app-create-user></app-create-user>
+                    </div>
+                </div>
+            </ng-template>
         </button>
 
+
         <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
-            placeholder="Search a user..." [(ngModel)]="username" (input)="Search()">
+            placeholder="Chercher un utilisateur..." [(ngModel)]="username" (input)="Search()">
         <span class="input-group-append">
             <button class="btn btn-outline-secondary" type="button">
                 <i class="fa fa-search"></i>
@@ -21,7 +35,7 @@
             <tr>
                 <th> Username </th>
                 <th> Email </th>
-                <th *ngIf=isAdmin()> Role </th>
+                <th *ngIf=isAdmin()> Rôle </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
@@ -34,8 +48,29 @@
                     <button (click)="updateUser(user.id)" class="btn btn-outline-info">
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
                     </button>
-                    <button (click)="deleteUser(user.id)" class="btn btn-outline-danger">
+                    <button class="btn btn-outline-danger" (click)="open(content)" *ngIf=isAdmin()>
                         <i class="fa fa-trash" aria-hidden="true"></i>
+                        <ng-template #content let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title text-danger">Suppression {{user.username}}</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group-append">
+                                    Voulez-vous vraiment supprimer cet utilisateur?
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                    Annuler
+                                </button>
+                                <button class="btn btn-danger" (click)="deleteUser(user.id)">
+                                    Supprimer
+                                </button>
+                            </div>
+                        </ng-template>
                     </button>
                 </td>
             </tr>

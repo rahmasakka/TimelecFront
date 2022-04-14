@@ -1,50 +1,50 @@
 <div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
-    <h1 class="text-blue mt-2">Update UAP </h1>
-    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3">
+    <h1 class="mt-2 text-info">Modification UAP : {{uap.uapName}}</h1>
+    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
         <div class="form-group">
             <label class="control-label">
-                <h4>UAP name:</h4>
+                <h5>UAP name:</h5>
             </label>
             <div>
                 <input type="text" class="form-control" name="uapName" [(ngModel)]="uap.uapName" required
                     #uapName="ngModel" minlength="3" maxlength="20">
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.invalid">
-                    UAP Name is required
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.['required']">
+                    Le nom de l'UAP est obligatoire
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.['minlength']">
-                    UAP Name must be at least 3 characters
+                    Le nom de l'UAP doit contenir au moins 3 caractètes.
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && uapName.errors?.['maxlength']">
-                    UAP Name must be at 20 characters
+                    Le nom de l'UAP doit contenir au plus 20 caractètes.
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h4>Description:</h4>
+                <h5>Description:</h5>
             </label>
             <textarea type="text" class="form-control" name="uapDescription" [(ngModel)]="uap.uapDescription" required
-                #uapDescription="ngModel"> </textarea>
+                #uapDescription="ngModel" minlength="10"> </textarea>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && uapDescription.errors?.['required']">
-                UAP Description is required
+                La description de l'UAP est obligatoire
             </div>
-            <div class="alert alert-danger" role="alert" *ngIf="submitted && uapDescription.errors?.['pattern']">
-                UAP Description must be a valid
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && uapDescription.errors?.['minlength']">
+                La description de l'UAP doit contenir au moins 10 caractères
             </div>
         </div>
 
-        <button class="btn  bg-info" >
-            <span> Update </span>
+        <button class="btn bg-info text-white" >
+            <span> Modifier </span>
         </button>
         <br />
 
-        <div class="alert alert-warning" *ngIf="isUpdateFailed">
-            Creation failed! {{ errorMessage }}
+        <div class="alert alert-warning" *ngIf="isFailed">
+            Modification échoué! {{ errorMessage }}
         </div>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">
-        Your update is successful!
+        Modification avec succés!
     </div>
 </div>

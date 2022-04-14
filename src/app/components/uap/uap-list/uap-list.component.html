@@ -1,12 +1,26 @@
-<div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
-    <h2 class="text-blue pt-3"> UAP List</h2>
+<div class="container card col-lg-6 col-md-10 col-sm-12 mt-4">
+    <h2 class="pt-3 text-info">Liste des UAPs</h2>
 
     <div class="input-group mt-3 mb-3">
-        <button *ngIf=isAdmin() class="btn col-lg-4 col-md-6 col-sm-12 btn btn-outline-info" routerLink="/create-uap">
+        <button class="btn col-lg-4 col-md-4 col-sm-12 btn btn-outline-info" (click)="open(content)" *ngIf=isAdmin()>
             <span> Ajouter UAP</span>
+            <ng-template #content let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title  text-info">Ajouter nouveau UAP</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group-append">
+                        <app-create-uap></app-create-uap>
+                    </div>
+                </div>
+            </ng-template>
         </button>
-        <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
-            placeholder="Search an uap..." [(ngModel)]="uapName" [(ngModel)]="uapDescription" (input)="Search()">
+
+        <input #myInput class="form-control border col-lg-8 col-md-8 col-sm-12" type="text"
+            placeholder="Chercher un UAP..." [(ngModel)]="uapName" [(ngModel)]="uapDescription" (input)="Search()">
         <span class="input-group-append">
             <button class="btn btn-outline-secondary" type="button">
                 <i class="fa fa-search"></i>
@@ -16,7 +30,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th> Name </th>
+                <th> Nom </th>
                 <th> Description </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
@@ -32,8 +46,36 @@
                     <button (click)="updateUAP(uap.idUAP)" class="btn btn-outline-secondary" *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
                     </button>
-                    <button (click)="deleteUAP(uap.idUAP)" class="btn btn-outline-danger" *ngIf=isAdmin()>
+                    <button class="btn btn-outline-danger" (click)="open(content)" *ngIf=isAdmin()>
                         <i class="fa fa-trash" aria-hidden="true"></i>
+                        <ng-template #content let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title text-danger">Suppression {{uap.uapName}}</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group-append">
+                                    Voulez-vous vraiment supprimer cet UAP?
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                    Annuler
+                                </button>
+                                <button class="btn btn-danger" (click)="deleteUAP(uap.idUAP)">
+                                    Supprimer
+                                </button>
+                            </div>
+                            <!--div class=" alert alert-success" *ngIf="isSuccessful">
+                                Suppression avec succées.
+                            </div-->
+                            <div *ngIf=isDeletedFailed class="alert alert-danger">
+                                Cet UAP contient des centres de charge. <br />
+                                Pour le supprimer, il faut supprimer tous les centres de charge qu'il
+                            </div>
+                        </ng-template>
                     </button>
                 </td>
             </tr>
