@@ -10,11 +10,11 @@
                 <input type="text" class="form-control" placeholder="Enter" name="username" [(ngModel)]="form.username"
                     required #username="ngModel" pattern="[a-z]">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['required']">
-                    Username is required
+                    Username est obligatoire.
                 </div>
 
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['pattern']">
-                    Username must contain only alphabet
+                    Username doit contenir seulement des lettres alphabétiques.
                 </div>
             </div>
         </div>
@@ -23,13 +23,13 @@
             <label class="control-label">
                 <h5>Email:</h5>
             </label>
-            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                placeholder=" Your email" #email="ngModel"/>
+            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required 
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder=" Your email" #email="ngModel"/>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['required']">
-                Email is required
+                Email est obligatoire.
             </div>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['pattern']">
-                Email must be a valid email address
+                Email doit être sous la forme ***@***.**
             </div>
         </div>
 
@@ -39,13 +39,13 @@
             </label>
             <div>
                 <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
-                    minlength="6" #password="ngModel" placeholder=" Your password"/>
+                    minlength="6" #password="ngModel" placeholder=" Votre mot de passe.."/>
 
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['required']">
-                    Password is required
+                    Mot de passe obligatoire.
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['minlength']">
-                    Password must be at least 6 characters
+                    Le mot de passe doit contenir au moins 6 caractères.
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
         </button>
 
         <div class="alert alert-warning" *ngIf="isSignUpFailed">
-            Signup failed! {{ errorMessage }}
+            Creation compte erronée! {{ errorMessage }}
         </div>
     </form>
 

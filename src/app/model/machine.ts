@@ -1,10 +1,10 @@
 import { category } from "./category";
-import { LaodCharge } from "./LaodCharge";
+import { centreCharge } from "./centreCharge";
 
 export class machine {
     idMachine!: number;
     machineName!: string;
     machineDescription!: string;
-    machineCategory!: category;
-    loadCharge! : LaodCharge
+  //  machineCategory!: category;
+    centreCharge! : centreCharge
 }

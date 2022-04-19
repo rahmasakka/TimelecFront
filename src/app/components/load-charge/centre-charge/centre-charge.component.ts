@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LaodCharge } from 'src/app/model/LaodCharge';
+import { centreCharge } from 'src/app/model/centreCharge';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { CentreChargeService } from 'src/app/services/centre-charge.service';
 export class CentreChargeComponent implements OnInit {
 
   @Input() data !: number
-  CCs!: LaodCharge[]
+  CCs!: centreCharge[]
   constructor(private ccService: CentreChargeService) { }
 
   ngOnInit(): void {

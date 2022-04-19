@@ -33,7 +33,7 @@
                 <th> Name </th>
                 <th> Description </th>
                 <th> Centre de Charge </th>
-                <th> Category </th>
+                <!--th> Category </th-->
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
@@ -42,7 +42,7 @@
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
                 <td>{{loadCharge.ccname}}</td>
-                <td>{{machine.machineCategory}}</td>
+                <!--td>{{machine.machineCategory}}</td-->
                 <td>
                     <!-- (click)="machineByLoadCharge(machine.idMachine)" class="btn btn-outline-info">
                         <i class="fa fa-file" aria-hidden="true"></i>

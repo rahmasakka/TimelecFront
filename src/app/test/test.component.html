@@ -1,0 +1,9 @@
+<div>
+    <label for="country">Country:</label>
+    <div class="input-group input-group-sm mb-3">
+        <select (change)="onSelect($event.target)">
+            <option value="0" selected disabled>--Select Country--</option>
+            <option *ngFor="let uap of uaps" [value]="idUAP">{{uap.uapName}}</option>
+        </select>
+    </div>
+</div>

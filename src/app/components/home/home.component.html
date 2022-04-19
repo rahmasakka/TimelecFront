@@ -1,1 +1,25 @@
-<p>home works!</p>
+<div class="panel-group" id="accordion1">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo">Collapsible Group Item #2
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="panel-body">
+                    <!--h4 class="panel-title">Heading</h4-->
+                    <div class="panel-group" id="uapName">
+                        <div class="panel" *ngFor="let uap of uaps">
+                            <a data-toggle="collapse" data-parent="#uapName" href="#collapseTwoOne">{{uap.uapName}}</a>
+                            <div id="collapseTwoOne" class="panel-collapse collapse">
+                                <div class="panel-body">Details 1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

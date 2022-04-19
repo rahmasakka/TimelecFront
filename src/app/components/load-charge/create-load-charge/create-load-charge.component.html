@@ -1,56 +1,58 @@
 <div class="container">
-    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
+    <form>
         <div class="form-group">
             <label class="control-label">
-                <h5>Nom centre de charge:</h5>
+                <h5>Nom centre charge:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" name="loadChargeName" [(ngModel)]="form.ccname" required
-                    #name="ngModel" minlength="3" maxlength="20">
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['minlength']">
-                    Nom centre de charge doit contenir au moins 3 charactères
+                <input type="text" class="form-control" placeholder="Nom du centre de charge" name="ccname"
+                    [(ngModel)]="newCentreCharge.ccname" required #ccname="ngModel" minlength="3" maxlength="20">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && ccname.errors?.['required']">
+                    Le nom du centre de charge est obligatoire.
                 </div>
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['maxlength']">
-                    Nom centre de charge doit contenir au plus 20 charactères
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && ccname.errors?.['minlength']">
+                    Le nom du centre de charge doit contenir au moins 3 caractères.
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && ccname.errors?.['maxlength']">
+                    Le nom du centre de charge doit contenir au plus 20 caractères.
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h5>Description:</h5>
-            </label>
-            <input type="text" class="form-control" name="text" [(ngModel)]="form.ccdescription" required
-                #description="ngModel" />
-            <div class="alert alert-danger" role="alert" *ngIf="submitted && description.errors?.['required']">
-                Description is required
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">
-                <h5>UAP: </h5>
+                <h5>Description du centre charge:</h5>
             </label>
             <div>
-                <select class="form-control" aria-label="Affecter un UAP à un centre de charge" id="iduap" name="iduap"
-                    [(ngModel)]="form.uap">
-                    <option>--Affecter un UAP à un centre de charge--</option>
-                    <option *ngFor="let uap of uaps" [value]="uap.idUAP">
-                        {{uap.uapName}}
-                    </option>
-                </select>
+                <textarea type="text" class="form-control" placeholder="Nom du centre de charge" name="ccdescription"
+                    [(ngModel)]="newCentreCharge.ccdescription" required #ccdescription="ngModel"
+                    minlength="10"></textarea>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && ccdescription.errors?.['required']">
+                    La description du centre de charge est obligatoire.
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && ccdescription.errors?.['minlength']">
+                    La description du centre de charge doit contenir au moins 10 caractères.
+                </div>
             </div>
         </div>
 
-        <button class="btn bg-info text-white">
-            <span> Créer </span>
-        </button>
+        <div>
+            <h5>UAP:</h5>
+            <select class="form-control" id="idUAP" name="idUAP" [(ngModel)]="newIdUAP">
+                <option value="0" selected disabled>--Affecter un UAP à ce centre de charge--</option>
+                <option *ngFor="let uap of uaps" [value]="uap.idUAP">
+                    {{uap.uapName}}
+                </option>
+            </select>
+        </div>
 
-        <div class="alert alert-warning" *ngIf="isCreatedFailed">
-            Création échoue! {{ errorMessage }}
+        <div class="mt-2">
+            <button type="submit" (click)="addCentreCharge()" class="btn btn-info">Ajouter</button>
+            <!--div class="alert alert-warning mt-2" *ngIf="isFailed">
+                Création échoue! {{ errorMessage }}
+            </div-->
         </div>
     </form>
-
     <div class="alert alert-success" *ngIf="isSuccessful">
         Création avec succées!
     </div>

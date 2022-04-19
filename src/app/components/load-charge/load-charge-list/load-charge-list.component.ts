@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LaodCharge } from 'src/app/model/LaodCharge';
+import { centreCharge } from 'src/app/model/centreCharge';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -12,7 +12,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class LoadChargeListComponent implements OnInit {
 
-  loadCharge!: LaodCharge[];
+  centreCharge!: centreCharge[];
   ccname: String = '';
   ccdescription: String = '';
   closeResult = '';
@@ -20,7 +20,7 @@ export class LoadChargeListComponent implements OnInit {
   isSuccessful: boolean = false
   errorMessage!: ''
 
-  constructor(private loadChargeService: CentreChargeService,
+  constructor(private centreChargeService: CentreChargeService,
     private token: TokenStorageService,
     private router: Router,
     private modalService: NgbModal) { }
@@ -31,16 +31,16 @@ export class LoadChargeListComponent implements OnInit {
   }
 
   getListLoadCharge() {
-    this.loadChargeService.getLoadCharge().subscribe(
+    this.centreChargeService.getLoadCharge().subscribe(
       data => {
-        this.loadCharge = data;
+        this.centreCharge = data;
         // console.log(data)
       }
     )
   }
 
   deleteLoadCharge(id: number) {
-    this.loadChargeService.deleteLoadCharge(id).subscribe(
+    this.centreChargeService.deleteLoadCharge(id).subscribe(
       data => {
         //   console.log(data);
         window.location.reload();
@@ -65,7 +65,7 @@ export class LoadChargeListComponent implements OnInit {
 
   Search() {
     if (this.ccname != "" || this.ccdescription != "") {
-      this.loadCharge = this.loadCharge.filter(
+      this.centreCharge = this.centreCharge.filter(
         res => {
           return (
             res.ccdescription.toLocaleLowerCase().match(this.ccdescription.toLocaleLowerCase()) ||

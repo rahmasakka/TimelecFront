@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LaodCharge } from '../model/LaodCharge';
+import { centreCharge } from '../model/centreCharge';
 
 const baseURL = "http://localhost:9003/api/cc/";
 
@@ -12,27 +12,27 @@ export class CentreChargeService {
 
   constructor(private http: HttpClient) { }
 
-  getLoadCharge(): Observable<LaodCharge[]> {
-    return this.http.get<LaodCharge[]>(baseURL + 'all')
+  getLoadCharge(): Observable<centreCharge[]> {
+    return this.http.get<centreCharge[]>(baseURL + 'all')
   }
 
   deleteLoadCharge(id: number): Observable<Object> {
     return this.http.delete(baseURL + 'delete/' + id)
   }
 
-  addNewLoadCharge(loadCharge: LaodCharge): Observable<Object> {
-    return this.http.post(baseURL + 'createCC', loadCharge);
+  addNewLoadCharge(centreCharge: centreCharge): Observable<Object> {
+    return this.http.post(baseURL + 'createCC', centreCharge);
   }
 
-  getLoadChargeById(id: number): Observable<LaodCharge> {
-    return this.http.get<LaodCharge>(baseURL + id);
+  getLoadChargeById(id: number): Observable<centreCharge> {
+    return this.http.get<centreCharge>(baseURL + id);
   }
 
-  updateLoadCharge(id: number, loadCharge: LaodCharge): Observable<Object> {
-    return this.http.put(baseURL + 'update/' + id, loadCharge)
+  updateLoadCharge(id: number, centreCharge: centreCharge): Observable<Object> {
+    return this.http.put(baseURL + 'update/' + id, centreCharge)
   }
 
-  listLoadChargeByUAP(id: number): Observable<LaodCharge[]> {
-    return this.http.get<LaodCharge[]>(baseURL + 'listCCByUAP/' + id)
+  listLoadChargeByUAP(id: number): Observable<centreCharge[]> {
+    return this.http.get<centreCharge[]>(baseURL + 'listCCByUAP/' + id)
   }
 }

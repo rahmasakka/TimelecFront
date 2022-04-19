@@ -1,18 +1,18 @@
 <div class="container card col-lg-6 col-sm-10 mt-4">
-    <h1 class="mt-2 text-info"> Modifier centre de charge </h1>
-    <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
+    <h1 class="mt-2 text-info"> Modification :</h1>
+    <form name="form" (ngSubmit)="onSubmit()" class="pb-3 mt-2">
         <div class="form-group">
             <label class="control-label">
                 <h5>Nom centre de charge:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" name="loadChargeName" [(ngModel)]="loadCharge.ccname" required
+                <input type="text" class="form-control" name="centreChargeName" [(ngModel)]="centreCharge.ccname" required
                     #name="ngModel" minlength="3" maxlength="20">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['minlength']">
                     Nom centre de charge doit contenir au moins 3 charactères
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['maxlength']">
-                    Nom centre de charge doit contenir au plus 20 charactères
+                    Nom centre de charge doit contenir au plus 20 caractères
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <label class="control-label">
                 <h5>Description:</h5>
             </label>
-            <input type="text" class="form-control" name="text" [(ngModel)]="loadCharge.ccdescription" required
+            <input type="text" class="form-control" name="text" [(ngModel)]="centreCharge.ccdescription" required
                 #description="ngModel" minlength="10"/>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && description.errors?.['required']">
                 La description de centre de charge est obligatoire
@@ -37,8 +37,8 @@
             </label>
             <div>
                 <select class="form-control" aria-label="Affecter un UAP à un centre de charge" id="iduap" name="iduap"
-                    [(ngModel)]="loadCharge.uap.idUAP">
-                    <option>--Affecter un UAP à un centre de charge--</option>
+                    [(ngModel)]="centreCharge.uap.idUAP">
+                    <option value="0" selected disabled>--Affecter un UAP à un centre de charge--</option>
                     <option *ngFor="let uap of uaps" [value]="uap.idUAP">
                         {{uap.uapName}}
                     </option>
@@ -51,7 +51,7 @@
         </button>
 
         <div class="alert alert-warning" *ngIf="isFailed">
-            Modification échoué! {{ errorMessage }}
+            Modification échouée! {{ errorMessage }}
         </div>
     </form>
 

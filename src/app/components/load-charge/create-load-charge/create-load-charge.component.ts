@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LaodCharge } from 'src/app/model/LaodCharge';
+import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { UapService } from 'src/app/services/uap.service';
@@ -12,47 +12,48 @@ import { UapService } from 'src/app/services/uap.service';
 })
 export class CreateLoadChargeComponent implements OnInit {
 
-  form : LaodCharge = new LaodCharge
   isSuccessful = false;
-  isCreatedFailed = false;
+  isFailed = false;
   errorMessage = '';
   submitted = false;
-  uaps!:UAP[];
+  newCentreCharge = new centreCharge();
+  uaps!: UAP[];
+  newIdUAP!: number;
+  newUAP!: UAP;
 
-  constructor(private loadChargeService: CentreChargeService, 
-              private router : Router, 
-              private uapService : UapService) { }
+  constructor(private centreChargeService: CentreChargeService,
+    private uapService: UapService,
+    private router: Router) { }
 
-  ngOnInit(): void {
-    this.getListUAP()
-    console.log(this.form)    
-  }
-
-  onSubmit(): void {
-    this.loadChargeService.addNewLoadCharge(this.form).subscribe(
-      data => {
-        this.goToLoadChargeList()
-        console.log(data)
-        this.isCreatedFailed = false;
-        this.isSuccessful = true;
-      },
-      error=>{
-        this.errorMessage = error.error.message
-        this.isCreatedFailed = true
-      }
-    )
-  }
-
-  goToLoadChargeList(){
-    this.router.navigate(['/load-charge-list'])
-  }
-
-  getListUAP(){
+  ngOnInit() {
     this.uapService.getUAPList().subscribe(
-      data=>{
+      data => {
         this.uaps = data
-      //  console.log(data)
       }
     )
+  }
+
+  addCentreCharge() {
+    this.submitted = true
+    this.uapService.getUAPById(this.newIdUAP).subscribe(
+      data => {
+        this.newUAP = data
+      }
+    )
+    //console.log("++++",this.newUAP.uapName)
+    this.newCentreCharge.uap = this.newUAP;
+    //console.log("****",this.newCentreCharge.uap.uapName)
+    this.centreChargeService.addNewLoadCharge(this.newCentreCharge).subscribe(
+      data => {
+        console.log(data)
+        this.isSuccessful = true;
+        this.isFailed = false;
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isFailed = true;
+      }
+    );
+    this.router.navigate(['/load-charge-list'])
   }
 }

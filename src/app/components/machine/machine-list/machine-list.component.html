@@ -33,9 +33,9 @@
             <tr>
                 <th> Nom </th>
                 <th> Description </th>
-                <!--th> Centre de charge </th>
-                <th> UAP </th-->
-                <th> Catégorie </th>
+                <th> Centre de charge </th>
+                <th> UAP </th>
+                <!--th> Catégorie </th-->
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
@@ -43,9 +43,9 @@
             <tr *ngFor="let machine of machines">
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
-                <!--td>{{machine.loadCharge}}</td>
-                <td>{{machine.loadCharge}}</td-->
-                <td>{{machine.machineCategory}}</td>
+                <td>{{machine.centreCharge.ccname}}</td>
+                <td>{{machine.centreCharge.uap.uapName}}</td>
+                <!--td>{{machine.machineCategory}}</td-->
                 <td>
                     <button (click)="updateMachine(machine.idMachine)" class="btn btn-outline-secondary"
                         *ngIf=isAdmin()>

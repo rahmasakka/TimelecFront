@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LaodCharge } from '../model/LaodCharge';
+import { centreCharge } from '../model/centreCharge';
 import { UAP } from '../model/uap';
 
 const baseURL = "http://localhost:9003/api/uap/";
@@ -33,7 +33,7 @@ export class UapService {
     return this.http.put(baseURL + 'update/' + id, uap)
   }
 
-  listCCByUAP(id:number):Observable<LaodCharge>{
-    return this.http.get<LaodCharge>(baseURL+'listCCByUAP/' + id)
+  listCCByUAP(id:number):Observable<centreCharge>{
+    return this.http.get<centreCharge>(baseURL+'listCCByUAP/' + id)
   }
 }

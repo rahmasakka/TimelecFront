@@ -32,7 +32,7 @@ export class MachineListComponent implements OnInit {
     this.machineService.getListMachine().subscribe(
       data => {
         this.machines = data;
-        console.log(data);
+       // console.log(data);
       }
     )
   }

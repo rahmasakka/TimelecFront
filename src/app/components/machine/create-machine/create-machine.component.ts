@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LaodCharge } from 'src/app/model/LaodCharge';
+import { centreCharge } from 'src/app/model/centreCharge';
+import { machine } from 'src/app/model/machine';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { MachineService } from 'src/app/services/machine.service';
 
@@ -10,47 +10,46 @@ import { MachineService } from 'src/app/services/machine.service';
   styleUrls: ['./create-machine.component.css']
 })
 export class CreateMachineComponent implements OnInit {
-  form: any = {};
+
   isSuccessful = false;
-  isSignUpFailed = false;
+  isFailed = false;
   errorMessage = '';
   submitted = false;
-
-  loadCharges!: LaodCharge[];
+  newMachine = new machine()
+  newIdCC!: number;
+  newCC!: centreCharge;
+  CCs!: centreCharge[]
 
   constructor(private machineService: MachineService,
-    private router: Router,
-    private loadChargeService: CentreChargeService) { }
+    private centreChargeService: CentreChargeService) { }
 
   ngOnInit(): void {
-    this.getListLoadCharge()
-    console.log(this.form)
+    this.centreChargeService.getLoadCharge().subscribe(
+      data => {
+        this.CCs = data
+      }
+    )
   }
 
-  onSubmit(): void {
-    this.submitted = true;
-    this.machineService.createMachine(this.form).subscribe(
+  addMachine() {
+    this.submitted = true
+    this.centreChargeService.getLoadChargeById(this.newIdCC).subscribe(
       data => {
-        this.goToMachineList()
+        this.newCC = data
+      }
+    )
+
+    this.newMachine.centreCharge = this.newCC;
+    this.machineService.createMachine(this.newMachine).subscribe(
+      data => {
+        console.log(data)
         this.isSuccessful = true;
-        this.isSignUpFailed = false;
       },
       err => {
         this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
+        this.isFailed = true;
       }
     );
-  }
-
-  goToMachineList() {
-    this.router.navigate(['/machine-list']);
-  }
-
-  getListLoadCharge() {
-    this.loadChargeService.getLoadCharge().subscribe(
-      data => {
-        this.loadCharges = data
-      }
-    )
+    //window.location.reload();
   }
 }

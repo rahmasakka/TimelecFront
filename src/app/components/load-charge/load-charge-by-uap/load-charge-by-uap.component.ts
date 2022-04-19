@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LaodCharge } from 'src/app/model/LaodCharge';
+import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -14,10 +14,10 @@ import { UapService } from 'src/app/services/uap.service';
 })
 export class LoadChargeByUapComponent implements OnInit {
   id!: number;  
-  loadCharge! : LaodCharge[];
+  centreCharge! : centreCharge[];
   ccname: String = '';
   ccdescription : String='';
-  loadChargeID!: LaodCharge;
+  loadChargeID!: centreCharge;
   uap!: UAP
   closeResult=''
   isDeletedFailed: boolean = false
@@ -25,7 +25,7 @@ export class LoadChargeByUapComponent implements OnInit {
   errorMessage!: ''
 
 
-  constructor(private loadChargeService: CentreChargeService,
+  constructor(private centreChargeService: CentreChargeService,
     private uapService : UapService,
     private token: TokenStorageService,
     private router: Router,
@@ -48,9 +48,9 @@ export class LoadChargeByUapComponent implements OnInit {
 
 
   getListLoadCharge(id: number){
-    this.loadChargeService.listLoadChargeByUAP(id).subscribe(
+    this.centreChargeService.listLoadChargeByUAP(id).subscribe(
       data => {
-        this.loadCharge = data
+        this.centreCharge = data
        // console.log(data)
       }
     )
@@ -58,7 +58,7 @@ export class LoadChargeByUapComponent implements OnInit {
 
   
   deleteLoadCharge(id: number) {
-    this.loadChargeService.deleteLoadCharge(id).subscribe(
+    this.centreChargeService.deleteLoadCharge(id).subscribe(
       data => {
         //   console.log(data);
         window.location.reload();
@@ -83,7 +83,7 @@ export class LoadChargeByUapComponent implements OnInit {
 
   Search() {
     if (this.ccname != "" || this.ccdescription != "") {
-      this.loadCharge = this.loadCharge.filter(
+      this.centreCharge = this.centreCharge.filter(
         res => {
           return (
             res.ccdescription.toLocaleLowerCase().match(this.ccdescription.toLocaleLowerCase()) ||

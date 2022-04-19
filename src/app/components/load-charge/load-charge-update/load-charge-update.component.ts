@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LaodCharge } from 'src/app/model/LaodCharge';
+import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { UapService } from 'src/app/services/uap.service';
@@ -13,7 +13,8 @@ import { UapService } from 'src/app/services/uap.service';
 export class LoadChargeUpdateComponent implements OnInit {
   id!: number;
   uaps!: UAP[];
-  loadCharge: LaodCharge = new LaodCharge();
+  centreCharge: centreCharge = new centreCharge();
+  
   isFailed = false;
   submitted = false;
   isSuccessful = false;
@@ -22,30 +23,40 @@ export class LoadChargeUpdateComponent implements OnInit {
   constructor(private uapService: UapService,
     private router: Router,
     private route: ActivatedRoute,
-    private loadChargeService: CentreChargeService
+    private centreChargeService: CentreChargeService
   ) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
-    this.loadChargeService.getLoadChargeById(this.id).subscribe(
+    this.centreChargeService.getLoadChargeById(this.id).subscribe(
       data => {
-        this.loadCharge = data;
+        this.centreCharge = data;
       },
       error => console.log(error)
     )
-    this.getListUAP();
+    this.ListUAP();
+  } 
+  
+  
+  ListUAP() {
+    this.uapService.getUAPList().subscribe(
+      data => {
+        this.uaps = data
+      }
+    )
   }
 
+
   onSubmit() {
-    this.loadChargeService.updateLoadCharge(this.id, this.loadCharge).subscribe(
+    this.centreChargeService.updateLoadCharge(this.id, this.centreCharge).subscribe(
       data => {
         this.goToLoadChargeList()
         console.log(data)
         this.isSuccessful = true
         this.submitted = true
       },
-      error => {
-        this.errorMessage = error.errorMessage
+      err => {
+        this.errorMessage = err.error.errorMessage
         this.isFailed = true
       }
     )
@@ -53,13 +64,5 @@ export class LoadChargeUpdateComponent implements OnInit {
 
   goToLoadChargeList() {
     this.router.navigate(['/load-charge-list'])
-  }
-
-  getListUAP() {
-    this.uapService.getUAPList().subscribe(
-      data => {
-        this.uaps = data
-      }
-    )
   }
 }

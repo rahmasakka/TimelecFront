@@ -36,7 +36,6 @@ export class UapListComponent implements OnInit {
     this.uapService.getUAPList().subscribe(
       data => {
         this.uaps = data;
-      //  console.log(this.uaps);
       }
     )
   }
@@ -44,7 +43,6 @@ export class UapListComponent implements OnInit {
   deleteUAP(id: number) {
     this.uapService.deleteUAP(id).subscribe(
       data => {
-        //   console.log(data);
         window.location.reload();
         this.isDeletedFailed = false;
         this.isSuccessful = true;

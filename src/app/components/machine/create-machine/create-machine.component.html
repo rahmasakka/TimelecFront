@@ -1,79 +1,79 @@
 <div class="container">
-    <form name="form" (ngSubmit)=" onSubmit()">
+    <form>
         <div class="form-group">
             <label class="control-label">
                 <h5>Nom machine:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" placeholder="Nom de la machine" name="machineName"
-                    [(ngModel)]="form.machineName" required #machineName="ngModel" minlength="3" maxlength="20">
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.invalid">
-                    Le nom de la machine est obligatoire
+                <input type="text" class="form-control" placeholder="Nom de la machine" name="ccname"
+                    [(ngModel)]="newMachine.machineName" #machineName="ngModel" required minlength="3" maxlength="20">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['required']">
+                    Le nom de la machine est obligatoire.
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['minlength']">
-                    Le nom de la machine doit contenir au moins 3 charactères
+                    Le nom de la machine doit contenir au moins 3 caractères.
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['maxlength']">
-                    Le nom de la machine doit contenir au plus 20 charactères
+                    Le nom de la machine doit contenir au plus 20 caractères.
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label">
-                <h5>Description:</h5>
-            </label>
-            <textarea type="text" class="form-control" name="description" [(ngModel)]="form.machineDescription" required
-                placeholder="Description de la machine" #machineDescription="ngModel"></textarea>
-            <div class="alert alert-danger" role="alert" *ngIf="submitted && machineDescription.errors?.['required']">
-                La description de la machine est obligatoire
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">
-                <h5>Catégorie:</h5>
-            </label>
-            <div class="container">
-                <div class="row">
-                    <div class="col-2"></div>
-                    <div class="form-check col-4 col-sm-4">
-                        <input class="form-check-input" type="radio" name="Testeur" value="Testeur" [(ngModel)]="form.machineCategory">
-                        <label class="form-check-label"> Testeur </label>
-                    </div>
-
-                    <div class="form-check col-4 col-sm-4">
-                        <input class="form-check-input" type="radio" name="Gabarie" value="Gabarie" [(ngModel)]="form.machineCategory">
-                        <label class="form-check-label"> Gabarie</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">
-                <h5>Centre de charge:</h5>
+                <h5>Description de la machine:</h5>
             </label>
             <div>
-                <select class="form-control" aria-label="Affecter la machine à un centre de charge" id="loadCharges" name="loadCharge" 
-                [(ngModel)]="form.loadCharge" >
-                    <option> -- Affecter la machine à un centre de charge --</option>
-                    <option *ngFor="let loadCharge of loadCharges" [value]="loadCharge.idCC">
-                        {{loadCharge.ccname}}
-                    </option>
-                </select>
+                <textarea type="text" class="form-control" placeholder="Description de la machine"
+                    name="machineDescription" [(ngModel)]="newMachine.machineDescription" required
+                    #machineDescription="ngModel" minlength="10"></textarea>
+                <div class="alert alert-danger" role="alert"
+                    *ngIf="submitted && machineDescription.errors?.['required']">
+                    La description de la machine est obligatoire.
+                </div>
+                <div class="alert alert-danger" role="alert"
+                    *ngIf="submitted && machineDescription.errors?.['minlength']">
+                    La description de la machine doit contenir au moins 10 caractères.
+                </div>
             </div>
         </div>
 
-        <button class="btn bg-info text-white">
-            <span> Créer </span>
-        </button>
-        <div class="alert alert-warning mt-2" *ngIf="isSignUpFailed">
-            Création échoue! {{ errorMessage }}
+        <!--div>
+            <label class="control-label">
+                <h5>Categorie</h5>
+            </label>
+            <div class="col-10">
+                <div class="form-check form-check-inline">
+                    <input mdbRadio class="form-check-input" type="radio" name="machineCategory" id="machineCategory"
+                        [value]="newMachine.machineCategory" [(ngModel)]="newMachine.machineCategory" />
+                    <label class="form-check-label" for="inlineRadio1">Testeur</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input mdbRadio class="form-check-input" type="radio" name="machineCategory" id="machineCategory"
+                        [value]="newMachine.machineCategory" [(ngModel)]="newMachine.machineCategory" />
+                    <label class="form-check-label" for="inlineRadio2">Gabarie</label>
+                </div>
+            </div>
+        </div-->
+
+        <div>
+            <h5>Centre de charge</h5>
+            <select class="form-control" id="idCC" name="idCC" [(ngModel)]="newIdCC" required>
+                <option value="0" selected disabled>--Affecter un centre de charge à cette machine--</option>
+                <option *ngFor="let CC of CCs" [value]="CC.idCC">
+                    {{CC.ccname}}
+                </option>
+            </select>
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" (click)="addMachine()" class="btn btn-info">Ajouter</button>
+            <!--div class="alert alert-warning mt-2" *ngIf="isFailed">
+                Création échoue! {{ errorMessage }}
+            </div-->
         </div>
     </form>
-
     <div class="alert alert-success" *ngIf="isSuccessful">
-        Création avec succées
+        Création avec succées!
     </div>
 </div>

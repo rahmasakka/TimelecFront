@@ -19,9 +19,12 @@ import { UapComponent } from './components/uap/uap/uap.component';
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   { path: 'uap', component: UapComponent},
+
+  { path: 'test', component: TestComponent},
 
 
   { path: 'machine-list', component: MachineListComponent},

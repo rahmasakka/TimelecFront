@@ -25,7 +25,7 @@ export class LoadChargeDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private token: TokenStorageService,
-    private loadChargeService: CentreChargeService,
+    private centreChargeService: CentreChargeService,
     private machineService: MachineService,
     private router: Router,
     private modalService: NgbModal) { }
@@ -34,7 +34,7 @@ export class LoadChargeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
-    this.loadChargeService.getLoadChargeById(this.id).subscribe(
+    this.centreChargeService.getLoadChargeById(this.id).subscribe(
       data => {
         this.loadCharge = data
       }

@@ -1,21 +1,21 @@
-<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
-    <h1 class="pt-2 text-info">Modification: {{machine.machineName}}</h1>
-
+<div class="container card col-lg-6 col-sm-10 mt-4">
+    <h1 class="mt-2 text-info">Modification:</h1>
+    <!-- {{machine.machineName}}-->
     <form name="form" (ngSubmit)=" onSubmit()" class="mt-2 pb-3">
         <div class="form-group">
             <label class="control-label">
                 <h5>Nom machine:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" placeholder="Nom de la machine" name="machineName"
-                    [(ngModel)]="machine.machineName" required #machineName="ngModel" minlength="3" maxlength="20">
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.invalid">
+                <input type="text" class="form-control" placeholder="Nom de la machine" name="name" id="name"
+                    [(ngModel)]="machine.machineName" required #name="ngModel" minlength="3" maxlength="20">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['required']">
                     Le nom de la machine est obligatoire.
                 </div>
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['minlength']">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['minlength']">
                     Le nom de la machine doit contenir au moins 3 caractères.
                 </div>
-                <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['maxlength']">
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['maxlength']">
                     Le nom de la machine doit contenir au plus 20 caractères.
                 </div>
             </div>
@@ -26,13 +26,14 @@
                 <h5>Description:</h5>
             </label>
             <textarea type="text" class="form-control" name="description" [(ngModel)]="machine.machineDescription"
-                required placeholder="Description de la machine" #machineDescription="ngModel"></textarea>
+                required placeholder="Description de la machine" #machineDescription="ngModel"
+                id="description"></textarea>
             <div class="alert alert-danger" role="alert" *ngIf="submitted && machineDescription.errors?.['required']">
-                La description de la machine est obligatoire
+                La description de la machine est obligatoire.
             </div>
         </div>
 
-        <div class="form-group">
+        <!--div class="form-group">
             <label class="control-label">
                 <h5>Catégorie:</h5>
             </label>
@@ -49,33 +50,33 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
 
         <div class="form-group">
             <label class="control-label">
                 <h5> Centre de charge </h5>
             </label>
             <div>
-                <select class="form-control" aria-label="Affecter la machine à un centre de charge"
-                    [(ngModel)]="machine.loadCharge" id="loadCharges" name="loadCharge">
-                    <option> -- Affecter la machine à un centre de charge --</option>
-                    <option *ngFor="let loadCharge of listLoadCharge" [value]="loadCharge.idCC">
-                        {{loadCharge.ccname}}
+                <select class="form-control" aria-label="Affecter un centre de charge à une machine" id="idCC" name="idCC"
+                [(ngModel)]="machine.centreCharge.idCC">
+                    <option *ngFor="let centreCharge of listCentreCharge" [value]="centreCharge.idCC">
+                        {{centreCharge.ccname}}
                     </option>
                 </select>
             </div>
         </div>
 
+
         <button class="btn bg-info text-white">
             <span> Modifier </span>
         </button>
         <br />
-        <div class="alert alert-warning" *ngIf="isSignUpFailed">
-            Création échouée! {{ errorMessage }}
+        <div class="alert alert-warning" *ngIf="isFailed">
+            Modification échouée! {{ errorMessage }}
         </div>
     </form>
 
     <div class="alert alert-success" *ngIf="isSuccessful">
-        Création avec succées!
+        Modification avec succées!
     </div>
 </div>
