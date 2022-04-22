@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
 
   uaps!: UAP[]
   uapName = "test"
-  constructor(private uapService : UapService) { }
+  constructor(private uapService: UapService) { }
 
   ngOnInit(): void {
     this.uapService.getUAPList().subscribe(

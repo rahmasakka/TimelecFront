@@ -34,6 +34,7 @@
                 <th> Nom </th>
                 <th> Description </th>
                 <th> Centre de charge </th>
+                <th> Réference </th>
                 <th> UAP </th>
                 <!--th> Catégorie </th-->
                 <th *ngIf=isAdmin()> Actions </th>
@@ -44,6 +45,7 @@
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
                 <td>{{machine.centreCharge.ccname}}</td>
+                <td>{{machine.reference}}</td>
                 <td>{{machine.centreCharge.uap.uapName}}</td>
                 <!--td>{{machine.machineCategory}}</td-->
                 <td>

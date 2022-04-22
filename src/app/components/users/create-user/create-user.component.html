@@ -5,7 +5,7 @@
                 <h5>Username:</h5>
             </label>
             <div>
-                <input type="text" class="form-control" placeholder="Ton username" name="username"
+                <input type="text" class="form-control" placeholder="Ton username" name="username" id="username"
                     [(ngModel)]="form.username" required #username="ngModel" minlength="3">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.invalid">
                      L'username est obligatoire
@@ -20,7 +20,7 @@
             <label class="control-label">
                 <h5>Email:</h5>
             </label>
-            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required
+            <input type="email" class="form-control" name="email" id="email" [(ngModel)]="form.email" required
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="nom@gmail.com" #email="ngModel" />
             <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['required']">
                 L'adresse mail est obligatoire
@@ -54,7 +54,7 @@
             </label>
             <div>
                 <select class="form-control" aria-label="Role" [(ngModel)]="form.roles">
-                    <option *ngFor="let role of roles" id="role" name="roles"> {{role.name}}
+                    <option *ngFor="let role of roles" id="role" name="roles" [value]="role.id"> {{role.name}}
                     </option>
                 </select>
             </div>

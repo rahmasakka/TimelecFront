@@ -25,17 +25,18 @@ export class CreateUserComponent implements OnInit {
   ngOnInit(): void {
     this.getRoles()
   }
- 
+
 
   onSubmit(): void {
-   this.submitted= true;
-
-   console.log(this.form)
+    this.submitted = true;
+    console.log(this.form)
     this.authService.register(this.form).subscribe(
       data => {
         this.goToUserList()
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        console.log(data)
+
       },
       err => {
         this.errorMessage = err.error.message;
@@ -46,7 +47,7 @@ export class CreateUserComponent implements OnInit {
   }
 
 
-  
+
   goToUserList() {
     this.router.navigate(['/list-users']);
   }

@@ -32,6 +32,8 @@ export class UpdateMachineComponent implements OnInit {
     this.machineService.getMachineById(this.id).subscribe(
       data => {
         this.machine = data
+        console.log(data)
+        console.log(this.machine.centreCharge.idCC)
       },
       error => console.log(error)
     )
@@ -50,17 +52,20 @@ export class UpdateMachineComponent implements OnInit {
 
   onSubmit() {
     this.machineService.updateMachine(this.id, this.machine).subscribe(
-      data => {
-        this.goToMachineList()
-        console.log("**"+ this.machine.centreCharge.ccname)
-        this.isSuccessful = true;
-        this.submitted = true;
+      () => {
+        //this.goToLoadChargeList()
+        this.isSuccessful = true
+        this.submitted = true
+        console.log(this.machine)
+
+        this.router.navigate(['/machine-list'])
+
       },
       err => {
-        this.errorMessage = err.error.message;
-        this.isFailed = true;
+        this.errorMessage = err.error.errorMessage
+        this.isFailed = true
       }
-    );
+    )
   }
   goToMachineList() {
     this.router.navigate(['/machine-list'])

@@ -1,5 +1,6 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
-    <h2 class="pt-3 text-info"> {{loadCharge.ccname}}</h2>
+    <!--h2 class="pt-3 text-info"> {{loadCharge.ccname}}</h2>
+    <h5 class="mx-auto">Machine réference: <b>{{machineReference.machineName}}</b></h5-->
 
     <div class="input-group mt-3 mb-3">
         <button class="btn col-lg-4 col-md-4 col-sm-12 btn btn-outline-info" (click)="open(content)" *ngIf=isAdmin()>
@@ -19,7 +20,7 @@
             </ng-template>
         </button>
         <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
-            placeholder="Search a machine..." [(ngModel)]="machineName" [(ngModel)]="machineDescription"
+            placeholder="Chercher une machine..." [(ngModel)]="machineName" [(ngModel)]="machineDescription"
             (input)="Search()">
         <span class="input-group-append">
             <button class="btn btn-outline-secondary" type="button">
@@ -27,12 +28,16 @@
             </button>
         </span>
     </div>
+    <!--ngb-alert *ngIf="!isExistMachine" class="mt-3 mb-0 w-75 mx-auto" type="info">
+        Il n'y a aucune machine affectée à ce centre de charge.
+    </ngb-alert-->
     <table class="table table-striped">
         <thead>
             <tr>
                 <th> Name </th>
                 <th> Description </th>
                 <th> Centre de Charge </th>
+                <th> Réference </th>
                 <!--th> Category </th-->
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
@@ -42,11 +47,20 @@
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
                 <td>{{loadCharge.ccname}}</td>
+                <td>
+                    <!--div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="{{machine.idMachine}}" checked>
+                        <label class="custom-control-label" for="{{machine.idMachine}}"></label>
+                    </div-->
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="machineReference" id="machineReference"
+                            [value]="machineReference" [(ngModel)]="machineReference">
+                    </div>
+
+                </td>
                 <!--td>{{machine.machineCategory}}</td-->
                 <td>
-                    <!-- (click)="machineByLoadCharge(machine.idMachine)" class="btn btn-outline-info">
-                        <i class="fa fa-file" aria-hidden="true"></i>
-                    </button-->
                     <button (click)="updateMachine(machine.idMachine)" class="btn btn-outline-secondary"
                         *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>

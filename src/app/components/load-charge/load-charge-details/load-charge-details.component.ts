@@ -18,10 +18,14 @@ export class LoadChargeDetailsComponent implements OnInit {
   machineDescription!: String
   machineName!: String
   loadCharge: any
+
   closeResult: String = ''
   isDeletedFailed: boolean = false
   isSuccessful: boolean = false
   errorMessage: string = ''
+
+  machineReference!: machine
+  isExistMachine: boolean = true
 
   constructor(private route: ActivatedRoute,
     private token: TokenStorageService,
@@ -40,21 +44,24 @@ export class LoadChargeDetailsComponent implements OnInit {
       }
     )
     this.getListOfMachine(this.id)
+    this.machineReferencedToCentreCharge(this.id)
   }
 
   getListOfMachine(id: number) {
-    this.machineService.listMachineByLoadCharge(this.id).subscribe(
+    this.machineService.listMachineByLoadCharge(id).subscribe(
       data => {
         this.machines = data
-        // console.log(data)
+        //console.log(data)
       }
     )
+    if (this.machines == []) {
+      this.isExistMachine = false
+    }
   }
 
   deletemachine(id: number) {
     this.machineService.deleteMachine(id).subscribe(
-      data => {
-        //   console.log(data);
+      () => {
         window.location.reload();
         this.isDeletedFailed = false;
         this.isSuccessful = true;
@@ -65,6 +72,7 @@ export class LoadChargeDetailsComponent implements OnInit {
       }
     )
   }
+
   Search() {
     if (this.machineDescription != "" || this.machineName != "") {
       this.machines = this.machines.filter(
@@ -88,6 +96,16 @@ export class LoadChargeDetailsComponent implements OnInit {
     this.router.navigate(['', id])
   }
 
+  machineReferencedToCentreCharge(idCentreCharge: number) {
+    this.machineService.machineReferencedToCentreCharge(idCentreCharge).subscribe(
+      data => {
+        this.machineReference = data
+      }
+    )
+  }
+
+
+  //modal 
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

@@ -36,4 +36,8 @@ export class MachineService {
   listMachineByLoadCharge(id: number): Observable<machine[]>{
     return this.http.get<machine[]>(baseURL+'listMachineByCC/'+ id)
   } 
+
+  machineReferencedToCentreCharge(idCentreCharge: number):Observable<machine>{
+    return this.http.get<machine>(baseURL+'referenced/'+idCentreCharge)
+  }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { centreCharge } from '../model/centreCharge';
-import { machine } from '../model/machine';
-import { UAP } from '../model/uap';
-import { CentreChargeService } from '../services/centre-charge.service';
-import { MachineService } from '../services/machine.service';
-import { UapService } from '../services/uap.service';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { benche } from '../model/benche';
+import { summary } from '../model/summary';
+import { BencheService } from '../services/benche.service';
+import { EtlService } from '../services/etl.service';
+import { ProductionService } from '../services/production.service';
 
 @Component({
   selector: 'app-test',
@@ -12,52 +12,162 @@ import { UapService } from '../services/uap.service';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
+  modelDebut!: NgbDateStruct;
+  modelFin!: NgbDateStruct;
+  listSummaries!: summary[]
+  testerId!: number
 
-  idUAP!: number
-  idCC!: number
+  msg!: string
+  datedeb!: string
+  datefin!: string
 
-  uaps!: UAP[]
-  machines!: machine[]
-  centreCharges !: centreCharge[]
-  selectedUAP!: UAP
+  isEmpty: boolean = false
+  isError: boolean = false
+  isClicked: boolean = false
 
-  constructor(private centreChargeService: CentreChargeService,
-    private uapService: UapService,
-    private machineService: MachineService) { }
+  listTesterID !: benche[]
+  nbSecond !: number
 
+  nbMinute = 3
+
+  constructor(private productionService: ProductionService,
+    private benchService: BencheService,
+    private etlService: EtlService) { }
 
   ngOnInit() {
-    this.showAll();
-    this.onSelect(this.selectedUAP.idUAP)
-  }
-
-  showAll() {
-    this.uapService.getUAPList().subscribe(
+    this.benchService.getListBench().subscribe(
       data => {
-        this.uaps = data
-        //console.log(this.uaps)
+        this.listTesterID = data
       }
     )
   }
 
-  /*
-  onSelect(uap_id : any){
-    this.centreChargeService.listLoadChargeByUAP(uap_id).subscribe(
-      (res : any) => {
-        this.centreCharges = res.filter(
-          (res:any) => res.uap_id == uap_id!.value
-        ),
-        console.log(this.centreCharges);
+  function() {
+    this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
+
+    if ((this.testerId != null) && (this.datefin != null)) {
+      this.datefin = this.modelFin.year.toString() + '-' + this.modelFin.month.toString() + '-' + this.modelFin.day.toString()
+      if (this.datedeb > this.datefin) {
+        this.isError = true
+        return
+      }
+      this.getListSummaryBetweenTwoDaysByTesterId(this.datedeb, this.datefin, this.testerId)
+      return
+    }
+
+    if ((this.testerId == null) && (this.datefin != null)) {
+      this.datefin = this.modelFin.year.toString() + '-' + this.modelFin.month.toString() + '-' + this.modelFin.day.toString()
+      if (this.datedeb > this.datefin) {
+        this.isError = true
+        return
+      }
+      this.getListSummariesBetweenDebFin(this.datedeb, this.datefin)
+      return
+    }
+
+    if ((this.testerId != null) && (this.datefin == null)) {
+      this.getListSummaryByTesterId(this.datedeb, this.testerId)
+      return
+    }
+
+    if ((this.testerId == null) && (this.datefin == null)) {
+      this.getListSummaryByDate(this.datedeb)
+    }
+    /*
+    if((this.datefin == null) && (this.datedeb == null)){
+      this.getTesterId(this.testerId)
+    }
+    */
+  }
+
+  /* 
+  function() {
+  this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
+
+  if (this.datefin != null) {
+    this.datefin = this.modelFin.year.toString() + '-' + this.modelFin.month.toString() + '-' + this.modelFin.day.toString()
+    if (this.datedeb >= this.datefin) {
+      this.isError = true
+    }
+    if (this.testerId != null) {
+      this.getListSummaryBetweenTwoDaysByTesterId(this.datedeb, this.datefin, this.testerId)
+    } else {
+      this.getListSummariesBetweenDebFin(this.datedeb, this.datefin)
+    }
+  } else {
+    if (this.testerId != null) {
+      this.getListSummaryByTesterId(this.datedeb, this.testerId)
+    } else {
+      this.getListSummaryByDate(this.datedeb)
+    }
+  }
+  this.getNbSecond(this.datedeb, this.testerId, this.nbMinute)
+}
+*/
+
+
+  getListSummaryByDate(date: string) {
+    this.productionService.getSummaryByDate(date).subscribe(
+      data => {
+        this.listSummaries = data
+        console.log(this.listSummaries)
+        if (this.listSummaries == null) {
+          this.isEmpty = true
+        }
       }
     )
-  }*/
+  }
 
-  onSelect(uap_id: any) {
-    this.centreChargeService.listLoadChargeByUAP(uap_id).subscribe(
+  getListSummaryByTesterId(datedeb: string, testerId: number) {
+    this.productionService.getListSummaryByTesterId(datedeb, testerId).subscribe(
       data => {
-        this.centreCharges = data
-        console.log("*****", this.centreCharges)
+        this.listSummaries = data
+        console.log(this.listSummaries)
+        if (this.listSummaries == null) {
+          this.isEmpty = true
+        }
       }
+    )
+  }
+
+  getListSummariesBetweenDebFin(datedeb: string, datefin: string) {
+    this.productionService.getSummariesBetweenTwoDays(datedeb, datefin).subscribe(
+      data => {
+        this.listSummaries = data
+        console.log(this.listSummaries)
+        if (this.listSummaries == null) {
+          this.isEmpty = true
+        }
+      }
+    )
+  }
+
+  getListSummaryBetweenTwoDaysByTesterId(datedeb: string, datefin: string, testerId: number) {
+    this.productionService.getSummariesBetweenTwoDaysByTesterId(datedeb, datefin, testerId).subscribe(
+      data => {
+        this.listSummaries = data
+        console.log(this.listSummaries)
+        if (this.listSummaries == null) {
+          this.isEmpty = true
+        }
+      }
+    )
+  }
+
+
+  getNbSecond(maDate: string, testerId: number, nbMinute: number) {
+    this.etlService.calculNbSecond(maDate, testerId, nbMinute).subscribe(
+      data => {
+        this.nbSecond = data
+        this.isClicked = true
+        console.log(this.nbSecond)
+      }
+    )
+  }
+
+  getTesterId(testerId: number) {
+    this.productionService.getTesterId(testerId).subscribe(
+      data => { this.listSummaries = data }
     )
   }
 }
