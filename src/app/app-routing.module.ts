@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfilComponent } from './components/auth/profil/profil.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
+import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
 import { HomeComponent } from './components/home/home.component';
 import { CreateLoadChargeComponent } from './components/load-charge/create-load-charge/create-load-charge.component';
 import { LoadChargeByUapComponent } from './components/load-charge/load-charge-by-uap/load-charge-by-uap.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'uap', component: UapComponent},
 
   { path: 'test', component: TestComponent},
+  { path: 'dashboard', component: DashboardComponent},
 
 
   { path: 'machine-list', component: MachineListComponent},

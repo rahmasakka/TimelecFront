@@ -31,6 +31,7 @@ import { TestComponent } from './test/test.component';
 import { UapComponent } from './components/uap/uap/uap.component';
 import { CentreChargeComponent } from './components/load-charge/centre-charge/centre-charge.component';
 import { MachineComponent } from './components/machine/machine/machine.component';
+import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
 
 @NgModule({    
   declarations: [
@@ -59,6 +60,7 @@ import { MachineComponent } from './components/machine/machine/machine.component
     UapComponent,
     CentreChargeComponent,
     MachineComponent,
+    DashboardComponent,
    ],
    
   imports: [

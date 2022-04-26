@@ -12,7 +12,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./load-charge-details.component.css']
 })
 export class LoadChargeDetailsComponent implements OnInit {
-
+  name = ""
   id!: number;
   machines!: machine[]
   machineDescription!: String
@@ -102,6 +102,31 @@ export class LoadChargeDetailsComponent implements OnInit {
         this.machineReference = data
       }
     )
+  }
+
+
+  updateReferenceMachine(id: number) {
+    for (let i = 0; i < this.machines.length; i++) {
+      console.log(this.machines[i].idMachine + "==>" + this.machines[i].reference)
+      if (this.machines[i].reference == true) {
+        this.machineService.updateReferenceMachineFalse(this.machines[i].idMachine).subscribe(
+          () => {
+            console.log(this.machines[i].idMachine + "==>" + this.machines[i].reference)
+          }
+        )
+      }
+      // console.log(this.machines[i].idMachine)
+
+    }
+
+    /*
+    this.machineService.updateReferenceMachine(id).subscribe(
+      () => {
+        console.log(this.machineReference)
+      }
+    )*/
+
+
   }
 
 

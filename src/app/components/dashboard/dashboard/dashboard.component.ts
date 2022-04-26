@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { machine } from '../model/machine';
-import { summary } from '../model/summary';
-import { EtlService } from '../services/etl.service';
-import { MachineService } from '../services/machine.service';
-import { ProductionService } from '../services/production.service';
+import { machine } from 'src/app/model/machine';
+import { summary } from 'src/app/model/summary';
+import { EtlService } from 'src/app/services/etl.service';
+import { MachineService } from 'src/app/services/machine.service';
+import { ProductionService } from 'src/app/services/production.service';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class TestComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   modelDebut!: NgbDateStruct;
   modelFin!: NgbDateStruct;
   listSummaries!: summary[]
