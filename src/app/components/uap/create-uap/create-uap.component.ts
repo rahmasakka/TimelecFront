@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { UapService } from 'src/app/services/uap.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class CreateUapComponent implements OnInit {
   errorMessage = '';
   submitted = false;
 
-  constructor(private uapservice: UapService, private router: Router) { }
+  constructor(private crudService: CrudGlobaleService, private router: Router) { }
 
   ngOnInit(): void {} 
 
@@ -23,7 +24,7 @@ export class CreateUapComponent implements OnInit {
    this.submitted= true;
 
    console.log(this.form)
-    this.uapservice.addNewUAP(this.form).subscribe(
+    this.crudService.createNewEntity("uap",this.form).subscribe(
       data => {
         this.goToUAPList()
         this.isSuccessful = true;

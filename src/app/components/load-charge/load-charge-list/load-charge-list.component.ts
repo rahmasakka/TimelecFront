@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./load-charge-list.component.css']
 })
 export class LoadChargeListComponent implements OnInit {
-
+  url: string = "cc";
   centreCharge!: centreCharge[];
   ccname: String = '';
   ccdescription: String = '';
@@ -21,6 +22,7 @@ export class LoadChargeListComponent implements OnInit {
   errorMessage!: ''
 
   constructor(private centreChargeService: CentreChargeService,
+    private crudService : CrudGlobaleService, 
     private token: TokenStorageService,
     private router: Router,
     private modalService: NgbModal) { }
@@ -31,7 +33,7 @@ export class LoadChargeListComponent implements OnInit {
   }
 
   getListLoadCharge() {
-    this.centreChargeService.getLoadCharge().subscribe(
+    this.crudService.getListEntity(this.url).subscribe(
       data => {
         this.centreCharge = data;
         // console.log(data)
@@ -40,7 +42,7 @@ export class LoadChargeListComponent implements OnInit {
   }
 
   deleteLoadCharge(id: number) {
-    this.centreChargeService.deleteLoadCharge(id).subscribe(
+    this.crudService.deleteEntity('cc', id).subscribe(
       data => {
         //   console.log(data);
         window.location.reload();

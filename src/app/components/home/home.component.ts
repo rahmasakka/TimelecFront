@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UAP } from 'src/app/model/uap';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { UapService } from 'src/app/services/uap.service';
 
 @Component({
@@ -11,10 +12,10 @@ export class HomeComponent implements OnInit {
 
   uaps!: UAP[]
   uapName = "test"
-  constructor(private uapService: UapService) { }
+  constructor(private crudService : CrudGlobaleService) { }
 
   ngOnInit(): void {
-    this.uapService.getUAPList().subscribe(
+    this.crudService.getListEntity("uap").subscribe(
       data => {
         this.uaps = data;
       }

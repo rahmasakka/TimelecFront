@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { machine } from 'src/app/model/machine';
@@ -15,7 +16,9 @@ export class DashboardComponent implements OnInit {
   modelDebut!: NgbDateStruct;
   modelFin!: NgbDateStruct;
   listSummaries!: summary[]
+  listSummaries1!: object[]
   testerId!: number
+  databaseId: string = ''
 
   msg!: string
   datedeb!: string
@@ -27,8 +30,15 @@ export class DashboardComponent implements OnInit {
 
   listTesterID !: machine[]
   nbSecond !: number
-
   nbMinute = 3
+
+  pageNumber: number = 0;
+  pageSize: number = 100;
+  numElement: number = 4;
+  nb_seconde!: number
+  nb_minute: number = 0
+  nb_heure: number = 0
+  time !: String
 
   constructor(private productionService: ProductionService,
     private etlService: EtlService,
@@ -38,11 +48,9 @@ export class DashboardComponent implements OnInit {
     this.machineService.listTesteurReferenced().subscribe(
       data => { this.listTesterID = data }
     )
-    
     const currentDate = new Date();
-    //console.log(currentDate.toISOString().substring(0, 10))
     const currentDateFormat = currentDate.toISOString().substring(0, 10)
-    this.getListSummaryByDate(currentDateFormat)
+   // this.getListSummaryByDate(currentDateFormat)
   }
 
   function() {
@@ -61,7 +69,6 @@ export class DashboardComponent implements OnInit {
           return
         }*/
       this.getListSummaryBetweenTwoDaysByTesterId(this.datedeb, this.datefin, this.testerId)
-      return
     }
 
     if ((this.testerId == null) && (this.datefin != null) && (this.datedeb != null)) {
@@ -71,12 +78,11 @@ export class DashboardComponent implements OnInit {
          return
        }*/
       this.getListSummariesBetweenDebFin(this.datedeb, this.datefin)
-      return
     }
 
     if ((this.testerId != null) && (this.datefin == null) && (this.datedeb != null)) {
       this.getListSummaryByTesterId(this.datedeb, this.testerId)
-      return
+      this.getNbSecond(this.datedeb, this.testerId, this.nbMinute)
     }
 
     if ((this.testerId == null) && (this.datefin == null) && (this.datedeb != null)) {
@@ -86,36 +92,11 @@ export class DashboardComponent implements OnInit {
     if ((this.datefin == null) && (this.datedeb == null) && (this.testerId != null)) {
       this.getTesterId(this.testerId)
     }
+
   }
-
-  /* 
-  function() {
-  this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
-
-  if (this.datefin != null) {
-    this.datefin = this.modelFin.year.toString() + '-' + this.modelFin.month.toString() + '-' + this.modelFin.day.toString()
-    if (this.datedeb >= this.datefin) {
-      this.isError = true
-    }
-    if (this.testerId != null) {
-      this.getListSummaryBetweenTwoDaysByTesterId(this.datedeb, this.datefin, this.testerId)
-    } else {
-      this.getListSummariesBetweenDebFin(this.datedeb, this.datefin)
-    }
-  } else {
-    if (this.testerId != null) {
-      this.getListSummaryByTesterId(this.datedeb, this.testerId)
-    } else {
-      this.getListSummaryByDate(this.datedeb)
-    }
-  }
-  this.getNbSecond(this.datedeb, this.testerId, this.nbMinute)
-}
-*/
-
 
   getListSummaryByDate(date: string) {
-    this.productionService.getSummaryByDate(date).subscribe(
+    this.productionService.getSummaryByDate(this.databaseId, date).subscribe(
       data => {
         this.listSummaries = data
         console.log(this.listSummaries)
@@ -127,7 +108,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getListSummaryByTesterId(datedeb: string, testerId: number) {
-    this.productionService.getListSummaryByTesterId(datedeb, testerId).subscribe(
+    this.productionService.getListSummaryByTesterId(this.databaseId, datedeb, testerId).subscribe(
       data => {
         this.listSummaries = data
         console.log(this.listSummaries)
@@ -139,7 +120,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getListSummariesBetweenDebFin(datedeb: string, datefin: string) {
-    this.productionService.getSummariesBetweenTwoDays(datedeb, datefin).subscribe(
+    this.productionService.getSummariesBetweenTwoDays(this.databaseId, datedeb, datefin).subscribe(
       data => {
         this.listSummaries = data
         console.log(this.listSummaries)
@@ -151,7 +132,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getListSummaryBetweenTwoDaysByTesterId(datedeb: string, datefin: string, testerId: number) {
-    this.productionService.getSummariesBetweenTwoDaysByTesterId(datedeb, datefin, testerId).subscribe(
+    this.productionService.getSummariesBetweenTwoDaysByTesterId(this.databaseId, datedeb, datefin, testerId).subscribe(
       data => {
         this.listSummaries = data
         console.log(this.listSummaries)
@@ -163,18 +144,45 @@ export class DashboardComponent implements OnInit {
   }
 
   getNbSecond(maDate: string, testerId: number, nbMinute: number) {
-    this.etlService.calculNbSecond(maDate, testerId, nbMinute).subscribe(
+    this.etlService.calculNbSecond(this.databaseId, maDate, testerId, nbMinute).subscribe(
       data => {
         this.nbSecond = data
         this.isClicked = true
-        console.log(this.nbSecond)
+        //console.log(this.nbSecond)
+        this.nb_seconde = this.nbSecond
+
+        if (this.nb_seconde > 3600) {
+          this.nb_heure = Math.floor(this.nb_seconde / 3600)
+        }
+
+        this.nb_seconde = this.nb_seconde - (this.nb_heure * 3600)
+
+        if (this.nb_seconde > 60) {
+          this.nb_minute = Math.floor(this.nb_seconde / 60)
+        }
+
+        this.nb_seconde = this.nb_seconde - (this.nb_minute * 60)
+        if (this.nb_heure >= 10) {
+          this.time= this.nb_heure + ":" + this.nb_minute + ':' + this.nb_seconde
+        }
+        else 
+       this.time = '0'+this.nb_heure + ":" + this.nb_minute + ':' + this.nb_seconde
       }
     )
   }
 
   getTesterId(testerId: number) {
-    this.productionService.getTesterId(testerId).subscribe(
+    this.productionService.getTesterId(this.databaseId, testerId).subscribe(
       data => { this.listSummaries = data }
+    )
+  }
+
+  getSummaryPagination() {
+    this.productionService.getSummaryListPaginate(this.databaseId, this.pageNumber, this.pageSize).subscribe(
+      data => {
+        this.listSummaries1 = data;
+        console.log(this.listSummaries1)
+      }
     )
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UAP } from 'src/app/model/uap';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { UapService } from 'src/app/services/uap.service';
 
 @Component({
@@ -18,12 +19,13 @@ export class UapUpdateComponent implements OnInit {
   isFailed = false;
 
   constructor(private uapService: UapService, 
+              private crudService: CrudGlobaleService, 
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
-    this.uapService.getUAPById(this.id).subscribe(
+    this.crudService.getEntityById("uap", this.id).subscribe(
       data => {
         this.uap = data;
       },
@@ -33,7 +35,7 @@ export class UapUpdateComponent implements OnInit {
 
 
   onSubmit(){
-    this.uapService.updateUAP(this.id, this.uap).subscribe(
+    this.crudService.updateEntity("uap", this.id, this.uap).subscribe(
       data => {
         console.log(data)
         this.goToUAP()

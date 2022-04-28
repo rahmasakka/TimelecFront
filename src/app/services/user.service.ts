@@ -55,8 +55,6 @@ export class UserService {
 
   getUsersListPaginate(pageNumber: number, sizeNumber: number): Observable<User[]> {
     const url = baseURL + 'all?page=' + pageNumber + '&size=' + sizeNumber
-    console.log(url);
     return this.http.get<User[]>(url).pipe(map(response => response));
-    //  return this.http.get<Student[]>(baseURL + `all?page=${page}&size=${size}`).pipe(
   }
 }

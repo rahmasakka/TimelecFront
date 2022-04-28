@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UAP } from 'src/app/model/uap';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UapService } from 'src/app/services/uap.service';
 
@@ -11,7 +12,7 @@ import { UapService } from 'src/app/services/uap.service';
   styleUrls: ['./uap-list.component.css']
 })
 export class UapListComponent implements OnInit {
-
+  url:string = "uap";
   uaps!: UAP[];
   uapName: String = '';
   uapDescription: String = '';
@@ -21,6 +22,7 @@ export class UapListComponent implements OnInit {
   errorMessage!: ''
 
   constructor(private uapService: UapService,
+              private crudService : CrudGlobaleService, 
               private token: TokenStorageService,
               private router: Router,
               private modalService: NgbModal) { }
@@ -33,7 +35,7 @@ export class UapListComponent implements OnInit {
   }
 
   getListOfUAP() {
-    this.uapService.getUAPList().subscribe(
+    this.crudService.getListEntity("uap").subscribe(
       data => {
         this.uaps = data;
       }
@@ -41,7 +43,7 @@ export class UapListComponent implements OnInit {
   }
 
   deleteUAP(id: number) {
-    this.uapService.deleteUAP(id).subscribe(
+    this.crudService.deleteEntity("uap", id).subscribe(
       data => {
         window.location.reload();
         this.isDeletedFailed = false;

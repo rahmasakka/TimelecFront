@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { machine } from 'src/app/model/machine';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { MachineService } from 'src/app/services/machine.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { MachineService } from 'src/app/services/machine.service';
   styleUrls: ['./create-machine.component.css']
 })
 export class CreateMachineComponent implements OnInit {
-
+  url: string = "cc";
   isSuccessful = false;
   isFailed = false;
   errorMessage = '';
@@ -21,10 +22,11 @@ export class CreateMachineComponent implements OnInit {
   CCs!: centreCharge[]
 
   constructor(private machineService: MachineService,
+    private crudService : CrudGlobaleService, 
     private centreChargeService: CentreChargeService) { }
 
   ngOnInit(): void {
-    this.centreChargeService.getLoadCharge().subscribe(
+    this.crudService.getListEntity(this.url).subscribe(
       data => {
         this.CCs = data
       }
@@ -33,14 +35,14 @@ export class CreateMachineComponent implements OnInit {
 
   addMachine() {
     this.submitted = true
-    this.centreChargeService.getLoadChargeById(this.newIdCC).subscribe(
+    this.crudService.getEntityById("cc",this.newIdCC).subscribe(
       data => {
         this.newCC = data
       }
     )
 
     this.newMachine.centreCharge = this.newCC;
-    this.machineService.createMachine(this.newMachine).subscribe(
+    this.crudService.createNewEntity("machine",this.newMachine).subscribe(
       data => {
         console.log(data)
         this.isSuccessful = true;

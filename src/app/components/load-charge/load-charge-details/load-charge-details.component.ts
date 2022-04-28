@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { machine } from 'src/app/model/machine';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { MachineService } from 'src/app/services/machine.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -31,6 +32,7 @@ export class LoadChargeDetailsComponent implements OnInit {
     private token: TokenStorageService,
     private centreChargeService: CentreChargeService,
     private machineService: MachineService,
+    private crudService: CrudGlobaleService,
     private router: Router,
     private modalService: NgbModal) { }
 
@@ -38,7 +40,7 @@ export class LoadChargeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
-    this.centreChargeService.getLoadChargeById(this.id).subscribe(
+    this.crudService.getEntityById("cc", this.id).subscribe(
       data => {
         this.loadCharge = data
       }
@@ -60,7 +62,7 @@ export class LoadChargeDetailsComponent implements OnInit {
   }
 
   deletemachine(id: number) {
-    this.machineService.deleteMachine(id).subscribe(
+    this.crudService.deleteEntity("machine", id).subscribe(
       () => {
         window.location.reload();
         this.isDeletedFailed = false;
@@ -116,7 +118,6 @@ export class LoadChargeDetailsComponent implements OnInit {
         )
       }
       // console.log(this.machines[i].idMachine)
-
     }
 
     /*

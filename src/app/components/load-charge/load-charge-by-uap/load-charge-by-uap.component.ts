@@ -4,6 +4,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UapService } from 'src/app/services/uap.service';
 
@@ -26,6 +27,7 @@ export class LoadChargeByUapComponent implements OnInit {
 
 
   constructor(private centreChargeService: CentreChargeService,
+    private crudService: CrudGlobaleService,
     private uapService : UapService,
     private token: TokenStorageService,
     private router: Router,
@@ -38,7 +40,7 @@ export class LoadChargeByUapComponent implements OnInit {
     this.id = this.route.snapshot.params['id']
     this.getListLoadCharge(this.id)
    
-    this.uapService.getUAPById(this.id).subscribe(
+    this.crudService.getEntityById("uap", this.id).subscribe(
       data => {
         this.uap = data
        // console.log(data)
@@ -58,7 +60,7 @@ export class LoadChargeByUapComponent implements OnInit {
 
   
   deleteLoadCharge(id: number) {
-    this.centreChargeService.deleteLoadCharge(id).subscribe(
+    this.crudService.deleteEntity('cc', id).subscribe(
       data => {
         //   console.log(data);
         window.location.reload();

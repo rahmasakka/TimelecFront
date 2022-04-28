@@ -1,6 +1,21 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
     <h2 class="pt-3 text-info"> {{loadCharge.ccname}}</h2>
-    <h5 class="mx-auto"><b>{{machineReference.machineName}}</b></h5>
+    <div class="row mt-3">
+        <div class="col-lg-6">
+            <h5 class="mx-auto"><b>{{machineReference.machineName}}</b></h5>
+        </div>
+        <!--div class="col-lg-6">
+            <label>
+                <h6>Réference: {{machineReference.machineName}}</h6>
+            </label>
+            <select class="form-control" id="testerId" name="testerId" [(ngModel)]="machineReference.reference">
+                <option value="0" selected disabled>--Choisissez un testeur --</option>
+                <option *ngFor="let machine of machines" [value]="machine.reference">
+                    {{machine.machineName}}
+                </option>
+            </select>
+        </div-->
+    </div>
 
     <div class="input-group mt-3 mb-3">
         <button class="btn col-lg-4 col-md-4 col-sm-12 btn btn-outline-info" (click)="open(content)" *ngIf=isAdmin()>
@@ -37,7 +52,6 @@
                 <th> Name </th>
                 <th> Description </th>
                 <th> Centre de Charge </th>
-                <th> Réference </th>
                 <!--th> Category </th-->
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
@@ -47,18 +61,6 @@
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
                 <td>{{loadCharge.ccname}}</td>
-                <td>
-                    <!--div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="{{machine.idMachine}}" checked>
-                        <label class="custom-control-label" for="{{machine.idMachine}}"></label>
-                    </div-->
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="reference" id="reference"
-                            [value]="machine.reference" [(ngModel)]="machineReference.reference"
-                            (change)="updateReferenceMachine(machine.idMachine)">
-                    </div>
-
-                </td>
                 <!--td>{{machine.machineCategory}}</td-->
                 <td>
                     <button (click)="updateMachine(machine.idMachine)" class="btn btn-outline-secondary"
@@ -92,7 +94,7 @@
                             </div-->
                             <!--div *ngIf = isDeletedFailed class="alert alert-danger">
                                 Ce centre de charge contient des machines. <br/>
-                                Pour le supprimer, il faut supprimer toutes les machines qu'il 
+                                Pour le supprimer, il faut supprimer toutes les machines qu'il compose. 
                             </div-->
                         </ng-template>
                     </button>
@@ -101,7 +103,3 @@
         </tbody>
     </table>
 </div>
-
-
-<!--<input [(ngModel)] = "name" type="text">
-{{name}}-->

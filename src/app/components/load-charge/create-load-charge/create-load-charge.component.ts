@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
 import { CentreChargeService } from 'src/app/services/centre-charge.service';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { UapService } from 'src/app/services/uap.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { UapService } from 'src/app/services/uap.service';
   styleUrls: ['./create-load-charge.component.css']
 })
 export class CreateLoadChargeComponent implements OnInit {
+  url:string = "uap";
 
   isSuccessful = false;
   isFailed = false;
@@ -22,11 +24,12 @@ export class CreateLoadChargeComponent implements OnInit {
   newUAP!: UAP;
 
   constructor(private centreChargeService: CentreChargeService,
+    private crudService : CrudGlobaleService, 
     private uapService: UapService,
     private router: Router) { }
 
   ngOnInit() {
-    this.uapService.getUAPList().subscribe(
+    this.crudService.getListEntity(this.url).subscribe(
       data => {
         this.uaps = data
       }
@@ -35,7 +38,7 @@ export class CreateLoadChargeComponent implements OnInit {
 
   addCentreCharge() {
     this.submitted = true
-    this.uapService.getUAPById(this.newIdUAP).subscribe(
+    this.crudService.getEntityById('uap', this.newIdUAP).subscribe(
       data => {
         this.newUAP = data
       }
@@ -43,7 +46,7 @@ export class CreateLoadChargeComponent implements OnInit {
     //console.log("++++",this.newUAP.uapName)
     this.newCentreCharge.uap = this.newUAP;
     //console.log("****",this.newCentreCharge.uap.uapName)
-    this.centreChargeService.addNewLoadCharge(this.newCentreCharge).subscribe(
+    this.crudService.createNewEntity("cc",this.newCentreCharge).subscribe(
       data => {
         console.log(data)
         this.isSuccessful = true;

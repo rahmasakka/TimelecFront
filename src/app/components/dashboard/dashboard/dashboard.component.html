@@ -1,7 +1,6 @@
 <div class="m-5 card">
     <div class="row mt-3 mb-5">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-3 col-md-5 col-sm-12">
+        <div class="col-lg-2 col-md-6 col-sm-12">
             <label>
                 <h5>Date début:</h5>
             </label>
@@ -13,9 +12,9 @@
                 </button>
             </div>
         </div>
-        <div class="col-lg-3 col-md-5 col-sm-12">
+        <div class="col-lg-2 col-md-6 col-sm-12">
             <label>
-                <h5>Date Fin:</h5>
+                <h5>Date fin:</h5>
             </label>
             <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modelFin" ngbDatepicker
@@ -26,15 +25,29 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-5 col-sm-12">
+        <div class="col-lg-2 col-md-6 col-sm-12">
             <label>
-                <h5>Testeur</h5>
+                <h5>Centre de charge:</h5>
             </label>
             <select class="form-control" id="testerId" name="testerId" [(ngModel)]="testerId">
                 <option value="0" selected disabled>--Choisissez un testeur --</option>
                 <option *ngFor="let testeur of listTesterID" [value]="testeur.idMachine">
                     {{testeur.idMachine}} : {{testeur.centreCharge.ccname}}
                 </option>
+            </select>
+        </div>
+
+        <div class="col-lg-2 col-md-6 col-sm-12">
+            <label>
+                <h5>Base de données: </h5>
+            </label>
+            <select class="form-control" id="databaseID" name="database" [(ngModel)]="databaseId">
+                <option value="0" selected disabled>--Choisissez une base de données --</option>
+                <option value="vm/"> TestResultVm </option>
+                <option value="sircoSircover/"> TestResultsSircoSircover </option>
+                <option value="p77/"> TestResultsP77 </option>
+                <option value="fuserbloc/"> TestResultsFuserbloc </option>
+                <option value="devP87/"> TestResultsDevP87 </option>
             </select>
         </div>
 
@@ -47,14 +60,14 @@
             la date de début doit être plus ancienne que la date fin .
         </ngb-alert>
         <ngb-alert *ngIf="isClicked" class="mt-3 mb-0 w-75 mx-auto" type="info">
-            {{this.nbSecond}} secondes
+            {{time}} : {{nbSecond}} secondes
         </ngb-alert>
     </div>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th> testeur </th>
+                <th> Centre de charge </th>
                 <th> test start time </th>
                 <th> test status </th>
                 <th> site code </th>
@@ -77,4 +90,17 @@
     <ngb-alert *ngIf="isEmpty" class="mt-3 mb-0" type="danger">
         Aucune information à afficher pour cette date.
     </ngb-alert>
+
+    <!--div class="footer-pagination">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <ngb-pagination [(page)]="pageNumber" 
+                                [pageSize]="pageSize" 
+                                [collectionSize]="numElement"
+                                (pageChange)="getSummaryPagination()">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div-->
 </div>

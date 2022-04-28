@@ -13,25 +13,27 @@ export class UapService {
 
   constructor(private http: HttpClient) { }
 
+  /*
   getUAPList():Observable<UAP[]>{
     return this.http.get<UAP[]>(baseURL+'all')
   }
 
   deleteUAP(id: number): Observable<Object> {
     return this.http.delete(baseURL + 'delete/' + id);
-  }
-
-  addNewUAP(uap: UAP): Observable<Object>{
-    return this.http.post(baseURL+'createUAP' , uap)
-  }
-
+  }  
+  
   getUAPById(id: number) : Observable<UAP>{
     return this.http.get<UAP>(baseURL+ id)
   }
 
-  updateUAP(id: number, uap: UAP): Observable<Object> {
+    updateUAP(id: number, uap: UAP): Observable<Object> {
     return this.http.put(baseURL + 'update/' + id, uap)
   }
+
+    addNewUAP(uap: UAP): Observable<Object>{
+    return this.http.post(baseURL+'createUAP' , uap)
+  }
+  */
 
   listCCByUAP(id:number):Observable<centreCharge>{
     return this.http.get<centreCharge>(baseURL+'listCCByUAP/' + id)
