@@ -1,5 +1,6 @@
 import { Component, OnInit , Input} from '@angular/core';
 import { machine } from 'src/app/model/machine';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { MachineService } from 'src/app/services/machine.service';
 
 @Component({
@@ -11,10 +12,10 @@ export class MachineComponent implements OnInit {
   @Input() data !: number
 
   machines!: machine[]
-  constructor(private machineService: MachineService) { }
+  constructor(private crudService: CrudGlobaleService) { }
 
   ngOnInit(): void {
-    this.machineService.listMachineByLoadCharge(this.data).subscribe(
+    this.crudService.getSonByMother("machine" ,this.data).subscribe(
       data =>{
         this.machines = data
       }

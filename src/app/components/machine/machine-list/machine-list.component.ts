@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { machine } from 'src/app/model/machine';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { MachineService } from 'src/app/services/machine.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
@@ -12,14 +11,13 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./machine-list.component.css']
 })
 export class MachineListComponent implements OnInit {
-  url: string = "machine"
   machines !: machine[]
   machineDescription!: String
   machineName!: String
   closeResult = '';
 
-  constructor(private machineService: MachineService,
-    private crudService : CrudGlobaleService, 
+  constructor(
+    private crudService: CrudGlobaleService,
     private token: TokenStorageService,
     private router: Router,
     private modalService: NgbModal) { }
@@ -31,21 +29,16 @@ export class MachineListComponent implements OnInit {
   }
 
   getListOfMachine() {
-    this.crudService.getListEntity(this.url).subscribe(
+    this.crudService.getListEntity("machine").subscribe(
       data => {
         this.machines = data;
-       // console.log(data);
+        console.log(this.machines);
       }
     )
   }
 
   deleteMachine(id: number) {
-    this.crudService.deleteEntity("machine", id).subscribe(
-      data => {
-        //console.log(data);
-        window.location.reload();
-      }
-    )
+    this.crudService.deleteEntity("machine", id).subscribe(() => { window.location.reload() })
   }
 
   Search() {

@@ -4,17 +4,6 @@
         <div class="col-lg-6">
             <h5 class="mx-auto"><b>{{machineReference.machineName}}</b></h5>
         </div>
-        <!--div class="col-lg-6">
-            <label>
-                <h6>Réference: {{machineReference.machineName}}</h6>
-            </label>
-            <select class="form-control" id="testerId" name="testerId" [(ngModel)]="machineReference.reference">
-                <option value="0" selected disabled>--Choisissez un testeur --</option>
-                <option *ngFor="let machine of machines" [value]="machine.reference">
-                    {{machine.machineName}}
-                </option>
-            </select>
-        </div-->
     </div>
 
     <div class="input-group mt-3 mb-3">
@@ -43,16 +32,17 @@
             </button>
         </span>
     </div>
-    <!--ngb-alert *ngIf="!isExistMachine" class="mt-3 mb-0 w-75 mx-auto" type="info">
+    <ngb-alert *ngIf="!isExistMachine" class="mt-3 mb-0 w-75 mx-auto" type="info">
         Il n'y a aucune machine affectée à ce centre de charge.
-    </ngb-alert-->
+    </ngb-alert>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th> Name </th>
                 <th> Description </th>
                 <th> Centre de Charge </th>
-                <!--th> Category </th-->
+                <th> Réference </th>
+                <th> Categorie </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
@@ -61,7 +51,11 @@
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
                 <td>{{loadCharge.ccname}}</td>
-                <!--td>{{machine.machineCategory}}</td-->
+                <td>
+                    <input class="form-check-input" type="checkbox" [checked]="machine.reference"
+                        (change)="onChange($event, machine)">
+                </td>
+                <td>{{machine.machineCategory}}</td>
                 <td>
                     <button (click)="updateMachine(machine.idMachine)" class="btn btn-outline-secondary"
                         *ngIf=isAdmin()>

@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-create-load-charge',
@@ -23,9 +21,8 @@ export class CreateLoadChargeComponent implements OnInit {
   newIdUAP!: number;
   newUAP!: UAP;
 
-  constructor(private centreChargeService: CentreChargeService,
+  constructor(
     private crudService : CrudGlobaleService, 
-    private uapService: UapService,
     private router: Router) { }
 
   ngOnInit() {

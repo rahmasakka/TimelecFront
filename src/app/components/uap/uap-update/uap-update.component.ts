@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UAP } from 'src/app/model/uap';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-uap-update',
@@ -18,7 +17,7 @@ export class UapUpdateComponent implements OnInit {
   errorMessage = '';
   isFailed = false;
 
-  constructor(private uapService: UapService, 
+  constructor(
               private crudService: CrudGlobaleService, 
               private route: ActivatedRoute,
               private router: Router) { }

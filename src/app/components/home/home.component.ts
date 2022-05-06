@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UAP } from 'src/app/model/uap';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-home',

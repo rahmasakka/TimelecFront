@@ -1,0 +1,82 @@
+<div class="row m-4">
+    <select class="form-control w-50 col-lg-3 col-md-6 col-sm-12" [(ngModel)]="moisId">
+        <option value="0" selected disabled>--Sélectionner mois--</option>
+        <option *ngFor="let m of mois" [value]="m.id">
+            {{m.mois}}
+        </option>
+    </select>
+
+    <select class="form-control w-50 col-lg-3 col-md-6 col-sm-12" [(ngModel)]="yearId">
+        <option value="0" selected disabled>--Sélectionner année</option>
+        <option *ngFor="let y of year" [value]="y.id">
+            {{y.id}}
+        </option>
+    </select>
+
+
+    <select class="form-control col-lg-3 col-md-6 col-sm-12" id="databaseID" name="database" [(ngModel)]="databaseId">
+        <option value="0" selected disabled>--Choisissez une base de données --</option>
+        <option value="vm/"> TestResultVm </option>
+        <option value="sircoSircover/"> TestResultsSircoSircover </option>
+        <option value="p77/"> TestResultsP77 </option>
+        <option value="fuserbloc/"> TestResultsFuserbloc </option>
+        <option value="devP87/"> TestResultsDevP87 </option>
+    </select>
+</div>
+
+<div class="row p-3">
+    <div class="col-6">
+        <button class="btn btn-outline-secondary mt-4 w-100" (click)="listsummary()" type="button">
+            Dashboard
+        </button>
+    </div>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> Centre de charge </th>
+                <th> test start time </th>
+                <th> test status </th>
+                <th> site code </th>
+                <th> operator name </th>
+                <th> mechanical assembly </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let summary of listSummaries">
+                <td>{{summary.testerID}}</td>
+                <td>{{summary.testStartTime}}</td>
+                <td>{{summary.testStatus}}</td>
+                <td>{{summary.siteCode}}</td>
+                <td>{{summary.operatorName}}</td>
+                <td>{{summary.mechanicalAssembly.idMechanicalAssembly}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-pagination">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-9" style="padding-left: 30%">
+                    <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize"
+                        [collectionSize]="theTotalElements" [maxSize]="5" [boundaryLinks]="true"
+                        (pageChange)="listsummary()">
+
+                    </ngb-pagination>
+                </div>
+                <div class="col-md-3 mt-2" style="text-align:right;">
+                    <span class="mr-2"> Page Size</span>
+                    <select (change)="updatePageSize($any($event.target).value)">
+                        <option selected="true"> 10 </option>
+                        <option> 100 </option>
+                        <option> 1000 </option>
+                        <option> 5000 </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

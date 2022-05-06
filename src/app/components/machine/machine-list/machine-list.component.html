@@ -36,7 +36,7 @@
                 <th> Centre de charge </th>
                 <th> Réference </th>
                 <th> UAP </th>
-                <!--th> Catégorie </th-->
+                <th> Catégorie </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
@@ -47,7 +47,7 @@
                 <td>{{machine.centreCharge.ccname}}</td>
                 <td>{{machine.reference}}</td>
                 <td>{{machine.centreCharge.uap.uapName}}</td>
-                <!--td>{{machine.machineCategory}}</td-->
+                <td>{{machine.machineCategory}}</td>
                 <td>
                     <button (click)="updateMachine(machine.idMachine)" class="btn btn-outline-secondary"
                         *ngIf=isAdmin()>

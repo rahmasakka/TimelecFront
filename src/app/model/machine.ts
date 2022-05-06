@@ -1,3 +1,4 @@
+import { category } from "./category";
 import { centreCharge } from "./centreCharge";
 
 export class machine {
@@ -5,6 +6,6 @@ export class machine {
     machineName!: string;
     machineDescription!: string;
     reference !: boolean;
-  //  machineCategory!: category;
+    machineCategory!: category;
     centreCharge! : centreCharge
 }

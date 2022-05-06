@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { machine } from 'src/app/model/machine';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { MachineService } from 'src/app/services/machine.service';
 
 @Component({
   selector: 'app-create-machine',
@@ -11,7 +9,6 @@ import { MachineService } from 'src/app/services/machine.service';
   styleUrls: ['./create-machine.component.css']
 })
 export class CreateMachineComponent implements OnInit {
-  url: string = "cc";
   isSuccessful = false;
   isFailed = false;
   errorMessage = '';
@@ -21,12 +18,10 @@ export class CreateMachineComponent implements OnInit {
   newCC!: centreCharge;
   CCs!: centreCharge[]
 
-  constructor(private machineService: MachineService,
-    private crudService : CrudGlobaleService, 
-    private centreChargeService: CentreChargeService) { }
+  constructor(private crudService : CrudGlobaleService) { }
 
   ngOnInit(): void {
-    this.crudService.getListEntity(this.url).subscribe(
+    this.crudService.getListEntity("cc").subscribe(
       data => {
         this.CCs = data
       }
@@ -42,6 +37,7 @@ export class CreateMachineComponent implements OnInit {
     )
 
     this.newMachine.centreCharge = this.newCC;
+    this.newMachine.reference = false
     this.crudService.createNewEntity("machine",this.newMachine).subscribe(
       data => {
         console.log(data)
@@ -52,6 +48,6 @@ export class CreateMachineComponent implements OnInit {
         this.isFailed = true;
       }
     );
-    //window.location.reload();
+    window.location.reload();
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { centreCharge } from 'src/app/model/centreCharge';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -21,7 +20,7 @@ export class LoadChargeListComponent implements OnInit {
   isSuccessful: boolean = false
   errorMessage!: ''
 
-  constructor(private centreChargeService: CentreChargeService,
+  constructor(
     private crudService : CrudGlobaleService, 
     private token: TokenStorageService,
     private router: Router,

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+  /*import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { centreCharge } from '../model/centreCharge';
@@ -13,7 +13,6 @@ export class UapService {
 
   constructor(private http: HttpClient) { }
 
-  /*
   getUAPList():Observable<UAP[]>{
     return this.http.get<UAP[]>(baseURL+'all')
   }
@@ -32,10 +31,10 @@ export class UapService {
 
     addNewUAP(uap: UAP): Observable<Object>{
     return this.http.post(baseURL+'createUAP' , uap)
-  }
-  */
-
+  }  
+  
   listCCByUAP(id:number):Observable<centreCharge>{
     return this.http.get<centreCharge>(baseURL+'listCCByUAP/' + id)
   }
-}
+  
+}*/

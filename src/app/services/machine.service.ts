@@ -31,11 +31,12 @@ export class MachineService {
 
   createMachine(machine: machine) : Observable<object>{
     return this.http.post(baseURL+"createMachine", machine)
-  }
-  */
+  }  
+  
   listMachineByLoadCharge(id: number): Observable<machine[]>{
-    return this.http.get<machine[]>(baseURL+'listMachineByCC/'+ id)
+    return this.http.get<machine[]>(baseURL+'sonByMother/'+ id)
   } 
+  */
 
   machineReferencedToCentreCharge(idCentreCharge: number):Observable<machine>{
     return this.http.get<machine>(baseURL+'referenced/'+idCentreCharge)
@@ -45,18 +46,14 @@ export class MachineService {
     return this.http.put(baseURL + 'updateReferenceMachine/'+idMachine, idMachine)
   }
 
-  updateReferenceMachineTrue(idMachine: number): Observable<Object>{
-    return this.http.put(baseURL + 'updateReferenceTrue/'+idMachine, idMachine)
+  updateReferenceMachineFalse(idCC : number): Observable<Object>{
+    return this.http.put(baseURL + 'updateReferenceMachineFalse/'+idCC, null)
   }
-
-  updateReferenceMachineFalse(idMachine: number): Observable<Object>{
-    return this.http.put(baseURL + 'updateReferenceFalse/'+idMachine, idMachine)
-  }
-
+/*
   listTesteurReferencedByCentreCharge(idCentreCharge: number): Observable<machine[]>{
     return this.http.get<machine[]>(baseURL+'listTesteurReferencedByCentreCharge/'+idCentreCharge)
   }
-
+*/
   listTesteurReferenced(): Observable<machine[]>{
     return this.http.get<machine[]>(baseURL+'listTesteurReferenced')
   }

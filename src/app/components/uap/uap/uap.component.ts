@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UAP } from 'src/app/model/uap';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-uap',
@@ -11,9 +10,7 @@ import { UapService } from 'src/app/services/uap.service';
 export class UapComponent implements OnInit {
   url:string = "uap";
   uaps!: UAP[]
-  constructor(private uapService: UapService,
-    private crudService : CrudGlobaleService, 
-    ) { }
+  constructor( private crudService : CrudGlobaleService) { }
 
   ngOnInit(): void {
     this.getListOfUAP();

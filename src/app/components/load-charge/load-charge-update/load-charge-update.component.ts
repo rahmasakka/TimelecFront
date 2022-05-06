@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-load-charge-update',
@@ -12,37 +10,36 @@ import { UapService } from 'src/app/services/uap.service';
   styleUrls: ['./load-charge-update.component.css']
 })
 export class LoadChargeUpdateComponent implements OnInit {
-  
-  url:string = "uap";
+
+  url: string = "uap";
 
   id!: number;
   uaps!: UAP[];
   centreCharge: centreCharge = new centreCharge();
-  
+
   isFailed = false;
   submitted = false;
   isSuccessful = false;
   errorMessage = '';
 
-  constructor(private uapService: UapService,
-    private crudService : CrudGlobaleService, 
+  constructor(
+    private crudService: CrudGlobaleService,
     private router: Router,
-    private route: ActivatedRoute,
-    private centreChargeService: CentreChargeService
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
-    this.crudService.getEntityById("cc",this.id).subscribe(
+    this.crudService.getEntityById("cc", this.id).subscribe(
       data => {
         this.centreCharge = data;
       },
       error => console.log(error)
     )
     this.ListUAP();
-  } 
-  
-  
+  }
+
+
   ListUAP() {
     this.crudService.getListEntity(this.url).subscribe(
       data => {

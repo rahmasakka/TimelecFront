@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { machine } from 'src/app/model/machine';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { MachineService } from 'src/app/services/machine.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -30,7 +29,6 @@ export class LoadChargeDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private token: TokenStorageService,
-    private centreChargeService: CentreChargeService,
     private machineService: MachineService,
     private crudService: CrudGlobaleService,
     private router: Router,
@@ -50,7 +48,7 @@ export class LoadChargeDetailsComponent implements OnInit {
   }
 
   getListOfMachine(id: number) {
-    this.machineService.listMachineByLoadCharge(id).subscribe(
+    this.crudService.getSonByMother("machine", id).subscribe(
       data => {
         this.machines = data
         //console.log(data)
@@ -106,28 +104,14 @@ export class LoadChargeDetailsComponent implements OnInit {
     )
   }
 
-
-  updateReferenceMachine(id: number) {
-    for (let i = 0; i < this.machines.length; i++) {
-      console.log(this.machines[i].idMachine + "==>" + this.machines[i].reference)
-      if (this.machines[i].reference == true) {
-        this.machineService.updateReferenceMachineFalse(this.machines[i].idMachine).subscribe(
-          () => {
-            console.log(this.machines[i].idMachine + "==>" + this.machines[i].reference)
-          }
-        )
-      }
-      // console.log(this.machines[i].idMachine)
-    }
-
-    /*
-    this.machineService.updateReferenceMachine(id).subscribe(
+  onChange(event: any, machine: any) {
+    machine.reference = !machine.reference;
+    this.machineService.updateReferenceMachineFalse(machine.centreCharge.idCC).subscribe(()=> {})
+    window.location.reload();
+    this.crudService.updateEntity("machine", machine.idMachine, machine).subscribe(
       () => {
-        console.log(this.machineReference)
       }
-    )*/
-
-
+    )
   }
 
 

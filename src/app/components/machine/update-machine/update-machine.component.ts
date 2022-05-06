@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { machine } from 'src/app/model/machine';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { MachineService } from 'src/app/services/machine.service';
 
 @Component({
   selector: 'app-update-machine',
@@ -23,11 +21,10 @@ export class UpdateMachineComponent implements OnInit {
   isSuccessful = false;
   errorMessage = '';
 
-  constructor(private machineService: MachineService,
+  constructor(
     private crudService : CrudGlobaleService, 
     private router: Router,
-    private route: ActivatedRoute,
-    private centreChargeService: CentreChargeService) { }
+    private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
@@ -35,8 +32,6 @@ export class UpdateMachineComponent implements OnInit {
     this.crudService.getEntityById("machine", this.id).subscribe(
       data => {
         this.machine = data
-        console.log(data)
-        console.log(this.machine.centreCharge.idCC)
       },
       error => console.log(error)
     )
@@ -56,11 +51,9 @@ export class UpdateMachineComponent implements OnInit {
   onSubmit() {
     this.crudService.updateEntity("machine", this.id, this.machine).subscribe(
       () => {
-        //this.goToLoadChargeList()
         this.isSuccessful = true
         this.submitted = true
-        console.log(this.machine)
-
+        console.log("*********", this.machine)
         this.router.navigate(['/machine-list'])
 
       },

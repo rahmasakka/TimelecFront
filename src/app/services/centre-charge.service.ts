@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+/*import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { centreCharge } from '../model/centreCharge';
 
 const baseURL = "http://localhost:9003/api/cc/";
 
@@ -11,7 +9,7 @@ const baseURL = "http://localhost:9003/api/cc/";
 export class CentreChargeService {
 
   constructor(private http: HttpClient) { }
-/*
+
   getLoadCharge(): Observable<centreCharge[]> {
     return this.http.get<centreCharge[]>(baseURL + 'all')
   }
@@ -30,10 +28,8 @@ export class CentreChargeService {
   getLoadChargeById(id: number): Observable<centreCharge> {
     return this.http.get<centreCharge>(baseURL + id);
   }
-  
-*/
-
-  listLoadChargeByUAP(id: number): Observable<centreCharge[]> {
+    listLoadChargeByUAP(id: number): Observable<centreCharge[]> {
     return this.http.get<centreCharge[]>(baseURL + 'listCCByUAP/' + id)
   }
-}
+
+}*/

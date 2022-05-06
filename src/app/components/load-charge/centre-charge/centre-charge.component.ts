@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { centreCharge } from 'src/app/model/centreCharge';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 
 @Component({
   selector: 'app-centre-charge',
@@ -11,10 +11,10 @@ export class CentreChargeComponent implements OnInit {
 
   @Input() data !: number
   CCs!: centreCharge[]
-  constructor(private ccService: CentreChargeService) { }
+  constructor(private crudService: CrudGlobaleService) { }
 
   ngOnInit(): void {
-    this.ccService.listLoadChargeByUAP(this.data).subscribe(
+    this.crudService.getSonByMother("cc", this.data).subscribe(
       data=>{
         this.CCs = data
       }

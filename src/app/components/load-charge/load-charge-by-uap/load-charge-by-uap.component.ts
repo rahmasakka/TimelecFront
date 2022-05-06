@@ -3,10 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { centreCharge } from 'src/app/model/centreCharge';
 import { UAP } from 'src/app/model/uap';
-import { CentreChargeService } from 'src/app/services/centre-charge.service';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-load-charge-by-uap',
@@ -26,9 +24,8 @@ export class LoadChargeByUapComponent implements OnInit {
   errorMessage!: ''
 
 
-  constructor(private centreChargeService: CentreChargeService,
+  constructor(
     private crudService: CrudGlobaleService,
-    private uapService : UapService,
     private token: TokenStorageService,
     private router: Router,
     private route: ActivatedRoute,
@@ -50,7 +47,7 @@ export class LoadChargeByUapComponent implements OnInit {
 
 
   getListLoadCharge(id: number){
-    this.centreChargeService.listLoadChargeByUAP(id).subscribe(
+    this.crudService.getSonByMother("cc", id).subscribe(
       data => {
         this.centreCharge = data
        // console.log(data)

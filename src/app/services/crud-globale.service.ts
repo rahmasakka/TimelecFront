@@ -31,4 +31,8 @@ export class CrudGlobaleService {
   createNewEntity(url: String, object: object): Observable<Object> {
     return this.http.post(baseURL + url + '/create', object)
   }
+
+  getSonByMother(url: String, id: number): Observable<any> {
+    return this.http.get<any>(baseURL + url + '/sonByMother/' + id)
+  }
 }

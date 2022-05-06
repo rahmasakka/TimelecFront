@@ -1,4 +1,4 @@
 export enum category {
-	Testeur,
-    Gabarie
+	testeur,
+    gabarie
 }

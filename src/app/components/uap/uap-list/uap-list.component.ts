@@ -4,7 +4,6 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UAP } from 'src/app/model/uap';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UapService } from 'src/app/services/uap.service';
 
 @Component({
   selector: 'app-uap-list',
@@ -21,7 +20,7 @@ export class UapListComponent implements OnInit {
   isSuccessful: boolean = false
   errorMessage!: ''
 
-  constructor(private uapService: UapService,
+  constructor(
               private crudService : CrudGlobaleService, 
               private token: TokenStorageService,
               private router: Router,
