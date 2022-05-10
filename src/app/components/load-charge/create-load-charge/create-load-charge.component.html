@@ -1,7 +1,7 @@
 <div class="container">
     <form>
         <div class="form-group">
-            <label class="control-label">
+            <label class="control-label text-one">
                 <h5>Nom centre charge:</h5>
             </label>
             <div>
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group text-one">
             <label class="control-label">
                 <h5>Description du centre charge:</h5>
             </label>
@@ -36,8 +36,10 @@
             </div>
         </div>
 
-        <div>
-            <h5>UAP:</h5>
+        <div class="form-group text-one">
+            <label class="control-label">
+                <h5>UAP:</h5>
+            </label>
             <select class="form-control" id="idUAP" name="idUAP" [(ngModel)]="newIdUAP">
                 <option value="0" selected disabled>--Affecter un UAP à ce centre de charge--</option>
                 <option *ngFor="let uap of uaps" [value]="uap.idUAP">
@@ -47,7 +49,7 @@
         </div>
 
         <div class="mt-2">
-            <button type="submit" (click)="addCentreCharge()" class="btn btn-info">Ajouter</button>
+            <button type="submit" (click)="addCentreCharge()" class="btn background-outline-yellow">Ajouter</button>
             <!--div class="alert alert-warning mt-2" *ngIf="isFailed">
                 Création échoue! {{ errorMessage }}
             </div-->

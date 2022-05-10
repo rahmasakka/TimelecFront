@@ -1,45 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-  <!--a class="navbar-brand" href="#">Navbar</a-->
+<nav class="navbar navbar-expand-lg navbar-light navbar-background">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul>
+      <!--img src="assets/logo.jpeg" style="width: 80px; height: 20px"/-->
+    </ul>
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <button class="btn navbar-brand" routerLink="uap" routerLinkActive="active">
-          <i class="fa fa-home" aria-hidden="true"></i>
+        <button class="btn navbar-brand text" routerLink="uap" routerLinkActive="active" >
+          <i class="fa fa-home icon" aria-hidden="true"></i>
           <span> Home</span>
         </button>
       </li>
       <li class="nav-item" *ngIf="isLoggedIn">
-        <button class="btn navbar-brand" routerLink="list-users" routerLinkActive="active">
-          <i class="fa fa-users" aria-hidden="true"></i>
+        <button class="btn navbar-brand text" routerLink="list-users" routerLinkActive="active">
+          <i class="fa fa-users icon" aria-hidden="true"></i>
           <span> Users</span>
         </button>
       </li>
-      <li class="nav-item dropdown" *ngIf="isLoggedIn" >
-        <button class="btn navbar-brand dropdown-toggle" data-toggle="dropdown" >
-          <i aria-hidden="true"  class="fa fa-building"></i>
+      <li class="nav-item dropdown" *ngIf="isLoggedIn">
+        <button class="btn navbar-brand dropdown-toggle text" data-toggle="dropdown">
+          <i aria-hidden="true" class="fa fa-building icon"></i>
           <span> UAP </span>
         </button>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <button class="dropdown-item " data-toggle="dropdown" routerLink="uap-list" routerLinkActive="active">
+        <div class="dropdown-menu navbar-background" aria-labelledby="navbarDropdownMenuLink">
+          <button class="dropdown-item text" data-toggle="dropdown" routerLink="uap-list" routerLinkActive="active">
             <i aria-hidden="true"></i>
             <span> UAP </span>
-          </button> 
-          <button class="dropdown-item " data-toggle="dropdown" routerLink="load-charge-list" routerLinkActive="active">
+          </button>
+          <button class="dropdown-item text" data-toggle="dropdown" routerLink="load-charge-list" routerLinkActive="active">
             <i aria-hidden="true"></i>
             <span> Centre Charge</span>
-          </button> 
-          <button class="dropdown-item " data-toggle="dropdown" routerLink="machine-list" routerLinkActive="active">
+          </button>
+          <button class="dropdown-item text " data-toggle="dropdown" routerLink="machine-list" routerLinkActive="active">
             <i aria-hidden="true"></i>
             <span> Machine </span>
           </button>
         </div>
       </li>
       <li class="nav-item" *ngIf="isLoggedIn">
-        <button class="btn navbar-brand" routerLink="dashboard" routerLinkActive="active">
+        <button class="btn navbar-brand text" routerLink="dashboard" routerLinkActive="active">
           <span>Dashboard</span>
         </button>
       </li>
@@ -47,26 +49,26 @@
 
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <button class="btn" routerLink="signup" routerLinkActive="active" *ngIf="!isLoggedIn">
-          <i class="fa fa-user-plus" aria-hidden="true"></i>
+        <button class="btn text" routerLink="signup" routerLinkActive="active" *ngIf="!isLoggedIn">
+          <i class="fa fa-user-plus icon" aria-hidden="true"></i>
           <span> Sign up</span>
         </button>
       </li>
       <li class="nav-item">
-        <button class="btn" routerLink="signin" routerLinkActive="active" *ngIf="!isLoggedIn">
-          <i class="fa fa-unlock" aria-hidden="true"></i>
+        <button class="btn text" routerLink="signin" routerLinkActive="active" *ngIf="!isLoggedIn">
+          <i class="fa fa-unlock icon" aria-hidden="true"></i>
           <span> Sign in</span>
         </button>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+        <a class="nav-link dropdown-toggle text-two" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false" *ngIf="isLoggedIn">
           Hi, {{ username}}
         </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <button class="dropdown-item" routerLink="profil">Profil</button>
-          <button (click)="logout()" class="dropdown-item" routerLink="/signin">
-            <i class="fa fa-power-off" aria-hidden="true"></i>
+        <div class="dropdown-menu dropdown-menu-right navbar-background">
+          <button class="dropdown-item text" routerLink="profil">Profil</button>
+          <button (click)="logout()" class="dropdown-item text" routerLink="/signin">
+            <i class="fa fa-power-off icon text" aria-hidden="true"></i>
             <span> Log out</span>
           </button>
         </div>

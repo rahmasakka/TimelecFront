@@ -1,11 +1,11 @@
 <div class="m-5 p-5 card">
     <div class="row">
-
         <div class="col-lg-3 col-md-6 col-sm-12">
             <label>
                 <h5>Base de données: </h5>
             </label>
-            <select class="form-control" id="databaseId" name="databaseId" [(ngModel)]="databaseId" (change)="chargerTesterID($any($event.target).value)">
+            <select class="form-control" id="databaseId" name="databaseId"
+                [(ngModel)]="databaseId" (change)="chargerTesterID($any($event.target).value)">
                 <option value="0" selected disabled>--Choisissez une base de données --</option>
                 <option value="vm/"> TestResultVm </option>
                 <option value="sircoSircover/"> TestResultsSircoSircover </option>
@@ -34,7 +34,7 @@
             <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modelDebut" ngbDatepicker
                     #dateDebut="ngbDatepicker">
-                <button class="btn btn-outline-secondary calendar" (click)="dateDebut.toggle()" type="button">
+                <button class="btn background-outline-yellow calendar" (click)="dateDebut.toggle()" type="button">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                 </button>
             </div>
@@ -46,7 +46,7 @@
             <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modelFin" ngbDatepicker
                     #dateFin="ngbDatepicker">
-                <button class="btn btn-outline-secondary calendar" (click)="dateFin.toggle()" type="button">
+                <button class="btn background-outline-yellow calendar" (click)="dateFin.toggle()" type="button">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                 </button>
             </div>
@@ -55,7 +55,7 @@
 
     <div class="row p-3">
         <div class="col-12">
-            <button class="btn btn-outline-secondary mt-4 w-100" (click)="listsummary()" type="button">
+            <button class="btn background-outline-yellow  mt-4 w-100" (click)="listsummary()" type="button">
                 Dashboard
             </button>
         </div>
@@ -103,14 +103,14 @@
                 </ngb-pagination>
             </div>
             <div class="col-3">
-                <span> Par </span>
-                <select (change)="updatePageSize($any($event.target).value)">
+                 Par
+                <select (change)="updatePageSize($any($event.target).value)" class="form-control w-8">
                     <option selected="true"> 10 </option>
                     <option> 100 </option>
                     <option> 1000 </option>
                     <option> 5000 </option>
                 </select>
-                <span> lignes </span>
+                 lignes
             </div>
         </div>
     </div>

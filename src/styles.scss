@@ -6,7 +6,74 @@ $theme-colors:(
     "danger": yellow
 )
 */
+.background {
+    background-color: #F0EFEF;
+}
 
-.primary {
-    background-color: #d96200 !important;
+
+.background-outline-yellow {
+    color:  #033A76 !important;
+    border-color: #f2c830 !important;
+}
+
+.background-outline-yellow:hover {
+    background-color: #f2c830 !important ;
+    //border-color: #033A76 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.outline-details{
+    color:  #033A76 !important;
+    border-color:  #033A76 !important;
+}
+
+.outline-details:hover{
+    background-color: #033A76 !important ;
+    color: white !important;
+}
+
+.outline-update{
+    color:  #f2c830 !important;
+    border-color:  #f2c830 !important;
+}
+
+.outline-update:hover{
+    background-color: #f2c830 !important ;
+    color: white !important;
+}
+
+
+.navbar-background {
+    background-color: #033A76 !important;
+}
+
+.text{
+    color: white !important;
+}
+
+.text-one{
+    color: #033A76 !important;
+}
+
+.text-two{
+    color: #FFD21F !important;
+}
+
+
+.background-modal-title{
+    background-color: #FFD21F !important;
+}
+/*
+select{
+    border-color:  #f2c830 !important;
+}
+
+input{
+    border-color:  #f2c830 !important;
+}
+*/
+
+.icon{
+    color: #f2c830
 }

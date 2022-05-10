@@ -1,8 +1,8 @@
 <div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
-    <h1 class="mt-2 text-info"> Modification: {{user.username}} </h1>
+    <h1 class="mt-2 text-one"> Modification: {{user.username}} </h1>
     <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
         <div class="form-group">
-            <label class="control-label">
+            <label class="control-label text-one">
                 <h5>Username:</h5>
             </label>
             <div>
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group text-one">
             <label class="control-label">
                 <h5>Email:</h5>
             </label>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group text-one">
             <label class="control-label">
                 <h5>Rôle: </h5> 
                 <!--{{user.roles[0].name}}-->
@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <button class="btn bg-info text-white">
+        <button class="btn background-outline-yellow">
             <span> Modifier </span>
         </button>
 

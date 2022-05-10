@@ -1,12 +1,12 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
-    <h2 class="pt-3">{{uap.uapName}}</h2>
+    <h2 class="pt-3 text-one">{{uap.uapName}}</h2>
 
     <div class="input-group mt-3 mb-3">
-        <button class="btn col-4 col-md-4 col-sm-12 btn btn-outline-info" (click)="open(content)" *ngIf=isAdmin()>
+        <button class="btn col-4 col-md-4 col-sm-12 btn background-outline-yellow " (click)="open(content)" *ngIf=isAdmin()>
             <span> Ajouter Centre de Charge</span>
             <ng-template #content let-modal>
-                <div class="modal-header">
-                    <h4 class="modal-title text-info">Ajouter nouveau centre de charge</h4>
+                <div class="modal-header background-modal-title">
+                    <h4 class="modal-title text-one">Ajouter nouveau centre de charge</h4>
                     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -18,10 +18,10 @@
                 </div>
             </ng-template>
         </button>
-        <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
+        <input class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
             placeholder="Chercher un UAP ..." [(ngModel)]="ccname" [(ngModel)]="ccdescription" (input)="Search()">
         <span class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">
+            <button class="btn background-outline-yellow" type="button">
                 <i class="fa fa-search"></i>
             </button>
         </span>
@@ -41,10 +41,10 @@
                 <td>{{cc.ccdescription}}</td>
                 <td>{{cc.uap.uapName}}</td>
                 <td>
-                    <button (click)="loadChargeDetails(cc.idCC)" class="btn btn-outline-info">
+                    <button (click)="loadChargeDetails(cc.idCC)" class="btn outline-details">
                         <i class="fa fa-file" aria-hidden="true"></i>
                     </button>
-                    <button (click)="updateLoadCharge(cc.idCC)" class="btn btn-outline-secondary" *ngIf=isAdmin()>
+                    <button (click)="updateLoadCharge(cc.idCC)" class="btn outline-update" *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
                     </button>
                     <button class="btn btn-outline-danger" (click)="open(content)" *ngIf=isAdmin()>

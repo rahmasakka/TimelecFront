@@ -1,7 +1,7 @@
 <div class="container">
     <form>
         <div class="form-group">
-            <label class="control-label">
+            <label class="control-label text-one">
                 <h5>Nom machine:</h5>
             </label>
             <div>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label">
+            <label class="control-label text-one">
                 <h5>Description de la machine:</h5>
             </label>
             <div>
@@ -39,7 +39,7 @@
         </div>
 
         <div>
-            <label class="control-label">
+            <label class="control-label text-one">
                 <h5>Categorie</h5>
             </label>
             <div class="col-10">
@@ -57,7 +57,9 @@
         </div>
 
         <div>
-            <h5>Centre de charge</h5>
+            <label class="control-label text-one mt-2">
+                <h5>Centre de charge</h5>
+            </label>
             <select class="form-control" id="idCC" name="idCC" [(ngModel)]="newIdCC" required>
                 <option value="0" selected disabled>--Affecter un centre de charge à cette machine--</option>
                 <option *ngFor="let CC of CCs" [value]="CC.idCC">
@@ -66,8 +68,8 @@
             </select>
         </div>
 
-        <div class="mt-2">
-            <button type="submit" (click)="addMachine()" class="btn btn-info">Ajouter</button>
+        <div class="mt-4">
+            <button type="submit" (click)="addMachine()" class="btn background-outline-yellow">Ajouter</button>
             <!--div class="alert alert-warning mt-2" *ngIf="isFailed">
                 Création échoue! {{ errorMessage }}
             </div-->
