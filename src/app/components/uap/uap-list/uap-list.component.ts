@@ -8,7 +8,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-uap-list',
   templateUrl: './uap-list.component.html',
-  styleUrls: ['./uap-list.component.css']
+  styleUrls: ['./uap-list.component.scss']
 })
 export class UapListComponent implements OnInit {
   url:string = "uap";

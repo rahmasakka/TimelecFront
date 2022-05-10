@@ -21,7 +21,7 @@
             </label>
             <select class="form-control" id="testerId" name="testerId" [(ngModel)]="testerId">
                 <option value="0" selected disabled>--Choisissez un testeur --</option>
-                <option *ngFor="let testeur of listTesterID" [value]="testeur.idMachine">
+                <option *ngFor="let testeur of listTesterID" [value]="testeur">
                     {{testeur}}
                 </option>
             </select>

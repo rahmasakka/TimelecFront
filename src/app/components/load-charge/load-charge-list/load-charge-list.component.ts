@@ -8,7 +8,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-load-charge-list',
   templateUrl: './load-charge-list.component.html',
-  styleUrls: ['./load-charge-list.component.css']
+  styleUrls: ['./load-charge-list.component.scss']
 })
 export class LoadChargeListComponent implements OnInit {
   url: string = "cc";

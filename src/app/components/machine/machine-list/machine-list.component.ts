@@ -8,7 +8,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-machine-list',
   templateUrl: './machine-list.component.html',
-  styleUrls: ['./machine-list.component.css']
+  styleUrls: ['./machine-list.component.scss']
 })
 export class MachineListComponent implements OnInit {
   machines !: machine[]

@@ -7,7 +7,7 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 @Component({
   selector: 'app-create-load-charge',
   templateUrl: './create-load-charge.component.html',
-  styleUrls: ['./create-load-charge.component.css']
+  styleUrls: ['./create-load-charge.component.scss']
 })
 export class CreateLoadChargeComponent implements OnInit {
   url:string = "uap";

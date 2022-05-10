@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { machine } from 'src/app/model/machine';
 import { summary } from 'src/app/model/summary';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { EtlService } from 'src/app/services/etl.service';
@@ -9,7 +8,7 @@ import { ProductionService } from 'src/app/services/production.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   modelDebut!: NgbDateStruct;
@@ -26,7 +25,6 @@ export class DashboardComponent implements OnInit {
   isError: boolean = false
   isClicked: boolean = false
 
-  //  listTesterID !: machine[]
   listTesterID: any
   nbSecond !: number
   nbMinute = 3
@@ -106,6 +104,17 @@ export class DashboardComponent implements OnInit {
       this.getListSummaryByTesterId(this.testerId)
     }
 
+    if ((this.datefin == null) && (this.datedeb == null) && (this.testerId == null)) {
+      this.getListSummaryByDatabase()
+    }
+  }
+
+  getListSummaryByDatabase(){
+    this.productionService.getListSummaryByDatabase(
+      this.databaseId, this.thePageSize,
+      this.thePageNumber - 1).subscribe(
+      this.processResult()
+    )
   }
 
   getListSummaryByDate(date: string) {

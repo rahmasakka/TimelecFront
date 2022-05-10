@@ -9,7 +9,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-load-charge-details',
   templateUrl: './load-charge-details.component.html',
-  styleUrls: ['./load-charge-details.component.css']
+  styleUrls: ['./load-charge-details.component.scss']
 })
 export class LoadChargeDetailsComponent implements OnInit {
   name = ""

@@ -9,7 +9,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-load-charge-by-uap',
   templateUrl: './load-charge-by-uap.component.html',
-  styleUrls: ['./load-charge-by-uap.component.css']
+  styleUrls: ['./load-charge-by-uap.component.scss']
 })
 export class LoadChargeByUapComponent implements OnInit {
   id!: number;  

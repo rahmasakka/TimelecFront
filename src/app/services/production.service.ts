@@ -11,12 +11,15 @@ const baseURL = 'http://localhost:9003/api/';
 
 export class ProductionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getListTesterByDatabase(baseDeDonnés: string): Observable<object>{
-    return this.http.get<Object>(`${baseURL}${baseDeDonnés}listeTesterIdByDatabase`)
+  getListSummaryByDatabase(baseDeDonnés: string, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary> {
+    return this.http.get<GetResponseSummary>(`${baseURL}${baseDeDonnés}all?pageSize=${thePageSize}&pageNumber=${thePageNumber}`)
   }
 
+  getListTesterByDatabase(baseDeDonnés: string): Observable<object> {
+    return this.http.get<Object>(`${baseURL}${baseDeDonnés}listeTesterIdByDatabase`)
+  }
 
   getSummaryByDatePaginate(baseDeDonnés: string, maDate: string, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary> {
     const searchUrl = `${baseURL}${baseDeDonnés}testStartTime/${maDate}?pageSize=${thePageSize}&pageNumber=${thePageNumber}`
@@ -28,7 +31,7 @@ export class ProductionService {
     const searchUrl = `${baseURL}${baseDeDonnés}testStartTime/${maDate}/testerID/${testerId}?pageSize=${thePageSize}&pageNumber=${thePageNumber}`
     return this.http.get<GetResponseSummary[]>(searchUrl)
   }
-  
+
   getListSummaryByTesterId(baseDeDonnés: string, testerId: number, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary[]> {
     const searchUrl = `${baseURL}${baseDeDonnés}testerID/${testerId}?pageSize=${thePageSize}&pageNumber=${thePageNumber}`
     return this.http.get<GetResponseSummary[]>(searchUrl)
@@ -41,7 +44,8 @@ export class ProductionService {
 
   getSummariesBetweenTwoDaysByTesterIdPaginate(baseDeDonnés: string, date1: string, date2: string, testerId: number, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary[]> {
     const searchUrl = `${baseURL}${baseDeDonnés}${date1}/${date2}/${testerId}?pageSize=${thePageSize}&pageNumber=${thePageNumber}`
-    return this.http.get<GetResponseSummary[]>(searchUrl)  }
+    return this.http.get<GetResponseSummary[]>(searchUrl)
+  }
 
   getSummaryListPaginate(baseDeDonnés: string, pageNumber: number, pageSize: number): Observable<GetResponseSummary[]> {
     const searchUrl = `${baseURL}${baseDeDonnés}all?pageSize=${pageSize}&pageNumber=${pageNumber}`
@@ -54,14 +58,14 @@ export class ProductionService {
   }
 }
 
-interface GetResponseSummary{
-  _embedded:{
-    summaries : summary[];
+interface GetResponseSummary {
+  _embedded: {
+    summaries: summary[];
   },
   page: {
     size: number;
     totalElements: number;
-    totalPages:  number,
-    number : number
+    totalPages: number,
+    number: number
   }
 }

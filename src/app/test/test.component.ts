@@ -7,7 +7,7 @@ import { ProductionService } from '../services/production.service';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css']
+  styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
   mois = [

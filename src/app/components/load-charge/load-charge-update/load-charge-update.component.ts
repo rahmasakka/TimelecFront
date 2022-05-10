@@ -7,7 +7,7 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 @Component({
   selector: 'app-load-charge-update',
   templateUrl: './load-charge-update.component.html',
-  styleUrls: ['./load-charge-update.component.css']
+  styleUrls: ['./load-charge-update.component.scss']
 })
 export class LoadChargeUpdateComponent implements OnInit {
 

@@ -6,7 +6,7 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 @Component({
   selector: 'app-create-machine',
   templateUrl: './create-machine.component.html',
-  styleUrls: ['./create-machine.component.css']
+  styleUrls: ['./create-machine.component.scss']
 })
 export class CreateMachineComponent implements OnInit {
   isSuccessful = false;

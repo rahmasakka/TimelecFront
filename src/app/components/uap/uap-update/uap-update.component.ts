@@ -6,7 +6,7 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 @Component({
   selector: 'app-uap-update',
   templateUrl: './uap-update.component.html',
-  styleUrls: ['./uap-update.component.css']
+  styleUrls: ['./uap-update.component.scss']
 })
 export class UapUpdateComponent implements OnInit {
 

@@ -7,7 +7,7 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 @Component({
   selector: 'app-update-machine',
   templateUrl: './update-machine.component.html',
-  styleUrls: ['./update-machine.component.css']
+  styleUrls: ['./update-machine.component.scss']
 })
 export class UpdateMachineComponent implements OnInit {
   url: string = "cc";
