@@ -32,6 +32,7 @@ import { UapComponent } from './components/uap/uap/uap.component';
 import { CentreChargeComponent } from './components/load-charge/centre-charge/centre-charge.component';
 import { MachineComponent } from './components/machine/machine/machine.component';
 import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
+import { Test1Component } from './test1/test1.component';
 
 @NgModule({    
   declarations: [
@@ -61,6 +62,7 @@ import { DashboardComponent } from './components/dashboard/dashboard/dashboard.c
     CentreChargeComponent,
     MachineComponent,
     DashboardComponent,
+    Test1Component,
    ],
    
   imports: [

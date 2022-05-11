@@ -20,7 +20,6 @@ $theme-colors:(
     background-color: #f2c830 !important ;
     //border-color: #033A76 !important;
     color: white !important;
-    font-weight: bold;
 }
 
 .outline-details{
@@ -29,13 +28,13 @@ $theme-colors:(
 }
 
 .outline-details:hover{
-    background-color: #033A76 !important ;
+    background-color:#033A76 !important ;
     color: white !important;
 }
 
 .outline-update{
-    color:  #f2c830 !important;
-    border-color:  #f2c830 !important;
+    color:#f2c830 !important;
+    border-color :#f2c830 !important;
 }
 
 .outline-update:hover{

@@ -6,7 +6,8 @@
             </label>
             <div>
                 <input type="text" class="form-control" placeholder="Nom de la machine" name="ccname"
-                    [(ngModel)]="newMachine.machineName" #machineName="ngModel" required minlength="3" maxlength="20">
+                    [(ngModel)]="newMachine.machineName" #machineName="ngModel" required minlength="3" maxlength="20"
+                    style="width : 110%">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && machineName.errors?.['required']">
                     Le nom de la machine est obligatoire.
                 </div>
@@ -26,7 +27,7 @@
             <div>
                 <textarea type="text" class="form-control" placeholder="Description de la machine"
                     name="machineDescription" [(ngModel)]="newMachine.machineDescription" required
-                    #machineDescription="ngModel" minlength="10"></textarea>
+                    #machineDescription="ngModel" minlength="10" style="width : 110%"></textarea>
                 <div class="alert alert-danger" role="alert"
                     *ngIf="submitted && machineDescription.errors?.['required']">
                     La description de la machine est obligatoire.
@@ -60,7 +61,7 @@
             <label class="control-label text-one mt-2">
                 <h5>Centre de charge</h5>
             </label>
-            <select class="form-control" id="idCC" name="idCC" [(ngModel)]="newIdCC" required>
+            <select class="form-control" id="idCC" name="idCC" [(ngModel)]="newIdCC" required style="width : 110%">
                 <option value="0" selected disabled>--Affecter un centre de charge à cette machine--</option>
                 <option *ngFor="let CC of CCs" [value]="CC.idCC">
                     {{CC.ccname}}

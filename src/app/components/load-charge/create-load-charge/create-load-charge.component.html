@@ -4,7 +4,7 @@
             <label class="control-label text-one">
                 <h5>Nom centre charge:</h5>
             </label>
-            <div>
+            <div style="width : 120%">
                 <input type="text" class="form-control" placeholder="Nom du centre de charge" name="ccname"
                     [(ngModel)]="newCentreCharge.ccname" required #ccname="ngModel" minlength="3" maxlength="20">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && ccname.errors?.['required']">
@@ -23,7 +23,7 @@
             <label class="control-label">
                 <h5>Description du centre charge:</h5>
             </label>
-            <div>
+            <div style="width : 120%">
                 <textarea type="text" class="form-control" placeholder="Nom du centre de charge" name="ccdescription"
                     [(ngModel)]="newCentreCharge.ccdescription" required #ccdescription="ngModel"
                     minlength="10"></textarea>
@@ -40,7 +40,7 @@
             <label class="control-label">
                 <h5>UAP:</h5>
             </label>
-            <select class="form-control" id="idUAP" name="idUAP" [(ngModel)]="newIdUAP">
+            <select class="form-control" id="idUAP" name="idUAP" [(ngModel)]="newIdUAP" style="width : 120%">
                 <option value="0" selected disabled>--Affecter un UAP à ce centre de charge--</option>
                 <option *ngFor="let uap of uaps" [value]="uap.idUAP">
                     {{uap.uapName}}

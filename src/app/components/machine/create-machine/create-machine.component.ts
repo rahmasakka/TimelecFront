@@ -38,6 +38,7 @@ export class CreateMachineComponent implements OnInit {
 
     this.newMachine.centreCharge = this.newCC;
     this.newMachine.reference = false
+    console.log(this.newMachine)
     this.crudService.createNewEntity("machine",this.newMachine).subscribe(
       data => {
         console.log(data)
@@ -48,6 +49,6 @@ export class CreateMachineComponent implements OnInit {
         this.isFailed = true;
       }
     );
-    window.location.reload();
+    //window.location.reload();
   }
 }

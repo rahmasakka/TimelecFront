@@ -75,6 +75,6 @@ export class MachineListComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
-    }
+    }  
   }
 }

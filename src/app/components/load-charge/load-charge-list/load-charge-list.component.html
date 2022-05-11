@@ -34,7 +34,7 @@
                 <th> Nom </th>
                 <th> Description </th>
                 <th> UAP </th>
-                <th *ngIf=isAdmin()> Actions </th>
+                <th> Actions </th>
             </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@
                 <td>
                     <button (click)="loadChargeDetails(cc.idCC)" class="btn outline-details">
                         <i class="fa fa-file" aria-hidden="true"></i>
-                        Machines par {{cc.ccname}}
+                        Détails de {{cc.ccname}}
                     </button>
                     <button (click)="updateLoadCharge(cc.idCC)" class="btn outline-update" *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
@@ -60,12 +60,12 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="input-group-append">
+                                <div class="input-group-append text-one">
                                     Voulez-vous vraiment supprimer ce centre de charge?
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                <button class="btn background-outline-yellow" (click)="modal.dismiss()">
                                     Annuler
                                 </button>
                                 <button class="btn btn-danger" (click)="deleteLoadCharge(cc.idCC)">

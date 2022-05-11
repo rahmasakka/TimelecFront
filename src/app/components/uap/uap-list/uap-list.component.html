@@ -29,10 +29,10 @@
     </div>
     <table class="table table-striped">
         <thead>
-            <tr>
+            <tr class="text-one">
                 <th> Nom </th>
                 <th> Description </th>
-                <th *ngIf=isAdmin()> Actions </th>
+                <th> Actions </th>
             </tr>
         </thead>
         <tbody>
@@ -57,12 +57,12 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="input-group-append">
+                                <div class="input-group-append text-one">
                                     Voulez-vous vraiment supprimer cet UAP?
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                <button class="btn background-outline-yellow" (click)="modal.dismiss()">
                                     Annuler
                                 </button>
                                 <button class="btn btn-danger" (click)="deleteUAP(uap.idUAP)">

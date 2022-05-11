@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-12">
             <label>
-                <h5>Base de données: </h5>
+                <h5 class="text-one"> Base de données: </h5>
             </label>
-            <select class="form-control" id="databaseId" name="databaseId"
-                [(ngModel)]="databaseId" (change)="chargerTesterID($any($event.target).value)">
+            <select class="form-control" id="databaseId" name="databaseId" [(ngModel)]="databaseId"
+                (change)="chargerTesterID($any($event.target).value)">
                 <option value="0" selected disabled>--Choisissez une base de données --</option>
                 <option value="vm/"> TestResultVm </option>
                 <option value="sircoSircover/"> TestResultsSircoSircover </option>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <label>
+            <label class="text-one">
                 <h5>Centre de charge:</h5>
             </label>
             <select class="form-control" id="testerId" name="testerId" [(ngModel)]="testerId">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-12">
-            <label>
+            <label class="text-one">
                 <h5>Date début:</h5>
             </label>
             <div class="input-group">
@@ -39,7 +39,7 @@
                 </button>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
+        <div class="col-lg-3 col-md-6 col-sm-12 text-one">
             <label>
                 <h5>Date fin:</h5>
             </label>
@@ -69,23 +69,23 @@
 
     <table class="table table-striped">
         <thead>
-            <tr>
+            <tr class="text-one">
+                <th> mechanical assembly </th>
                 <th> Centre de charge </th>
                 <th> test start time </th>
                 <th> test status </th>
                 <th> site code </th>
                 <th> operator name </th>
-                <th> mechanical assembly </th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let summary of listSummaries">
+                <td>{{summary.mechanicalAssembly.idMechanicalAssembly}}</td>
                 <td>{{summary.testerID}}</td>
                 <td>{{summary.testStartTime}}</td>
                 <td>{{summary.testStatus}}</td>
                 <td>{{summary.siteCode}}</td>
                 <td>{{summary.operatorName}}</td>
-                <td>{{summary.mechanicalAssembly.idMechanicalAssembly}}</td>
             </tr>
         </tbody>
     </table>
@@ -103,14 +103,14 @@
                 </ngb-pagination>
             </div>
             <div class="col-3">
-                 Par
+                Par
                 <select (change)="updatePageSize($any($event.target).value)" class="form-control w-8">
                     <option selected="true"> 10 </option>
                     <option> 100 </option>
                     <option> 1000 </option>
-                    <option> 5000 </option>
+                    <!--option> 5000 </option-->
                 </select>
-                 lignes
+                lignes
             </div>
         </div>
     </div>

@@ -4,11 +4,11 @@
             <label class="control-label text-one">
                 <h5>Username:</h5>
             </label>
-            <div>
+            <div style="width: 200%">
                 <input type="text" class="form-control" placeholder="Ton username" name="username" id="username"
                     [(ngModel)]="form.username" required #username="ngModel" minlength="3">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.invalid">
-                     L'username est obligatoire
+                    L'username est obligatoire
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['minlength']">
                     L'username doit contenir au moins 3 caractères
@@ -20,13 +20,15 @@
             <label class="control-label">
                 <h5>Email:</h5>
             </label>
-            <input type="email" class="form-control" name="email" id="email" [(ngModel)]="form.email" required
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="nom@gmail.com" #email="ngModel" />
-            <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['required']">
-                L'adresse mail est obligatoire
-            </div>
-            <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['pattern']">
-                L'adresse mail doit respecter la forme ***@****.**
+            <div style="width: 200%">
+                <input type="email" class="form-control" name="email" id="email" [(ngModel)]="form.email" required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="nom@gmail.com" #email="ngModel" />
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['required']">
+                    L'adresse mail est obligatoire
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="submitted && email.errors?.['pattern']">
+                    L'adresse mail doit respecter la forme ***@****.**
+                </div>
             </div>
         </div>
 
@@ -35,9 +37,9 @@
             <label class="control-label">
                 <h5>Mot de passe:</h5>
             </label>
-            <div>
+            <div style="width: 200%">
                 <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
-                    minlength="6" #password="ngModel" placeholder=" Your password" />
+                    minlength="6" #password="ngModel" placeholder=" Ton mot de passe" />
 
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && password.errors?.['required']">
                     Le mot de passe est obligatoire!
@@ -52,7 +54,7 @@
             <label class="control-label">
                 <h5>Rôle:</h5>
             </label>
-            <div>
+            <div style="width: 200%">
                 <select class="form-control" aria-label="Role" [(ngModel)]="form.roles">
                     <option *ngFor="let role of roles" id="role" name="roles" [value]="role.id"> {{role.name}}
                     </option>
@@ -65,8 +67,8 @@
         </button>
         <br />
         <div class="alert alert-warning" *ngIf="isSignUpFailed">
-            Création erroné! <br/> {{ errorMessage }}
-            
+            Création erroné! <br /> {{ errorMessage }}
+
         </div>
     </form>
 

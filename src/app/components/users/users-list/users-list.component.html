@@ -35,7 +35,7 @@
             <tr class="text-one">
                 <th> Username </th>
                 <th> Email </th>
-                <th *ngIf=isAdmin()> Rôle </th>
+                <th> Rôle </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
         </thead>
@@ -43,12 +43,12 @@
             <tr *ngFor="let user of users">
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
-                <td *ngIf=isAdmin()> {{user.roles[0].name}} </td>
+                <td> {{user.roles[0].name}} </td>
                 <td *ngIf=isAdmin()>
                     <button (click)="updateUser(user.id)" class="btn outline-update">
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-outline-danger" (click)="open(content)" *ngIf=isAdmin()>
+                    <button class="btn btn-outline-danger" (click)="open(content)">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                         <ng-template #content let-modal>
                             <div class="modal-header">
@@ -58,12 +58,12 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="input-group-append">
+                                <div class="input-group-append text-one">
                                     Voulez-vous vraiment supprimer cet utilisateur?
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                <button class="btn background-outline-yellow" (click)="modal.dismiss()">
                                     Annuler
                                 </button>
                                 <button class="btn btn-danger" (click)="deleteUser(user.id)">

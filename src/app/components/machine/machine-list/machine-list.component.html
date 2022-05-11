@@ -30,7 +30,7 @@
     </div>
     <table class="table table-striped">
         <thead>
-            <tr>
+            <tr class="text-one">
                 <th> Nom </th>
                 <th> Description </th>
                 <th> Centre de charge </th>
@@ -66,12 +66,12 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="input-group-append">
+                                <div class="input-group-append text-one">
                                     Voulez-vous vraiment supprimer cette machine?
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-outline-secondary" (click)="modal.dismiss()">
+                                <button class="btn background-outline-yellow" (click)="modal.dismiss()">
                                     Annuler
                                 </button>
                                 <button class="btn btn-danger" (click)="deleteMachine(machine.idMachine)">
