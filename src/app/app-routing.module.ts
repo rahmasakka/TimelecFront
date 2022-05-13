@@ -4,6 +4,7 @@ import { ProfilComponent } from './components/auth/profil/profil.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
+import { DatabasesComponent } from './components/dashboard/databases/databases.component';
 import { HomeComponent } from './components/home/home.component';
 import { CreateLoadChargeComponent } from './components/load-charge/create-load-charge/create-load-charge.component';
 import { LoadChargeByUapComponent } from './components/load-charge/load-charge-by-uap/load-charge-by-uap.component';
@@ -22,11 +23,12 @@ import { UpdateUserComponent } from './components/users/update-user/update-user.
 import { UsersListComponent } from './components/users/users-list/users-list.component';
 import { TestComponent } from './test/test.component';
 
+
 const routes: Routes = [
   { path: 'uap', component: UapComponent},
-
-  { path: 'test', component: TestComponent},
+  { path: 'databases', component: DatabasesComponent},
   { path: 'dashboard', component: DashboardComponent},
+  { path: 'test', component: TestComponent},
 
 
   { path: 'machine-list', component: MachineListComponent},

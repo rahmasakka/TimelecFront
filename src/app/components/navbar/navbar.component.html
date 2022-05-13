@@ -45,6 +45,12 @@
           <span>Dashboard</span>
         </button>
       </li>
+
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <button class="btn navbar-brand text" routerLink="databases" routerLinkActive="active">
+          <span>Databases</span>
+        </button>
+      </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">

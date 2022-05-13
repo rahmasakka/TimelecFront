@@ -27,12 +27,12 @@ import { CreateLoadChargeComponent } from './components/load-charge/create-load-
 import { CreateMachineComponent } from './components/machine/create-machine/create-machine.component';
 import { UpdateMachineComponent } from './components/machine/update-machine/update-machine.component';
 import { LoadChargeDetailsComponent } from './components/load-charge/load-charge-details/load-charge-details.component';
-import { TestComponent } from './test/test.component';
 import { UapComponent } from './components/uap/uap/uap.component';
 import { CentreChargeComponent } from './components/load-charge/centre-charge/centre-charge.component';
 import { MachineComponent } from './components/machine/machine/machine.component';
 import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
-import { Test1Component } from './test1/test1.component';
+import { DatabasesComponent } from './components/dashboard/databases/databases.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({    
   declarations: [
@@ -57,12 +57,12 @@ import { Test1Component } from './test1/test1.component';
     CreateMachineComponent,
     UpdateMachineComponent,
     LoadChargeDetailsComponent,
-    TestComponent,
     UapComponent,
     CentreChargeComponent,
     MachineComponent,
     DashboardComponent,
-    Test1Component,
+    DatabasesComponent,
+    TestComponent
    ],
    
   imports: [
@@ -70,7 +70,7 @@ import { Test1Component } from './test1/test1.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule,  
+    NgbModule
     ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
