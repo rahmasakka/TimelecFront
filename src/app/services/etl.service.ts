@@ -9,13 +9,7 @@ const baseURL = 'http://localhost:9003/api/';
 export class EtlService {
 
   constructor(private http: HttpClient) { }
-  /*
-  calculNbSecond(databaseId: string,  maDate: string , testerId: number , nbMinute : number) : Observable<number>{
-    return this.http.get<number>(baseURL+databaseId+'nbSecondParJour/'+ maDate+'/testerID/'+testerId+'/nbMinute/'+nbMinute)
-  }
-  */
-
-  ETL(jour: string, testerID: number, database: string): Observable<object> {
-    return this.http.get<object>(`${baseURL}${database}/etl/${jour}/${testerID}`)
+  ETL(jour: string, database: string): Observable<object> {
+    return this.http.get<object>(`${baseURL}${database}/etl/${jour}`)
   }
 }

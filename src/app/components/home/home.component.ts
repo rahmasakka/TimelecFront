@@ -9,15 +9,8 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 })
 export class HomeComponent implements OnInit {
 
-  uaps!: UAP[]
-  uapName = "test"
-  constructor(private crudService : CrudGlobaleService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.crudService.getListEntity("uap").subscribe(
-      data => {
-        this.uaps = data;
-      }
-    )
   }
 }

@@ -1,54 +1,57 @@
-<div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
-  <h1 class="mt-2">Sign In</h1>
+<div class="sign">
+  <div class="container card col-lg-6 col-sm-10 align-items-left mt-4">
+    <h1 class="mt-2">Sign In</h1>
 
-  <form class="form-horizontal" *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"
-    novalidate>
+    <form class="form-horizontal" *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"
+      novalidate>
 
-    <div class="form-group">
-      <label class="control-label">
-        <h5>Username:</h5>
-      </label>
-      <div>
-        <input type="username" class="form-control" placeholder="Votre username" name="username"
-          [(ngModel)]="form.username" required #username="ngModel">
-        <div class="alert alert-danger" role="alert" *ngIf="f.submitted && username.invalid">
-          Username est obligatoire!
+      <div class="form-group">
+        <label class="control-label">
+          <h5>Username:</h5>
+        </label>
+        <div>
+          <input type="username" class="form-control" placeholder="Votre username" name="username"
+            [(ngModel)]="form.username" required #username="ngModel">
+          <div class="alert alert-danger" role="alert" *ngIf="f.submitted && username.invalid">
+            Username est obligatoire!
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="control-label">
-        <h5>Mot de passe:</h5>
-      </label>
-      <div>
-        <input type="password" class="form-control" placeholder="Votre mot de passe.." name="password"
-          [(ngModel)]="form.password" required minlength="6" #password="ngModel">
-      </div>
-      <div class="alert alert-danger" role="alert" *ngIf="f.submitted && password.invalid">
-        <div *ngIf="password.errors?.required">Mot de passe est obligatoire</div>
-        <div *ngIf="password.errors?.minlength">
-          Mot de passe doit contenir  au moins 6 charactères
+      <div class="form-group">
+        <label class="control-label">
+          <h5>Mot de passe:</h5>
+        </label>
+        <div>
+          <input type="password" class="form-control" placeholder="Votre mot de passe.." name="password"
+            [(ngModel)]="form.password" required minlength="6" #password="ngModel">
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="f.submitted && password.invalid">
+          <div *ngIf="password.errors?.required">Mot de passe est obligatoire</div>
+          <div *ngIf="password.errors?.minlength">
+            Mot de passe doit contenir au moins 6 charactères
+          </div>
         </div>
       </div>
-    </div>
 
 
 
-    <button class="btn bg-info">
-      <span> Se connecter</span>
-    </button>
-    <br />
+      <button class="btn bg-info">
+        <span> Se connecter</span>
+      </button>
+      <br />
 
-    <div class="form-group">
-      <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
-        Connexion échouée: {{ errorMessage }}
+      <div class="form-group">
+        <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
+          Connexion échouée: {{ errorMessage }}
+        </div>
       </div>
+
+    </form>
+
+    <div class="alert alert-success" *ngIf="isLoggedIn">
+      Connectée comme: {{ roles }}.
     </div>
-
-  </form>
-
-  <div class="alert alert-success" *ngIf="isLoggedIn">
-    Connectée comme:  {{ roles }}.
   </div>
+
 </div>

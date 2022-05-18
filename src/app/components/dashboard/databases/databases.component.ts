@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { summary } from 'src/app/model/summary';
 import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
@@ -41,9 +42,7 @@ export class DatabasesComponent implements OnInit {
 
 
   constructor(
-    private productionService: ProductionService,
-    private etlService: EtlService,
-    private crudService: CrudGlobaleService) { }
+    private productionService: ProductionService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     /*  
@@ -54,10 +53,13 @@ export class DatabasesComponent implements OnInit {
     this.machineService.listTesteurReferenced().subscribe(
       data => { this.listTesterID = data }
     )*/
+   // this.databaseId="vm"
+
+    this.databaseId = this.route.snapshot.params['keyword']
 
     const currentDate = new Date();
     const currentDateFormat = currentDate.toISOString().substring(0, 10)
-    //this.getListSummaryByDatePaginate(currentDateFormat)
+    this.getListSummaryByDatabase()
   }
 
   chargerTesterID(db: string) {
@@ -197,6 +199,7 @@ export class DatabasesComponent implements OnInit {
     )
   }
 */
+
   processResult() {
     return (data: any) => {
       this.listSummaries = data.content;

@@ -1,0 +1,72 @@
+.card-testeur {
+    border: 0.1em solid rgba(3, 58, 118, 1);
+    background-color: rgba(3, 58, 118, 0.2);
+}
+
+.text-card-testeur {
+    color: #033A76;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-date {
+    border: 0.1em solid #033A76;
+    background-color: white;
+}
+
+
+.title-card-testeur {
+    color: #033A76;
+    font-size: 20px;
+}
+
+.card-fonctionnement {
+    border: 0.1em solid rgba(242, 200, 48, 2);
+    background-color: rgba(242, 200, 48, 0.2);
+}
+
+.card-disfonctionnement {
+    background-color: rgba(219, 0, 66, 0.1);
+    border: 0.1em solid rgba(219, 0, 66, 1)
+}
+
+.text-card-disfonctionnement {
+    color: rgba(219, 0, 66, 1);
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    //  margin-top: 2%;
+}
+
+.title-card-disfonctionnement {
+    color: rgba(219, 0, 66, 1);
+    font-size: 20px;
+}
+
+.text-card-fonctionnement {
+    color: #033A76;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    // margin-top: 2%;
+}
+
+.text-card-fonctionnement {
+    color: rgba(255, 128, 0, 1);
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    //  margin-top: 2%;
+}
+
+.title-card-fonctionnement {
+    color: rgba(255, 128, 0, 1);
+    font-size: 20px;
+}
+
+.title-card-date {
+    color: #033A76;
+    font-size: 30px;
+    font-weight: bold;
+}

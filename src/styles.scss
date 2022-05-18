@@ -22,6 +22,17 @@ $theme-colors:(
     color: white !important;
 }
 
+.background-outline-bleu{
+    color:  #033A76  !important;
+    border-color:  #033A76 !important;
+}
+
+.background-outline-bleu:hover {
+    background-color:  #033A76 !important;
+    //border-color: #033A76 !important;
+    color: white !important;
+}
+
 .outline-details{
     color:  #033A76 !important;
     border-color:  #033A76 !important;

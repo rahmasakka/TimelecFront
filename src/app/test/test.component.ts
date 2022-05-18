@@ -122,19 +122,19 @@ export class TestComponent implements OnInit {
               label: date,
               data: [conforme, nonConforme],
               backgroundColor: [
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 99, 132, 0.2)"
+                "rgba(3, 58, 118, 0.8)",
+                "rgba(242, 200, 48, 0.8)"
               ],
               borderColor: [
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 99, 132, 1)"
+                "rgba(3, 58, 118, 1)",
+                "rgba(242, 200, 48, 1)"
+
               ],
               borderWidth: 1
             }
             ]
-          },
-        }
-        )
+          }
+        })
 
 
         var myChartBar = new Chart("myChartBar", {
@@ -156,6 +156,15 @@ export class TestComponent implements OnInit {
               borderWidth: 1,
             }
             ]
+          }
+
+          ,
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
           }
         }
         )

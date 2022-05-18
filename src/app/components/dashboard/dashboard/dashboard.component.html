@@ -1,21 +1,17 @@
-<!--div style = "width : 50% ; height: 50%">
-    <canvas id="myChart"></canvas>
-</div-->
-
 <div class="m-5 p-5 card">
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-12">
             <label>
                 <h5 class="text-one"> Base de données: </h5>
             </label>
-            <select class="form-control" id="databaseId" name="databaseId" [(ngModel)]="databaseId">
-                <!--                (change)="chargerTesterID($any($event.target).value)"-->
+            <select class="form-control" id="databaseId" name="databaseId" [(ngModel)]="databaseId"
+                (change)="chargerTesterID($any($event.target).value)">
                 <option value="0" selected disabled>--Choisissez une base de données --</option>
-                <option value="vm"> TestResultVm </option>
-                <option value="sircoSircover"> TestResultsSircoSircover </option>
-                <option value="p77"> TestResultsP77 </option>
-                <option value="fuserbloc"> TestResultsFuserbloc </option>
-                <option value="devP87"> TestResultsDevP87 </option>
+                <option value="vm"> Sirco vm </option>
+                <option value="sircoSircover"> Sirco Sircover </option>
+                <option value="fuserbloc"> Fuserbloc </option>
+                <option value="p77"> P77 </option>
+                <option value="devP87"> P87 </option>
             </select>
         </div>
 
@@ -68,7 +64,7 @@
         </ngb-alert-->
 
     </div>
-    <table class="table table-striped">
+    <!--table class="table table-striped">
         <thead>
             <tr class="text-one">
                 <th> base de données </th>
@@ -76,8 +72,6 @@
                 <th> Testeur</th>
                 <th> Fonctionnement </th>
                 <th> Disfonctionnement </th>
-                <!--th> dureeDisfonctionnementSeconde </th>
-                <th> dureeFonctionnementSeconde </th-->
                 <th> Conforme </th>
                 <th> Non Conforme </th>
                 <th> Début </th>
@@ -97,5 +91,41 @@
                 <td>{{dashboard.finishTime}}</td>
             </tr>
         </tbody>
-    </table>
+    </table-->
+    <div class="row">
+        <div class="col-lg-3">
+            <canvas id="myChartPie"></canvas>
+        </div>
+
+        <div class="col-lg-6">
+            <canvas id="myChartBar"></canvas>
+        </div>
+
+        <div class="col-lg-12">
+            <canvas id="myLineBar"></canvas>
+        </div>
+    </div>
+
+    <div class="row" *ngFor="let dashboard of dashboards">
+        <div class="card col-lg-2 col-md-4 col-sm-6 col-xs-12 m-2 text-one card-date">
+            <p class="title-card-date"> {{dashboard.date}} </p>
+        </div>
+
+        <div class="card col-lg-2 col-md-4 col-sm-6 col-xs-12 m-2 text-one card-testeur">
+            <p class="title-card-testeur">Testeur</p>
+            <p class="text-card-testeur"> {{dashboard.testeurId}} </p>
+        </div>
+
+        <div class="card col-lg-3 col-md-4 col-sm-6 col-xs-12 m-2 text-one card-fonctionnement">
+            <p class="title-card-fonctionnement">Durée fonctionnement</p>
+            <p class="text-card-fonctionnement"> {{dashboard.dureeFonctionnement}} </p>
+        </div>
+
+        <div class="card col-lg-3 col-md-4 col-sm-6 col-xs-12 m-2 text-one card-disfonctionnement">
+            <p class="title-card-disfonctionnement">Durée disfonctionnement</p>
+            <p class="text-card-disfonctionnement"> {{dashboard.dureeDisfonctionnement}} </p>
+        </div>
+
+    </div>
+
 </div>

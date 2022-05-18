@@ -14,7 +14,7 @@ export class ProductionService {
   constructor(private http: HttpClient) {}
 
   getListSummaryByDatabase(baseDeDonnés: string, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary> {
-    return this.http.get<GetResponseSummary>(`${baseURL}${baseDeDonnés}all?pageSize=${thePageSize}&pageNumber=${thePageNumber}`)
+    return this.http.get<GetResponseSummary>(`${baseURL}${baseDeDonnés}/all?pageSize=${thePageSize}&pageNumber=${thePageNumber}`)
   }
 
   getListTesterByDatabase(baseDeDonnés: string): Observable<object> {
