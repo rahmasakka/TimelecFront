@@ -6,50 +6,61 @@ $theme-colors:(
     "danger": yellow
 )
 */
-.background {
-    background-color: #F0EFEF;
+
+
+.card {
+    background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
+.background {
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+    //background-color: #033A76;
+    background: url('assets/background.jpeg')no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
 
 .background-outline-yellow {
-    color:  #033A76 !important;
+    color: #033A76 !important;
     border-color: #f2c830 !important;
 }
 
 .background-outline-yellow:hover {
-    background-color: #f2c830 !important ;
-    //border-color: #033A76 !important;
+    background-color: #f2c830 !important;
     color: white !important;
 }
 
-.background-outline-bleu{
-    color:  #033A76  !important;
-    border-color:  #033A76 !important;
+.background-outline-bleu {
+    color: #033A76 !important;
+    border-color: #033A76 !important;
 }
 
 .background-outline-bleu:hover {
-    background-color:  #033A76 !important;
-    //border-color: #033A76 !important;
+    background-color: #033A76 !important;
     color: white !important;
 }
 
-.outline-details{
-    color:  #033A76 !important;
-    border-color:  #033A76 !important;
+.outline-details {
+    color: #033A76 !important;
+    border-color: #033A76 !important;
 }
 
-.outline-details:hover{
-    background-color:#033A76 !important ;
+.outline-details:hover {
+    background-color: #033A76 !important;
     color: white !important;
 }
 
-.outline-update{
-    color:#f2c830 !important;
-    border-color :#f2c830 !important;
+.outline-update {
+    color: #f2c830 !important;
+    border-color: #f2c830 !important;
 }
 
-.outline-update:hover{
-    background-color: #f2c830 !important ;
+.outline-update:hover {
+    background-color: #f2c830 !important;
     color: white !important;
 }
 
@@ -58,22 +69,23 @@ $theme-colors:(
     background-color: #033A76 !important;
 }
 
-.text{
+.text {
     color: white !important;
 }
 
-.text-one{
+.text-one {
     color: #033A76 !important;
 }
 
-.text-two{
+.text-two {
     color: #FFD21F !important;
 }
 
 
-.background-modal-title{
+.background-modal-title {
     background-color: #FFD21F !important;
 }
+
 /*
 select{
     border-color:  #f2c830 !important;
@@ -84,6 +96,6 @@ input{
 }
 */
 
-.icon{
+.icon {
     color: #f2c830
 }

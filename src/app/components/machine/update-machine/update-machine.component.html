@@ -1,8 +1,23 @@
 <div class="container card col-lg-6 col-sm-10 mt-4">
-    <h1 class="mt-2 text-one">Modification:</h1>
-    <!-- {{machine.machineName}}-->
+    <h1 class="mt-2 text-one">Modification: {{machine.machineName}}</h1>
     <form name="form" (ngSubmit)=" onSubmit()" class="mt-2 pb-3">
         <div class="form-group">
+            <label class="control-label text-one">
+                <h5>Id machine:</h5>
+            </label>
+            <input type="text" class="form-control" placeholder="Identificateur de la machine" name="id" id="id"
+                [(ngModel)]="machine.idMachine" required #id="ngModel" minlength="4" maxlength="4">
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && id.errors?.['required']">
+                L'identificateur de la machine est obligatoire.
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && id.errors?.['minlength']">
+                Le nom de la machine doit contenir au moins 4 caractères.
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && id.errors?.['maxlength']">
+                Le nom de la machine doit contenir au plus 4 caractères.
+            </div>
+
+
             <label class="control-label text-one">
                 <h5>Nom machine:</h5>
             </label>

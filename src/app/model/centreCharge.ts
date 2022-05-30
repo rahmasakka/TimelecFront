@@ -4,5 +4,9 @@ export class centreCharge {
     idCC!: number;
     ccname!: string;
     ccdescription!: string;
-    uap! : UAP
+    uap! : {
+        idUAP: number;
+        uapName: string;
+        uapDescription: string;
+    }
 }

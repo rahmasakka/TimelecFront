@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { summary } from 'src/app/model/summary';
-import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
-import { EtlService } from 'src/app/services/etl.service';
 import { ProductionService } from 'src/app/services/production.service';
 
 @Component({
@@ -16,8 +14,9 @@ export class DatabasesComponent implements OnInit {
   modelFin!: NgbDateStruct;
   listSummaries: summary[] = []
   testerId!: number
-  databaseId: string = ''
 
+
+  databaseId: string = ''
   msg!: string
   datedeb!: string
   datefin!: string
@@ -33,13 +32,12 @@ export class DatabasesComponent implements OnInit {
   nb_seconde!: number
   nb_minute: number = 0
   nb_heure: number = 0
-  time !: String
+  time !: string
 
   //properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
+  thePageSize: number = 5;
   theTotalElements: number = 0;
-
 
   constructor(
     private productionService: ProductionService, private route: ActivatedRoute) { }

@@ -5,6 +5,15 @@
                 <h5>Nom machine:</h5>
             </label>
             <div>
+                <input type="text" class="form-control" placeholder="Id de la machine" name="idmachine"
+                    [(ngModel)]="newMachine.idMachine" #machineName="ngModel" required minlength="4" maxlength="4"
+                    style="width : 110%">
+            </div>
+            <label class="control-label text-one">
+                <h5>Nom machine:</h5>
+            </label>
+
+            <div>
                 <input type="text" class="form-control" placeholder="Nom de la machine" name="ccname"
                     [(ngModel)]="newMachine.machineName" #machineName="ngModel" required minlength="3" maxlength="20"
                     style="width : 110%">

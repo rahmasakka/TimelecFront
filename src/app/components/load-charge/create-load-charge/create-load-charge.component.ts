@@ -11,7 +11,6 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 })
 export class CreateLoadChargeComponent implements OnInit {
   url:string = "uap";
-
   isSuccessful = false;
   isFailed = false;
   errorMessage = '';
@@ -35,25 +34,24 @@ export class CreateLoadChargeComponent implements OnInit {
 
   addCentreCharge() {
     this.submitted = true
-    this.crudService.getEntityById('uap', this.newIdUAP).subscribe(
+    this.crudService.getEntityById(this.url, this.newIdUAP).subscribe(
       data => {
         this.newUAP = data
+        this.newCentreCharge.uap = this.newUAP;
+        this.crudService.createNewEntity("cc",this.newCentreCharge).subscribe(
+          data => {
+            console.log(data)
+            this.isSuccessful = true;
+            this.isFailed = false;
+            window.location.reload();
+          },
+          err => {
+            this.errorMessage = err.error.message;
+            this.isFailed = true;
+          }
+        );
       }
     )
-    //console.log("++++",this.newUAP.uapName)
-    this.newCentreCharge.uap = this.newUAP;
-    //console.log("****",this.newCentreCharge.uap.uapName)
-    this.crudService.createNewEntity("cc",this.newCentreCharge).subscribe(
-      data => {
-        console.log(data)
-        this.isSuccessful = true;
-        this.isFailed = false;
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isFailed = true;
-      }
-    );
-    this.router.navigate(['/load-charge-list'])
+   
   }
 }

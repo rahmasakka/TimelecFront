@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardService } from 'src/app/services/dashboard.service';
-import { EtlService } from 'src/app/services/etl.service';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { centreCharge } from '../model/centreCharge';
+import { machine } from '../model/machine';
+import { UAP } from '../model/uap';
+import { CrudGlobaleService } from '../services/crud-globale.service';
+import { DashboardService } from '../services/dashboard.service';
+import { MachineService } from '../services/machine.service';
+import { EtlService } from '../services/etl.service';
+import { dashboard } from '../model/dashboard';
 import {
   Chart,
   ArcElement,
@@ -28,9 +35,7 @@ import {
   Tooltip,
   SubTitle
 } from 'chart.js';
-import { ProductionService } from 'src/app/services/production.service';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { dashboard } from 'src/app/model/dashboard';
+
 
 @Component({
   selector: 'app-test',
@@ -38,20 +43,25 @@ import { dashboard } from 'src/app/model/dashboard';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
-
   modelDebut!: NgbDateStruct;
   modelFin!: NgbDateStruct;
-  result: any
-  listTesterID: any
-  databaseId: string = '';
-  testerId!: number
-  dashboards !: dashboard[];
 
   datedeb!: string
   datefin!: string
 
+  uaps!: UAP[];
+  centreChargeByUAP !: centreCharge[];
+  machineReferenced !: machine;
+  dashboardUAP !: dashboard[];
+  dashboardCC!: dashboard[]
+  isOK = false
 
-  constructor(private dashboardService: DashboardService, private etl: EtlService, private productionService: ProductionService) {
+  tester!: any
+
+  constructor(private crud: CrudGlobaleService,
+    private machineService: MachineService,
+    private dashboardService: DashboardService,
+    private etl: EtlService) {
     Chart.register(
       ArcElement,
       LineElement,
@@ -80,141 +90,167 @@ export class TestComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    this.dashboardService.getDashboardByDatabase("vm").subscribe(
-      (data: any) => {
-        console.log(data)
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnement)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnement)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
+  ngOnInit(): void { }
 
-        /*
-          database
-          date
-          dureeDisfonctionnement: "00:35:51"
-          dureeDisfonctionnementSeconde: 2151
-          dureeFonctionnement: "00:19:56"
-          dureeFonctionnementSeconde: 1196
-          finishTime: "17:27:18"
-          id: 1
-          quantiteConforme: 16
-          quantiteNonConforme: 1
-          startTime: "16:31:31"
-          testeurId: 6932
-        */
-        /*
-                let date: any = []
-                temp_date.forEach((data: any) => {
-                  let jsdate = new Date(data * 1000)
-                  date.push(jsdate.toLocaleTimeString('fr', { year: 'numeric', month: 'short', day: 'numeric' }))
-                })
-        */
-
-
-        var myChartPie = new Chart("myChartPie", {
-          type: 'pie',
-          data: {
-            labels: ["conforme", "nonConforme"],
-            datasets: [{
-              label: date,
-              data: [conforme, nonConforme],
-              backgroundColor: [
-                "rgba(3, 58, 118, 0.8)",
-                "rgba(242, 200, 48, 0.8)"
-              ],
-              borderColor: [
-                "rgba(3, 58, 118, 1)",
-                "rgba(242, 200, 48, 1)"
-
-              ],
-              borderWidth: 1
-            }
-            ]
-          }
-        })
-
-
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'piece conforme',
-              data: conforme,
-              backgroundColor: "rgba(75, 192, 192, 0.8)",
-              borderColor: "rgba(75, 192, 192, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'piece non conforme',
-              data: nonConforme,
-              backgroundColor: "rgba(255, 99, 132, 0.8)",
-              borderColor: "rgba(255, 99, 132, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-          ,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        }
-        )
-      })
+  listUAP() {
+    this.crud.getListEntity("uap").subscribe(
+      data => {
+        this.uaps = data;
+      }
+    )
   }
 
+  getListCentreChargeByUAP(id: number) {
+    this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
+    this.ETL(this.datedeb)
+    this.crud.getSonByMother("cc", id).subscribe(
+      data => {
+        this.centreChargeByUAP = data
+        for (let i = 0; i < this.centreChargeByUAP.length; i++) {
+          this.getListMachineReferenced(this.centreChargeByUAP[i].idCC)
+        }
+      })
 
+    this.dashboardService.getDashboardByDate(this.datedeb).subscribe((data) => {
+      localStorage.removeItem('dashboardUAP')
+      this.dashboardUAP = data
+      console.log(this.dashboardUAP)
+      let temp_tester = this.dashboardUAP.map((data: any) => data.testeurId.idMachine)
+      this.tester = temp_tester
+      let temp_fonctionnement = this.dashboardUAP.map((data: any) => data.dureeFonctionnementSeconde)
+      let temp_disfonctionnement = this.dashboardUAP.map((data: any) => data.dureeDisfonctionnementSeconde)
+      let conforme = this.dashboardUAP.map((data: any) => data.quantiteConforme)
+      let nonConforme = this.dashboardUAP.map((data: any) => data.quantiteNonConforme)
+     // let date = this.dashboardUAP.map((data: any) => data.date)
+      let sommeConforme = 0
+      for (let i = 0; i < conforme.length; i++) { sommeConforme = sommeConforme + conforme[i] }
 
-  getDashboard() {
+      let sommeNonConforme = 0
+      for (let i = 0; i < nonConforme.length; i++) { sommeNonConforme = sommeNonConforme + nonConforme[i] }
+
+      var myChartPieUAP = new Chart("myChartPieUAP", {
+        type: 'pie',
+        data: {
+          labels: ["conforme", "nonConforme"],
+          datasets: [{
+            label: "date",
+            data: [sommeConforme, sommeNonConforme],
+            backgroundColor: [
+              "rgba(3, 58, 118, 0.5)",
+              "rgba(219, 0, 66, 0.3)"
+            ],
+            borderColor: [
+              "rgba(3, 58, 118, 1)",
+              "rgba(219, 0, 66, 1)"
+            ],
+            borderWidth: 1
+          }
+          ]
+        }
+      })
+
+      var myChartLineUAP = new Chart("myChartLineUAP", {
+        type: 'line',
+        data: {
+          labels: temp_tester,
+          datasets: [{
+            label: 'Durée du fonctionnement',
+            data: temp_fonctionnement,
+            backgroundColor: "rgba(242, 200, 48, 0.5)",
+            borderColor: "rgba(242, 200, 48, 1)",
+            borderWidth: 1,
+          },
+          {
+            label: 'Durée du disfonctionnement',
+            data: temp_disfonctionnement,
+            backgroundColor: "rgba(219, 0, 66, 0.5)",
+            borderColor: "rgba(219, 0, 66, 1)",
+            borderWidth: 1,
+          }]
+        }
+      })
+    })
+
+  }
+
+  getListMachineReferenced(idCentreCharge: number) {
+    this.machineService.machineReferencedToCentreCharge(idCentreCharge).subscribe(data => {
+      this.machineReferenced = data
+      this.getDashboard(this.machineReferenced.idMachine)
+    })
+  }
+
+  getDashboard(idMachine: number) {
     if (this.modelDebut != null) {
       this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
+      this.dashboardService.getDashboardByDateBytesterId(this.datedeb, idMachine).subscribe(data => { this.dashboardCC = data })
+    } else {
+      this.dashboardService.getDashboardByTesterID(idMachine).subscribe(data => {
+        this.dashboardCC = data
+        console.log(this.dashboardCC)
+      })
     }
+    //
 
-    if (this.modelFin != null) {
-      this.datefin = this.modelFin.year.toString() + '-' + this.modelFin.month.toString() + '-' + this.modelFin.day.toString()
-    }
+    let temp_fonctionnement = this.dashboardCC.map((data: any) => data.dureeFonctionnementSeconde)
+    let temp_disfonctionnement = this.dashboardCC.map((data: any) => data.dureeDisfonctionnementSeconde)
+    let conforme = this.dashboardCC.map((data: any) => data.quantiteConforme)
+    let nonConforme = this.dashboardCC.map((data: any) => data.quantiteNonConforme)
+    let date = this.dashboardCC.map((data: any) => data.date)
+    let temp_tester = this.dashboardUAP.map((data: any) => data.testeurId.idMachine)
 
-    if ((this.testerId != null) && (this.datefin == null) && (this.datedeb == null)) {
-      this.getDashboardByDatabaseByTester(this.databaseId, this.testerId)
-    }
-
-    if ((this.testerId == null) && (this.datefin == null) && (this.datedeb == null)) {
-      this.getDashboardByDatabase(this.databaseId)
-    }
-
-  }
-
-  getDashboardByDatabase(db: string) {
-    // this.chargerTesterID(db)
-    this.dashboardService.getDashboardByDatabase(db).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
+    var myChartBar = new Chart("myChartBar", {
+      type: 'bar',
+      data: {
+        labels: date,
+        datasets: [{
+          label: 'Durée du fonctionnement',
+          data: temp_fonctionnement,
+          backgroundColor: "rgba(242, 200, 48, 0.5)",
+          borderColor: "rgba(242, 200, 48, 1)",
+          borderWidth: 1,
+        },
+        {
+          label: 'Durée du disfonctionnement',
+          data: temp_disfonctionnement,
+          backgroundColor: "rgba(219, 0, 66, 0.5)",
+          borderColor: "rgba(219, 0, 66, 1)",
+          borderWidth: 1,
+        }]
       }
-    )
-  }
+    })
 
-  chargerTesterID(db: string) {
-    this.productionService.getListTesterByDatabase(db).subscribe(
-      data => this.listTesterID = data
-    )
-  }
+    //
 
-  getDashboardByDatabaseByTester(db: string, tester: number) {
-    this.dashboardService.getDashboardByDatabaseByTester(db, tester).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
+    var myChartPie = new Chart("myChartPie", {
+      type: 'pie',
+      data: {
+        labels: ["conforme", "nonConforme"],
+        datasets: [{
+          label: "date",
+          data: [conforme, nonConforme],
+          backgroundColor: [
+            "rgba(242, 200, 48, 0.5)",
+            "rgba(219, 0, 66, 0.5)"
+          ],
+          borderColor: [
+            "rgba(242, 200, 48, 1)",
+            "rgba(219, 0, 66, 1)"
+          ],
+          borderWidth: 1
+        }
+        ]
       }
-    )
+    })
+
   }
 
+  ETL(date: string) {
+    this.etl.ETLDEVP87(date).subscribe(() => { console.log("ETL DEVP87 done! ") })
+    this.etl.ETLSIRCOVER(date).subscribe(() => { console.log("ETL SIRCOVER done! ") })
+    this.etl.ETLFuserbloc(date).subscribe(() => { console.log("ETL Fuserbloc done! ") })
+    this.etl.ETLVM(date).subscribe(() => { console.log("ETL VM done! ") })
+    this.etl.ETLP77(date).subscribe(data => { console.log("ETL P77 done! ") })
+    this.isOK = true
+  }
 }

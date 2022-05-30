@@ -24,7 +24,6 @@ export class ProductionService {
   getSummaryByDatePaginate(baseDeDonnés: string, maDate: string, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary> {
     const searchUrl = `${baseURL}${baseDeDonnés}/testStartTime/${maDate}?pageSize=${thePageSize}&pageNumber=${thePageNumber}`
     return this.http.get<GetResponseSummary>(searchUrl);
-    //baseURL + baseDeDonnés + 'testStartTime/' + maDate + "?pageSize=" + thePageSize + "&pageNumber=" + thePageNumber
   }
 
   getListSummaryByDateByTesterIdPaginate(baseDeDonnés: string, maDate: string, testerId: number, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary[]> {

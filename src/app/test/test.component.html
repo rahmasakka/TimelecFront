@@ -1,82 +1,32 @@
-<!--div class="m-5 p-5 card">
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <label>
-                <h5 class="text-one"> Base de données: </h5>
-            </label>
-            <select class="form-control" id="databaseId" name="databaseId" [(ngModel)]="databaseId"
-                (change)="chargerTesterID($any($event.target).value)">
-                <option value="0" selected disabled>--Choisissez une base de données --</option>
-                <option value="vm"> TestResultVm </option>
-                <option value="sircoSircover"> TestResultsSircoSircover </option>
-                <option value="p77"> TestResultsP77 </option>
-                <option value="fuserbloc"> TestResultsFuserbloc </option>
-                <option value="devP87"> TestResultsDevP87 </option>
-            </select>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <label class="text-one">
-                <h5>Centre de charge:</h5>
-            </label>
-            <select class="form-control" id="testerId" name="testerId" [(ngModel)]="testerId">
-                <option value="0" selected disabled>--Choisissez un testeur --</option>
-                <option *ngFor="let testeur of listTesterID" [value]="testeur">
-                    {{testeur}}
-                </option>
-            </select>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <label class="text-one">
-                <h5>Date début:</h5>
-            </label>
-            <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modelDebut" ngbDatepicker
-                    #dateDebut="ngbDatepicker">
-                <button class="btn background-outline-yellow calendar" (click)="dateDebut.toggle()" type="button">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-12 text-one">
-            <label>
-                <h5>Date fin:</h5>
-            </label>
-            <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modelFin" ngbDatepicker
-                    #dateFin="ngbDatepicker">
-                <button class="btn background-outline-yellow calendar" (click)="dateFin.toggle()" type="button">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="row p-3">
-        <div class="col-12">
-            <button class="btn background-outline-yellow  mt-4 w-100" (click)="getDashboard()" type="button">
-                Dashboard
+<div class="row p-5">
+    <div class="card m-3 p-3 col-lg-3 col-md-5 col-xs-11">
+        <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modelDebut" ngbDatepicker
+                #dateDebut="ngbDatepicker" (change) = listUAP()>
+            <button class="btn background-outline-yellow calendar" (click)="dateDebut.toggle()" type="button">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
             </button>
         </div>
+
+        <button *ngFor="let uap of uaps" type="button" class="btn background-outline-bleu m-2"
+            (click)="getListCentreChargeByUAP(uap.idUAP)" routerLinkActive="active">
+            {{uap.uapName}}
+        </button>
+        <button *ngFor="let cc of centreChargeByUAP" class="btn background-outline-yellow m-2"
+            (click)="getListMachineReferenced(cc.idCC)" routerLinkActive="active">
+            {{cc.ccname}}
+        </button>
     </div>
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <canvas id="myChartPie"></canvas>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <canvas id="myChartBar"></canvas>
-        </div>
+    <div class="card m-3 p-3 col-lg-7 col-md-5 col-xs-11">
+        <canvas id="myChartLineUAP"></canvas>
     </div>
-</div-->
 
-<div class="row">
-    <!--div class="col-lg-3 col-md-6 col-sm-12">
-        <canvas id="myChartPie"></canvas>
-    </div-->
+    <div class="card m-3 p-3 col-lg-4 col-md-5 col-xs-11">
+        <canvas id="myChartPieUAP"></canvas>
+    </div>
 
-    <div style = "width : 50% ; height: 50%; margin-left:20px;">
+    <div class="card m-3 p-3 col-lg-3 col-md-5 col-xs-11">
         <canvas id="myChartBar"></canvas>
+        <canvas id="myChartPie"></canvas>
     </div>
 </div>

@@ -63,6 +63,7 @@ export class UpdateMachineComponent implements OnInit {
       }
     )
   }
+  
   goToMachineList() {
     this.router.navigate(['/machine-list'])
   }

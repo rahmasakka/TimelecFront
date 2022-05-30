@@ -24,39 +24,51 @@ import { TestComponent } from './test/test.component';
 
 
 const routes: Routes = [
-  { path: 'databases', component: DatabasesComponent},
-  { path: 'databases/:keyword', component: DatabasesComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'dashboard/:keyword', component: DashboardComponent},
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
 
-  { path: 'test', component: TestComponent},
+      /* {
+         path: 'archive',
+         component: SomeComponentBArchive,
+       }*/
+    ]
 
+  },
+  { path: 'databases', component: DatabasesComponent },
+  { path: 'databases/:keyword', component: DatabasesComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard/:keyword', component: DashboardComponent },
 
-  { path: 'machine-list', component: MachineListComponent},
-  { path: 'create-machine', component: CreateMachineComponent},
-  { path: 'update-machine/:id', component: UpdateMachineComponent},
-
-
-  { path: 'load-charge-list', component: LoadChargeListComponent},
-  { path: 'load-charge-update/:id', component: LoadChargeUpdateComponent},
-  { path: 'create-load-charge', component: CreateLoadChargeComponent},
-  { path: 'load-charge-details/:id', component:LoadChargeDetailsComponent },
-
-  { path: 'uap-update/:id', component: UapUpdateComponent},
-  { path: 'load-charge-by-uap/:id', component: LoadChargeByUapComponent},
-  { path: 'uap-list', component: UapListComponent},
-  { path: 'create-uap', component: CreateUapComponent},
+  { path: 'test', component: TestComponent },
 
 
-  { path: 'create-user', component: CreateUserComponent},
-  { path: 'search/:keyword', component: UsersListComponent},
-  { path: 'update-user/:id', component: UpdateUserComponent},
-  { path: 'profil', component: ProfilComponent},
-  { path: 'list-users', component: UsersListComponent},
-  { path: 'signin', component: SigninComponent},
-  { path: 'signup', component:SignupComponent },
-  { path: 'home', component: HomeComponent},
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: 'machine-list', component: MachineListComponent },
+  { path: 'create-machine', component: CreateMachineComponent },
+  { path: 'update-machine/:id', component: UpdateMachineComponent },
+
+
+  { path: 'load-charge-list', component: LoadChargeListComponent },
+  { path: 'load-charge-update/:id', component: LoadChargeUpdateComponent },
+  { path: 'create-load-charge', component: CreateLoadChargeComponent },
+  { path: 'load-charge-details/:id', component: LoadChargeDetailsComponent },
+
+  { path: 'uap-update/:id', component: UapUpdateComponent },
+  { path: 'load-charge-by-uap/:id', component: LoadChargeByUapComponent },
+  { path: 'uap-list', component: UapListComponent },
+  { path: 'create-uap', component: CreateUapComponent },
+
+
+  { path: 'create-user', component: CreateUserComponent },
+  { path: 'search/:keyword', component: UsersListComponent },
+  { path: 'update-user/:id', component: UpdateUserComponent },
+  { path: 'profil', component: ProfilComponent },
+  { path: 'list-users', component: UsersListComponent },
+  { path: 'signin', component: SigninComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '**', redirectTo: 'signin', pathMatch: 'full' }
 
 ];
 

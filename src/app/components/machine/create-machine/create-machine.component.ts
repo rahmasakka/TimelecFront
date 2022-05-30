@@ -18,7 +18,7 @@ export class CreateMachineComponent implements OnInit {
   newCC!: centreCharge;
   CCs!: centreCharge[]
 
-  constructor(private crudService : CrudGlobaleService) { }
+  constructor(private crudService: CrudGlobaleService) { }
 
   ngOnInit(): void {
     this.crudService.getListEntity("cc").subscribe(
@@ -30,25 +30,22 @@ export class CreateMachineComponent implements OnInit {
 
   addMachine() {
     this.submitted = true
-    this.crudService.getEntityById("cc",this.newIdCC).subscribe(
+    this.crudService.getEntityById("cc", this.newIdCC).subscribe(
       data => {
         this.newCC = data
+        this.newMachine.centreCharge = this.newCC;
+        this.newMachine.reference = false
+        this.crudService.createNewEntity("machine", this.newMachine).subscribe(
+          data => {
+            this.isSuccessful = true;
+           // window.location.reload();
+          },
+          err => {
+            this.errorMessage = err.error.message;
+            this.isFailed = true;
+          }
+        );
       }
     )
-
-    this.newMachine.centreCharge = this.newCC;
-    this.newMachine.reference = false
-    console.log(this.newMachine)
-    this.crudService.createNewEntity("machine",this.newMachine).subscribe(
-      data => {
-        console.log(data)
-        this.isSuccessful = true;
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isFailed = true;
-      }
-    );
-    //window.location.reload();
   }
 }

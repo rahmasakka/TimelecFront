@@ -35,7 +35,7 @@ export class LoadChargeListComponent implements OnInit {
     this.crudService.getListEntity(this.url).subscribe(
       data => {
         this.centreCharge = data;
-        // console.log(data)
+         console.log(data)
       }
     )
   }

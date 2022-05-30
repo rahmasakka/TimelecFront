@@ -28,34 +28,42 @@ import {
   Tooltip,
   SubTitle
 } from 'chart.js';
-import { ProductionService } from 'src/app/services/production.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { dashboard } from 'src/app/model/dashboard';
-import { ActivatedRoute } from '@angular/router';
+import { UAP } from 'src/app/model/uap';
+import { centreCharge } from 'src/app/model/centreCharge';
+import { machine } from 'src/app/model/machine';
+import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
+import { MachineService } from 'src/app/services/machine.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
 
+
+export class DashboardComponent implements OnInit {
   modelDebut!: NgbDateStruct;
   modelFin!: NgbDateStruct;
-  result: any
-  listTester: any
-  databaseId: string = '';
-  testerId!: number
-  dashboards !: dashboard[];
+
   datedeb!: string
   datefin!: string
 
-  resultat: any;
+  uaps!: UAP[];
+  centreChargeByUAP !: centreCharge[];
+  machineReferenced !: machine;
+  machineReferencedByCentreCharge!: machine;
+  dashboardUAP !: dashboard[];
+  dashboardCC!: dashboard[]
+  isOK = false
 
-  constructor(private dashboardService: DashboardService,
-    private etl: EtlService,
-    private productionService: ProductionService,
-    private route: ActivatedRoute) {
+  tester!: any
+
+  constructor(private crud: CrudGlobaleService,
+    private machineService: MachineService,
+    private dashboardService: DashboardService,
+    private etl: EtlService) {
     Chart.register(
       ArcElement,
       LineElement,
@@ -84,591 +92,161 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    this.databaseId = this.route.snapshot.params['keyword']
-    this.getDashboardByDatabase(this.databaseId)
+  ngOnInit(): void { }
+
+  listUAP() {
+    this.crud.getListEntity("uap").subscribe(
+      data => {
+        this.uaps = data;
+      }
+    )
   }
 
-  getDashboard() {
+  getListCentreChargeByUAP(idUAP: number) {
+    this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
+    this.crud.getSonByMother("cc", idUAP).subscribe(
+      data => {
+        this.centreChargeByUAP = data
+        console.log(this.centreChargeByUAP)
+        for (let k = 0; k < this.centreChargeByUAP.length; k++) {
+          this.machineService.machineReferencedToCentreCharge(this.centreChargeByUAP[k].idCC).subscribe(
+            data => {
+              this.machineReferenced = data
+              console.log(this.machineReferenced)
+            }
+          )
+        }
+      }
+    )
 
+    this.dashboardService.getDashboardByDate(this.datedeb).subscribe((data) => {
+      localStorage.removeItem('dashboardUAP')
+      this.dashboardUAP = data
+      console.log(this.dashboardUAP)
+      let temp_tester = this.dashboardUAP.map((data: any) => data.testeurId.idMachine)
+      this.tester = temp_tester
+      let temp_fonctionnement = this.dashboardUAP.map((data: any) => data.dureeFonctionnementSeconde)
+      let temp_disfonctionnement = this.dashboardUAP.map((data: any) => data.dureeDisfonctionnementSeconde)
+      let conforme = this.dashboardUAP.map((data: any) => data.quantiteConforme)
+      let nonConforme = this.dashboardUAP.map((data: any) => data.quantiteNonConforme)
+      let sommeConforme = 0
+      for (let i = 0; i < conforme.length; i++) { sommeConforme = sommeConforme + conforme[i] }
+
+      let sommeNonConforme = 0
+      for (let i = 0; i < nonConforme.length; i++) { sommeNonConforme = sommeNonConforme + nonConforme[i] }
+
+      var myChartPieUAP = new Chart("myChartPieUAP", {
+        type: 'pie',
+        data: {
+          labels: ["conforme", "nonConforme"],
+          datasets: [{
+            label: "date",
+            data: [sommeConforme, sommeNonConforme],
+            backgroundColor: [
+              "rgba(3, 58, 118, 0.5)",
+              "rgba(219, 0, 66, 0.3)"
+            ],
+            borderColor: [
+              "rgba(3, 58, 118, 1)",
+              "rgba(219, 0, 66, 1)"
+            ],
+            borderWidth: 1
+          }
+          ]
+        }
+      })
+
+      var myChartLineUAP = new Chart("myChartLineUAP", {
+        type: 'line',
+        data: {
+          labels: temp_tester,
+          datasets: [{
+            label: 'Durée du fonctionnement',
+            data: temp_fonctionnement,
+            backgroundColor: "rgba(242, 200, 48, 0.5)",
+            borderColor: "rgba(242, 200, 48, 1)",
+            borderWidth: 1,
+          },
+          {
+            label: 'Durée du disfonctionnement',
+            data: temp_disfonctionnement,
+            backgroundColor: "rgba(219, 0, 66, 0.5)",
+            borderColor: "rgba(219, 0, 66, 1)",
+            borderWidth: 1,
+          }]
+        }
+      })
+    })
+  }
+
+  getDashboard(idMachine: number) {
     if (this.modelDebut != null) {
       this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
+      this.dashboardService.getDashboardByDateBytesterId(this.datedeb, idMachine).subscribe(data => { this.dashboardCC = data })
+    } else {
+      this.dashboardService.getDashboardByTesterID(idMachine).subscribe(data => {
+        this.dashboardCC = data
+        console.log(this.dashboardCC)
+      })
     }
 
-    if (this.modelFin != null) {
-      this.datefin = this.modelFin.year.toString() + '-' + this.modelFin.month.toString() + '-' + this.modelFin.day.toString()
-    }
-    if (this.databaseId != '')
-      if (this.testerId != null)
-        if (this.datedeb != null)
-          if (this.datefin != null)
-            this.getDashboardBetween2DaysByDatabaseByTester(this.databaseId, this.datedeb, this.datefin, this.testerId)///////////////////
-          else {
-            this.getDashboardByDateByDatabaseBytesterId(this.databaseId, this.datedeb, this.testerId)
-          }
-        else
-          this.getDashboardByDatabaseByTester(this.databaseId, this.testerId) //////////////////////
-      else
-        if (this.datedeb != null)
-          if (this.datefin != null)
-            this.getDashboardBetween2DaysByDatabase(this.datedeb, this.datefin, this.databaseId) ////////////////
-          else {
-            this.etl.ETL(this.datedeb, this.databaseId)
-            this.getDashboardByDateByDatabase(this.databaseId, this.datedeb)//////////
-          }
-        else
-          this.getDashboardByDatabase(this.databaseId)//////////
+    let temp_fonctionnement = this.dashboardCC.map((data: any) => data.dureeFonctionnementSeconde)
+    let temp_disfonctionnement = this.dashboardCC.map((data: any) => data.dureeDisfonctionnementSeconde)
+    let conforme = this.dashboardCC.map((data: any) => data.quantiteConforme)
+    let nonConforme = this.dashboardCC.map((data: any) => data.quantiteNonConforme)
+    let date = this.dashboardCC.map((data: any) => data.date)
+    let temp_tester = this.dashboardUAP.map((data: any) => data.testeurId.idMachine)
 
-    else
-      if (this.testerId != null)
-        if (this.datedeb != null)
-          if (this.datefin != null)
-            this.getDashboardBetween2DaysByTester(this.testerId, this.datedeb, this.datefin)
-          else
-            this.getDashboardByDateBytesterId(this.datedeb, this.testerId)
-        else
-          this.getDashboardByTesterID(this.testerId)
+    var myChartBar = new Chart("myChartBar", {
+      type: 'bar',
+      data: {
+        labels: date,
+        datasets: [{
+          label: 'Durée du fonctionnement',
+          data: temp_fonctionnement,
+          backgroundColor: "rgba(242, 200, 48, 0.5)",
+          borderColor: "rgba(242, 200, 48, 1)",
+          borderWidth: 1,
+        },
+        {
+          label: 'Durée du disfonctionnement',
+          data: temp_disfonctionnement,
+          backgroundColor: "rgba(219, 0, 66, 0.5)",
+          borderColor: "rgba(219, 0, 66, 1)",
+          borderWidth: 1,
+        }]
+      }
+    })
 
-      else
-        if (this.datedeb != null)
-          if (this.datefin != null)
-            this.getDashboardBetween2Days(this.datedeb, this.datefin)
-          else
-            this.getDashboardByDate(this.datedeb)
-  }
-
-  chargerTesterID(db: string) {
-    this.productionService.getListTesterByDatabase(db).subscribe(
-      data => this.listTester = data
-    )
-  }
-
-
-  //1 [database testerID datedeb datefin]
-  getDashboardBetween2DaysByDatabaseByTester(db: string, date1: string, date2: string, tester: number) {
-    this.dashboardService.getDashboardBetween2DaysByDatabaseByTester(db, date1, date2, tester).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-
-
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
+    var myChartPie = new Chart("myChartPie", {
+      type: 'pie',
+      data: {
+        labels: ["conforme", "nonConforme"],
+        datasets: [{
+          label: "date",
+          data: [conforme, nonConforme],
+          backgroundColor: [
+            "rgba(242, 200, 48, 0.5)",
+            "rgba(219, 0, 66, 0.5)"
+          ],
+          borderColor: [
+            "rgba(242, 200, 48, 1)",
+            "rgba(219, 0, 66, 1)"
+          ],
+          borderWidth: 1
         }
-        )
-
-
-
+        ]
       }
-    )
+    })
+
   }
 
-
-  //2 [database testerID datedeb !datefin]
-  getDashboardByDateByDatabaseBytesterId(database: string, dateDeb: string, tester: number) {
-    this.dashboardService.getDashboardByDateByDatabaseByTester(database, dateDeb, tester).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-
-
-        ///////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        ///////////////////////////////////////////
-
-        var myChartPie = new Chart("myChartPie", {
-          type: 'pie',
-          data: {
-            labels: ["conforme", "nonConforme"],
-            datasets: [{
-              label: "date",
-              data: [conforme, nonConforme],
-              backgroundColor: [
-                "rgba(3, 58, 118, 0.5)",
-                "rgba(219, 0, 66, 0.3)"
-              ],
-              borderColor: [
-                "rgba(3, 58, 118, 1)",
-                "rgba(219, 0, 66, 1)"
-              ],
-              borderWidth: 1
-            }
-            ]
-          }
-        })
-
-
-      }
-    )
+  ETL(date: string) {
+    this.etl.ETLDEVP87(date).subscribe(() => { console.log("ETL DEVP87 done! ") })
+    this.etl.ETLSIRCOVER(date).subscribe(() => { console.log("ETL SIRCOVER done! ") })
+    this.etl.ETLFuserbloc(date).subscribe(() => { console.log("ETL Fuserbloc done! ") })
+    this.etl.ETLVM(date).subscribe(() => { console.log("ETL VM done! ") })
+    this.etl.ETLP77(date).subscribe(data => { console.log("ETL P77 done! ") })
+    this.isOK = true
   }
-
-
-  //3 [database testerID !datedeb !datefin]
-  getDashboardByDatabaseByTester(database: string, tester: number) {
-    this.dashboardService.getDashboardByDatabaseByTester(database, tester).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-        /////////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        //////////////////////////////////////////////////
-      }
-    )
-  }
-
-
-  //4 [database !testerID datedeb datefin]
-  getDashboardBetween2DaysByDatabase(dateDeb: string, dateFin: string, database: string) {
-    this.dashboardService.getDashboardBetween2DaysByDatabase(database, dateDeb, dateFin).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-
-        ///////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        ///////////////////////////////////////////
-
-
-
-      }
-    )
-  }
-
-
-  //5 [database !testerID datedeb !datefin]
-  getDashboardByDateByDatabase(database: string, dateDeb: string) {
-    this.dashboardService.getDashboardByDateByDatabase(database, dateDeb).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        //////////////////////////////////////////////////
-      }
-    )
-  }
-
-
-  //6 [database !testerID !datedeb !datefin]
-  getDashboardByDatabase(database: string) {
-    this.dashboardService.getDashboardByDatabase(database).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-
-
-
-        ///////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myLineBar = new Chart("myLineBar", {
-          type: 'line',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        ///////////////////////////////////////////
-      }
-    )
-  }
-
-  //7 [!database testerID datedeb datefin]
-  getDashboardBetween2DaysByTester(tester: number, dateDeb: string, dateFin: string) {
-    this.dashboardService.getDashboardBetween2DaysByTester(tester, dateDeb, dateFin).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-
-
-        ///////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        ///////////////////////////////////////////
-
-      }
-    )
-  }
-
-
-  //8 [!database testerID datedeb !datefin]
-  getDashboardByDateBytesterId(dateDeb: string, tester: number) {
-    this.dashboardService.getDashboardByDateBytesterId(dateDeb, tester).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-      }
-    )
-  }
-
-  //9 [!database testerID !datedeb !datefin]
-  getDashboardByTesterID(tester: number) {
-    this.dashboardService.getDashboardByTesterID(tester).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      }
-    )
-  }
-
-
-  //10 [!database !testerID datedeb datefin]
-  getDashboardBetween2Days(dateDeb: string, dateFin: string) {
-    this.dashboardService.getDashboardBetween2Days(dateDeb, dateFin).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-
-        ///////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        ///////////////////////////////////////////
-
-      }
-    )
-  }
-
-
-  //11 [!database !testerID datedeb !datefin]
-  getDashboardByDate(dateDeb: string) {
-    this.dashboardService.getDashboardByDate(dateDeb).subscribe(
-      data => {
-        this.dashboards = data
-        console.log(this.dashboards)
-        ///////////////////////////////////////////////////////////////
-        let temp_tester = data.map((data: any) => data.testerID)
-        let temp_fonctionnement = data.map((data: any) => data.dureeFonctionnementSeconde)
-        let temp_disfonctionnement = data.map((data: any) => data.dureeDisfonctionnementSeconde)
-        let conforme = data.map((data: any) => data.quantiteConforme)
-        let nonConforme = data.map((data: any) => data.quantiteNonConforme)
-        let date = data.map((data: any) => data.date)
-        var myChartBar = new Chart("myChartBar", {
-          type: 'bar',
-          data: {
-            labels: date,
-            datasets: [{
-              label: 'Durée du fonctionnement',
-              data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
-              borderColor: "rgba(242, 200, 48, 1)",
-              borderWidth: 1,
-            },
-            {
-              label: 'Durée du disfonctionnement',
-              data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
-              borderColor: "rgba(219, 0, 66, 1)",
-              borderWidth: 1,
-            }
-            ]
-          }
-
-        }
-        )
-        ///////////////////////////////////////////
-      }
-    )
-  }
-
-
-  //12 
-  dashboardByTesterID() {
-    this.dashboardService.dashboardByTesterID().subscribe(
-      data => {
-        this.resultat = data
-
-      }
-    )
-  }
-
-
-  //14 
-  /* listTesters() {
-     this.dashboardService.listTesters().subscribe(
-       data => {
-         this.listTester = data
-         console.log("**********", this.listTester)
-       }
-     )
-   }
- */
 }

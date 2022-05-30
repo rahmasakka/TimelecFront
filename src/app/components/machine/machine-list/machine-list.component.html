@@ -2,7 +2,8 @@
     <h2 class="pt-3 text-one"> Liste des machines</h2>
 
     <div class="input-group mt-3 mb-3">
-        <button class="btn col-4 col-md-4 col-sm-12 btn background-outline-yellow" (click)="open(content)" *ngIf=isAdmin()>
+        <button class="btn col-4 col-md-4 col-sm-12 btn background-outline-yellow" (click)="open(content)"
+            *ngIf=isAdmin()>
             <span> Ajouter machine</span>
             <ng-template #content let-modal>
                 <div class="modal-header background-modal-title">
@@ -31,6 +32,7 @@
     <table class="table table-striped">
         <thead>
             <tr class="text-one">
+                <th> ID machine</th>
                 <th> Nom </th>
                 <th> Description </th>
                 <th> Centre de charge </th>
@@ -42,6 +44,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let machine of machines">
+                <td>{{machine.idMachine}}</td>
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
                 <td>{{machine.centreCharge.ccname}}</td>
@@ -49,8 +52,7 @@
                 <td>{{machine.centreCharge.uap.uapName}}</td>
                 <td>{{machine.machineCategory}}</td>
                 <td>
-                    <button (click)="updateMachine(machine.idMachine)" class="btn outline-update"
-                        *ngIf=isAdmin()>
+                    <button (click)="updateMachine(machine.idMachine)" class="btn outline-update" *ngIf=isAdmin()>
                         <i class="fa fa-paint-brush" aria-hidden="true"></i>
                     </button>
                     <!--button (click)="deleteMachine(machine.idMachine)" class="btn btn-outline-danger" *ngIf=isAdmin()>

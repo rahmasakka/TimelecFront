@@ -7,7 +7,7 @@
             </label>
             <div>
                 <input type="text" class="form-control" name="centreChargeName" [(ngModel)]="centreCharge.ccname" required
-                    #name="ngModel" minlength="3" maxlength="20">
+                    #name="ngModel" minlength="3" maxlength="30">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && name.errors?.['minlength']">
                     Nom centre de charge doit contenir au moins 3 charactères
                 </div>

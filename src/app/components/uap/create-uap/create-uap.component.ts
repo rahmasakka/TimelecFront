@@ -25,7 +25,7 @@ export class CreateUapComponent implements OnInit {
    console.log(this.form)
     this.crudService.createNewEntity("uap",this.form).subscribe(
       data => {
-        this.goToUAPList()
+        window.location.reload();      
         this.isSuccessful = true;
         this.isFailed = false;
       },
@@ -36,7 +36,4 @@ export class CreateUapComponent implements OnInit {
     );
   }
   
-  goToUAPList() {
-    this.router.navigate(['/uap-list']);
-  }
 }

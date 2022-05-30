@@ -1,18 +1,21 @@
-.test{
-    background-color: yellow;
-    height: 50px;
+.card {
+    background-color: #ffffff !important;
+    height: 350px;
+    margin-right: 3%;
+    border-radius: 15px !important;
 }
 
-.card{
-   margin-left: 20px ;
-   width: 110%;
+img {
+    height: 200px;
+    // width: 100%;
 }
 
-button{
-    margin-top: 5%;
-    width: 110%;
+.test {
+    height: 80%;
+    width: 80%;
+    margin: 5% 10%;
 }
 
-.row{
-    margin: 7% 10% ;
+button {
+    margin: 2%;
 }

@@ -20,6 +20,7 @@ export class SigninComponent implements OnInit {
               private router : Router) { }
 
   ngOnInit(): void {
+
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
@@ -35,7 +36,8 @@ export class SigninComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        this.reloadPage();
+        this.router.navigate(['/dashboard']);
+        this.reloadPage()
       },
       err => {
         this.errorMessage = err.error.message;
