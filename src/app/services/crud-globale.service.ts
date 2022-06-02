@@ -7,6 +7,7 @@ const baseURL = "http://localhost:9003/api/";
 @Injectable({
   providedIn: 'root'
 })
+
 export class CrudGlobaleService {
 
   constructor(private http: HttpClient) { }
@@ -33,5 +34,9 @@ export class CrudGlobaleService {
 
   getSonByMother(url: String, id: number): Observable<any> {
     return this.http.get<any>(baseURL + url + '/sonByMother/' + id)
+  }
+
+  exporterExcel(): Observable<any> {
+    return this.http.get<any>(baseURL + 'users/export/excel', { responseType: 'arraybuffer' as 'json' })
   }
 }

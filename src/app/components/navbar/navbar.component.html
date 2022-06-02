@@ -1,23 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light navbar-background"  *ngIf="isLoggedIn">
+<nav class="navbar navbar-expand-lg navbar-background"  *ngIf="isLoggedIn">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul>
-      <!--img src="assets/logo.jpeg" style="width: 80px; height: 20px"/-->
-    </ul>
     <ul class="navbar-nav">
       <li class="nav-item active">
         <button class="btn navbar-brand text" routerLink="home">
-          <img src="assets/logo.jpeg"/>
+          <img src="assets/logo1.png"/>
         </button>
       </li>
       <li class="nav-item active">
-        <button class="btn navbar-brand text" routerLink="home" routerLinkActive="active" >
+        <!--button class="btn navbar-brand text" routerLink="home" routerLinkActive="active" >
           <i class="fa fa-home icon" aria-hidden="true"></i>
           <span> Home</span>
-        </button>
+        </button-->
       </li>
       <li class="nav-item" *ngIf="isLoggedIn && isAdmin()">
         <button class="btn navbar-brand text" routerLink="list-users" routerLinkActive="active">
@@ -72,14 +69,14 @@
         </button>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-two" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+        <a class="nav-link dropdown-toggle text-one" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false" *ngIf="isLoggedIn">
           Hi, {{ username}}
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-background">
           <button class="dropdown-item text" routerLink="profil">Profil</button>
           <button (click)="logout()" class="dropdown-item text" routerLink="/signin">
-            <i class="fa fa-power-off icon text" aria-hidden="true"></i>
+            <i class="fa fa-power-off icon" aria-hidden="true"></i>
             <span> Log out</span>
           </button>
         </div>

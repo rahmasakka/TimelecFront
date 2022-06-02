@@ -32,6 +32,8 @@ import { MachineComponent } from './components/machine/machine/machine.component
 import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
 import { DatabasesComponent } from './components/dashboard/databases/databases.component';
 import { TestComponent } from './test/test.component';
+import { NgxPrintModule } from 'ngx-print';
+import { DatePipe } from '@angular/common';
 
 @NgModule({    
   declarations: [
@@ -69,9 +71,11 @@ import { TestComponent } from './test/test.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule, 
+    NgxPrintModule,
     ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,     DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,32 +1,3 @@
-<div class="row p-5">
-    <div class="card m-3 p-3 col-lg-3 col-md-5 col-xs-11">
-        <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modelDebut" ngbDatepicker
-                #dateDebut="ngbDatepicker" (change) = listUAP()>
-            <button class="btn background-outline-yellow calendar" (click)="dateDebut.toggle()" type="button">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </button>
-        </div>
-
-        <button *ngFor="let uap of uaps" type="button" class="btn background-outline-bleu m-2"
-            (click)="getListCentreChargeByUAP(uap.idUAP)" routerLinkActive="active">
-            {{uap.uapName}}
-        </button>
-        <button *ngFor="let cc of centreChargeByUAP" class="btn background-outline-yellow m-2"
-            (click)="getListMachineReferenced(cc.idCC)" routerLinkActive="active">
-            {{cc.ccname}}
-        </button>
-    </div>
-    <div class="card m-3 p-3 col-lg-7 col-md-5 col-xs-11">
-        <canvas id="myChartLineUAP"></canvas>
-    </div>
-
-    <div class="card m-3 p-3 col-lg-4 col-md-5 col-xs-11">
-        <canvas id="myChartPieUAP"></canvas>
-    </div>
-
-    <div class="card m-3 p-3 col-lg-3 col-md-5 col-xs-11">
-        <canvas id="myChartBar"></canvas>
-        <canvas id="myChartPie"></canvas>
-    </div>
+<div class="m-3">
+    <button class="btn btn-info " (click)="export()">Export to Excel</button>
 </div>
