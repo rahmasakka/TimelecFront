@@ -36,7 +36,10 @@ export class CrudGlobaleService {
     return this.http.get<any>(baseURL + url + '/sonByMother/' + id)
   }
 
-  exporterExcel(): Observable<any> {
-    return this.http.get<any>(baseURL + 'users/export/excel', { responseType: 'arraybuffer' as 'json' })
+
+  exporterExcel(date1: string, date2: string): Observable<any> {
+    let url = baseURL + 'dashboard/export/excelDashboard/' + date1 + '/' + date2
+    console.log(url)
+    return this.http.get<any>(url, { responseType: 'arraybuffer' as 'json' })
   }
 }

@@ -103,7 +103,12 @@ export class DashboardComponent implements OnInit {
       this.dateFin = this.dateDeb
     }
 
+    if (this.dateDeb == undefined) {
+      alert("Il faut choisir la date pour préparer le tableau de bordd")
+    }
+
     this.dashboardService.getDashboardByUAP(this.dateDeb, this.dateFin, idUAP).subscribe(
+
       (data: any) => {
         this.dashboardUAP = data
         // let temp_fonctionnement = this.dashboardUAP.map((data: any) => data[26])
@@ -195,6 +200,9 @@ export class DashboardComponent implements OnInit {
 
 
   getDashboardCentreCharge(idCC: number) {
+    if (this.dateDeb == undefined) {
+      alert("Il faut choisir la date pour préparer le tableau de bordd")
+    }
     this.dashboardService.dashboardByCentreCharge(this.dateDeb, this.dateFin, idCC).subscribe(
       (data: any) => {
         this.dashboardCentreCharge = data
@@ -207,20 +215,20 @@ export class DashboardComponent implements OnInit {
         let date = this.dashboardCentreCharge.map((data: any) => data[9])
 
         var myChartLine = new Chart("myChartLineByCentreCharge", {
-          type: 'line',
+          type: 'bar',
           data: {
             labels: date,
             datasets: [{
               label: 'Durée du fonctionnement',
               data: temp_fonctionnement,
-              backgroundColor: "rgba(242, 200, 48, 0.5)",
+              backgroundColor: "rgba(242, 200, 48, 0.3)",
               borderColor: "rgba(242, 200, 48, 1)",
               borderWidth: 1,
             },
             {
               label: 'Durée du disfonctionnement',
               data: temp_disfonctionnement,
-              backgroundColor: "rgba(219, 0, 66, 0.5)",
+              backgroundColor: "rgba(219, 0, 66, 0.3)",
               borderColor: "rgba(219, 0, 66, 1)",
               borderWidth: 1,
             }]
@@ -233,6 +241,10 @@ export class DashboardComponent implements OnInit {
   getDashboard() {
     if (this.dateFin == undefined) {
       this.dateFin = this.dateDeb
+    }
+
+    if (this.dateDeb == undefined) {
+      alert("Il faut choisir la date pour préparer le tableau de bordd")
     }
 
     if (this.testerID != null) {
@@ -374,6 +386,9 @@ export class DashboardComponent implements OnInit {
 
 
   ETL() {
+    if (this.dateDeb == undefined) {
+      alert("Il faut choisir la date pour préparer le tableau de bordd")
+    }
     this.dateDebutSeconde = new Date(this.dateDeb).getTime();
     this.dateFinSeconde = new Date(this.dateFin).getTime();
     this.nbj = (this.dateFinSeconde - this.dateDebutSeconde) / 86400000;
@@ -391,5 +406,13 @@ export class DashboardComponent implements OnInit {
     this.etl.ETLVM(date).subscribe(() => { console.log(date + " ETL VM done! ") })
     this.etl.ETLP77(date).subscribe(() => { console.log(date + " ETL P77 done! ") })
     this.isOK = true
+  }
+
+  exportExcel() {
+    this.crud.exporterExcel(this.dateDeb, this.dateFin).subscribe((data) => {
+      let file = new Blob([data], { type: 'application/vnd.ms-excel' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    })
   }
 }
