@@ -41,10 +41,10 @@ export class DatabasesComponent implements OnInit {
   ngOnInit() {
     this.databaseId = this.route.snapshot.params['keyword']
     this.chargerTesterID(this.databaseId)
+    this.getListSummaryByDatabase()
     const currentDate = new Date();
     const currentDateFormat = currentDate.toISOString().substring(0, 10)
-    console.log(currentDateFormat)
-    this.getListSummaryByDate(currentDateFormat)
+   // this.getListSummaryByDate(currentDateFormat)
   }
 
   chargerTesterID(db: string) {

@@ -46,4 +46,10 @@ export class GabarieService {
 
   }
 
+  exporterExcel(date1: string, date2: string): Observable<any> {
+    let url = baseURL + 'excel/' + date1 + '/' + date2
+    console.log(url)
+    return this.http.get<any>(url, { responseType: 'arraybuffer' as 'json' })
+  }
+
 }

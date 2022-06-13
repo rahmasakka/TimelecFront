@@ -146,6 +146,10 @@ export class GabariesComponent implements OnInit {
   }
 
   exportExcel() {
-
+    this.gabarieService.exporterExcel(this.dateDeb, this.dateFin).subscribe((data) => {
+      let file = new Blob([data], { type: 'application/vnd.ms-excel' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    })
   }
 }
