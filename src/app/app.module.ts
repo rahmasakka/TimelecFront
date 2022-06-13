@@ -29,11 +29,14 @@ import { LoadChargeDetailsComponent } from './components/load-charge/load-charge
 import { UapComponent } from './components/uap/uap/uap.component';
 import { CentreChargeComponent } from './components/load-charge/centre-charge/centre-charge.component';
 import { MachineComponent } from './components/machine/machine/machine.component';
-import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
-import { DatabasesComponent } from './components/dashboard/databases/databases.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DatabasesComponent } from './components/databases/databases.component';
 import { TestComponent } from './test/test.component';
 import { NgxPrintModule } from 'ngx-print';
 import { DatePipe } from '@angular/common';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { TesteursComponent } from './components/databases/testeurs/testeurs.component';
+import { GabariesComponent } from './components/databases/gabaries/gabaries.component';
 
 @NgModule({    
   declarations: [
@@ -63,7 +66,10 @@ import { DatePipe } from '@angular/common';
     MachineComponent,
     DashboardComponent,
     DatabasesComponent,
-    TestComponent
+    TestComponent,
+    NotFoundComponent,
+    TesteursComponent,
+    GabariesComponent,
    ],
    
   imports: [

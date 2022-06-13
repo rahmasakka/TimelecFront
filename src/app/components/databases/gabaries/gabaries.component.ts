@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { GabarieService } from '../services/gabarie.service';
+import { GabarieService } from 'src/app/services/gabarie.service';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+  selector: 'app-gabaries',
+  templateUrl: './gabaries.component.html',
+  styleUrls: ['./gabaries.component.scss']
 })
-export class TestComponent implements OnInit {
-
+export class GabariesComponent implements OnInit {
   of !: string
   dateDeb !: string
   dateFin !: string
@@ -34,10 +33,10 @@ export class TestComponent implements OnInit {
   constructor(private gabarieService: GabarieService) { }
 
   ngOnInit(): void {
-   // this.getList()
+    this.getList()
   }
 
- /* getList() {
+  getList() {
     if (this.dateFin == undefined) {
       this.dateFin = this.dateDeb
     }
@@ -148,5 +147,5 @@ export class TestComponent implements OnInit {
 
   exportExcel() {
 
-  } */
+  }
 }

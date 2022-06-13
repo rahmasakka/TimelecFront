@@ -12,6 +12,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./load-charge-details.component.scss']
 })
 export class LoadChargeDetailsComponent implements OnInit {
+  
   name = ""
   id!: number;
   machines!: machine[]

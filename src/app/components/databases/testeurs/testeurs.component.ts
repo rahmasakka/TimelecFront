@@ -1,25 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
 import { summary } from 'src/app/model/summary';
 import { ProductionService } from 'src/app/services/production.service';
 
 @Component({
-  selector: 'app-databases',
-  templateUrl: './databases.component.html',
-  styleUrls: ['./databases.component.scss']
+  selector: 'app-testeurs',
+  templateUrl: './testeurs.component.html',
+  styleUrls: ['./testeurs.component.scss']
 })
-export class DatabasesComponent implements OnInit {
-  modelDebut!: NgbDateStruct;
-  modelFin!: NgbDateStruct;
+export class TesteursComponent implements OnInit {
   listSummaries: summary[] = []
   testerId!: number
 
-
   databaseId: string = ''
   msg!: string
-  datedeb!: string
-  datefin!: string
 
   isEmpty: boolean = false
   isError: boolean = false
@@ -27,7 +21,6 @@ export class DatabasesComponent implements OnInit {
 
   listTesterID: any
   nbSecond !: number
-  nbMinute = 3
 
   nb_seconde!: number
   nb_minute: number = 0
@@ -39,40 +32,28 @@ export class DatabasesComponent implements OnInit {
   thePageSize: number = 5;
   theTotalElements: number = 0;
 
-  constructor(
-    private productionService: ProductionService, private route: ActivatedRoute) { }
+  datedeb: any;
+  datefin: any;
+
+  constructor(private productionService: ProductionService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    /*  
-    this.crudService.getListEntity("machine").subscribe(
-      data => this.listTesterID = data
-    )
-
-    this.machineService.listTesteurReferenced().subscribe(
-      data => { this.listTesterID = data }
-    )*/
-   // this.databaseId="vm"
-
     this.databaseId = this.route.snapshot.params['keyword']
-
+    this.chargerTesterID(this.databaseId)
     const currentDate = new Date();
     const currentDateFormat = currentDate.toISOString().substring(0, 10)
-    this.getListSummaryByDatabase()
+    console.log(currentDateFormat)
+    this.getListSummaryByDate(currentDateFormat)
   }
 
   chargerTesterID(db: string) {
-    this.productionService.getListTesterByDatabase(db).subscribe(
-      data => this.listTesterID = data
-    )
+    this.productionService.getListTesterByDatabase(db).subscribe((data) => this.listTesterID = data)
   }
 
   listsummary() {
-    if (this.modelDebut != null) {
-      this.datedeb = this.modelDebut.year.toString() + '-' + this.modelDebut.month.toString() + '-' + this.modelDebut.day.toString()
-    }
-
-    if (this.modelFin != null) {
-      this.datefin = this.modelFin.year.toString() + '-' + this.modelFin.month.toString() + '-' + this.modelFin.day.toString()
+    if (this.datefin == undefined) {
+      this.datefin = this.datedeb
     }
 
     if ((this.testerId != null) && (this.datefin != null) && (this.datedeb != null)) {
@@ -93,7 +74,6 @@ export class DatabasesComponent implements OnInit {
 
     if ((this.testerId != null) && (this.datefin == null) && (this.datedeb != null)) {
       this.getListSummaryByDateByTesterId(this.datedeb, this.testerId)
-      //this.getNbSecond(this.datedeb, this.testerId, this.nbMinute)
     }
 
     if ((this.testerId == null) && (this.datefin == null) && (this.datedeb != null)) {
@@ -109,12 +89,17 @@ export class DatabasesComponent implements OnInit {
     }
   }
 
-  getListSummaryByDatabase(){
+  getAll(){
+    this.productionService.getAll(this.databaseId,
+      this.thePageSize,
+      this.thePageNumber - 1).subscribe(this.processResult())
+  }
+
+  getListSummaryByDatabase() {
     this.productionService.getListSummaryByDatabase(
-      this.databaseId, this.thePageSize,
-      this.thePageNumber - 1).subscribe(
-      this.processResult()
-    )
+      this.databaseId,
+      this.thePageSize,
+      this.thePageNumber - 1).subscribe(this.processResult())
   }
 
   getListSummaryByDate(date: string) {
@@ -125,7 +110,6 @@ export class DatabasesComponent implements OnInit {
       this.thePageNumber - 1
     ).subscribe(this.processResult());
   }
-
 
   getListSummaryByDateByTesterId(datedeb: string, testerId: number) {
     this.productionService.getListSummaryByDateByTesterIdPaginate(
@@ -155,7 +139,6 @@ export class DatabasesComponent implements OnInit {
       this.thePageNumber - 1).subscribe(this.processResult())
   }
 
-
   getListPaginate() {
     this.productionService.getSummaryListPaginate(this.databaseId,
       this.thePageSize,
@@ -169,39 +152,10 @@ export class DatabasesComponent implements OnInit {
       this.thePageSize,
       this.thePageNumber - 1).subscribe(this.processResult())
   }
-/*
-  getNbSecond(maDate: string, testerId: number, nbMinute: number) {
-    this.etlService.calculNbSecond(this.databaseId, maDate, testerId, nbMinute).subscribe(
-      data => {
-        this.nbSecond = data
-        this.isClicked = true
-        this.nb_seconde = this.nbSecond
-
-        if (this.nb_seconde > 3600) {
-          this.nb_heure = Math.floor(this.nb_seconde / 3600)
-        }
-
-        this.nb_seconde = this.nb_seconde - (this.nb_heure * 3600)
-
-        if (this.nb_seconde > 60) {
-          this.nb_minute = Math.floor(this.nb_seconde / 60)
-        }
-
-        this.nb_seconde = this.nb_seconde - (this.nb_minute * 60)
-        if (this.nb_heure >= 10) {
-          this.time = this.nb_heure + ":" + this.nb_minute + ':' + this.nb_seconde
-        }
-        else
-          this.time = '0' + this.nb_heure + ":" + this.nb_minute + ':' + this.nb_seconde
-      }
-    )
-  }
-*/
 
   processResult() {
     return (data: any) => {
       this.listSummaries = data.content;
-      console.log(data)
       this.thePageSize = data.pageable.pageSize;
       this.thePageNumber = data.pageable.pageNumber + 1;
       this.theTotalElements = data.totalElements;

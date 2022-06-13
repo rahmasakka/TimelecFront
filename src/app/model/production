@@ -1,0 +1,10 @@
+import { Time } from "@angular/common";
+
+export class production{
+    id!: number;
+    of!: number;
+    quantiteProduite!: number;
+    quantiteRebut!: number;
+    date!: Date;
+    temps !: Time
+}

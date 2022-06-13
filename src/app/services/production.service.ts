@@ -55,6 +55,12 @@ export class ProductionService {
     const searchUrl = `${baseURL}${baseDeDonnés}/month/${month}/year/${year}?pageSize=${thePageSize}&pageNumber=${thePageNumber}`
     return this.http.get<GetResponseSummary[]>(searchUrl)
   }
+
+  getAll(baseDeDonnés: string, thePageSize: number, thePageNumber: number): Observable<GetResponseSummary[]> {
+    const searchUrl = `${baseURL}${baseDeDonnés}/all&pageSize=${thePageSize}&pageNumber=${thePageNumber}`
+    return this.http.get<GetResponseSummary[]>(searchUrl)
+  }
+
 }
 
 interface GetResponseSummary {

@@ -1,0 +1,100 @@
+<div class=" container card mt-5 p-3">
+    <div class="row">
+        <div class="card col-lg-2 col-md-5 col-sm-11 p-1 m-2">
+            <label>
+                <h5 class="text-one"> Base de données </h5>
+            </label>
+            <select class="form-control" id="databaseId" name="databaseId" [(ngModel)]="databaseId"
+                (change)="chargerTesterID($any($event.target).value)">
+                <option value="0" selected disabled>--Choisissez une base de données --</option>
+                <option value="vm"> Sirco vm </option>
+                <option value="sircoSircover"> Sirco Sircover </option>
+                <option value="fuserbloc"> Fuserbloc </option>
+                <option value="p77"> P77 </option>
+                <option value="devP87"> P87 </option>
+            </select>
+        </div>
+
+        <div class="card col-lg-2 col-md-5 col-sm-11 p-1 m-2">
+            <label class="text-one">
+                <h5>Centre de charge</h5>
+            </label>
+            <select class="form-control" id="testerId" name="testerId" [(ngModel)]="testerId">
+                <option value="0" selected disabled>--Choisissez un testeur --</option>
+                <option *ngFor="let testeur of listTesterID" [value]="testeur">
+                    {{testeur}}
+                </option>
+            </select>
+        </div>
+        <div class=" card col-lg-2 col-md-5 col-sm-11 p-1 m-2">
+            <label>
+                <h5 class="text-one"> Date début </h5>
+            </label>
+            <input class="form-control" type="date" name="dateDeb" [(ngModel)]="datedeb" required>
+        </div>
+
+        <div class=" card col-lg-2 col-md-5 col-sm-11 p-1 m-2">
+            <label>
+                <h5 class="text-one"> Date fin </h5>
+            </label>
+            <input class="form-control" type="date" name="dateFin" [(ngModel)]="datefin" [value]="datedeb">
+        </div>
+
+
+        <div class="col-lg-2 col-md-10 col-sm-11 p-2 m-2">
+            <button class="btn background-outline-yellow  mt-4 w-100" (click)="listsummary()" type="button">
+                Opérations
+            </button>
+        </div>
+        <ngb-alert *ngIf="isError" class="mt-3 mb-0" type="danger">
+            la date de début doit être plus ancienne que la date fin .
+        </ngb-alert>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr class="text-one">
+                <th> Assemblage mécanique</th>
+                <th> Centre de charge </th>
+                <th> Temps début</th>
+                <th> Conformité </th>
+                <th> Code du site</th>
+                <th> Code opérateur </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let summary of listSummaries">
+                <td>{{summary.mechanicalAssembly.idMechanicalAssembly}}</td>
+                <td>{{summary.testerID}}</td>
+                <td>{{summary.testStartTime}}</td>
+                <td>{{summary.testStatus}}</td>
+                <td>{{summary.siteCode}}</td>
+                <td>{{summary.operatorName}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ngb-alert *ngIf="isEmpty" class="mt-3 mb-0" type="danger">
+        Aucune information à afficher pour cette date.
+    </ngb-alert>
+
+    <div class="footer-pagination">
+        <div class="row">
+            <div class="col-lg-9 col-md-6 col-sm-12">
+                <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize" [collectionSize]="theTotalElements"
+                    [maxSize]="2" [boundaryLinks]="true" (pageChange)="listsummary()">
+
+                </ngb-pagination>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <select (change)="updatePageSize($any($event.target).value)" class="form-control w-8">
+                    <option selected="true"> 5 </option>
+                    <option> 10 </option>
+                    <option> 100 </option>
+                    <option> 1000 </option>
+                    <option> 5000 </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

@@ -85,10 +85,23 @@ export class DashboardComponent implements OnInit {
   nbj = 0
   uaps!: UAP[]
 
-
   ngOnInit(): void {
     this.listUAP()
+    //this.refrech()
+
+    var now: any = new Date();
+    var millisTill: any = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+
+    console.log(millisTill);
+
+    if (millisTill < 0) {
+      millisTill += 86400000; // it's after 10am, try 10am tomorrow.
+    }
+
+    setTimeout(function () { alert("It's 10am!") }, millisTill);
+
   }
+
 
   listUAP() {
     this.crud.getListEntity("uap").subscribe(
@@ -104,18 +117,15 @@ export class DashboardComponent implements OnInit {
     }
 
     if (this.dateDeb == undefined) {
-      alert("Il faut choisir la date pour préparer le tableau de bordd")
+      alert("Il faut choisir la date pour préparer le tableau de bord")
     }
 
     this.dashboardService.getDashboardByUAP(this.dateDeb, this.dateFin, idUAP).subscribe(
 
       (data: any) => {
         this.dashboardUAP = data
-        // let temp_fonctionnement = this.dashboardUAP.map((data: any) => data[26])
-        // let temp_disfonctionnement = this.dashboardUAP.map((data: any) => data[25])
         let conforme = this.dashboardUAP.map((data: any) => data[27])
         let nonConforme = this.dashboardUAP.map((data: any) => data[28])
-        // let date = this.dashboardUAP.map((data: any) => data[9])
         var myChartPie = new Chart("myChartPieByUAP", {
           type: 'pie',
           data: {
@@ -147,7 +157,6 @@ export class DashboardComponent implements OnInit {
         let temp_disfonctionnement = this.dashboardUAPDetails.map((data: any) => data[25])
         let sommeConforme = this.dashboardUAPDetails.map((data: any) => data[27])
         let sommeNonConforme = this.dashboardUAPDetails.map((data: any) => data[28])
-        //  let date = this.dashboardUAPDetails.map((data: any) => data[9])
         let centre_charge = this.dashboardUAPDetails.map((data: any) => data[21])
         var myChartLine = new Chart("myChartLineByUAPDetails", {
           type: 'bar',
@@ -188,7 +197,8 @@ export class DashboardComponent implements OnInit {
               borderColor: "rgba(219, 0, 66, 1)",
               borderWidth: 1,
             }]
-          }
+          },
+
         })
       }
     )
@@ -201,7 +211,7 @@ export class DashboardComponent implements OnInit {
 
   getDashboardCentreCharge(idCC: number) {
     if (this.dateDeb == undefined) {
-      alert("Il faut choisir la date pour préparer le tableau de bordd")
+      alert("Il faut choisir la date pour préparer le tableau de bord")
     }
     this.dashboardService.dashboardByCentreCharge(this.dateDeb, this.dateFin, idCC).subscribe(
       (data: any) => {
@@ -210,14 +220,13 @@ export class DashboardComponent implements OnInit {
 
         let temp_fonctionnement = this.dashboardCentreCharge.map((data: any) => data[26])
         let temp_disfonctionnement = this.dashboardCentreCharge.map((data: any) => data[25])
-        // let conforme = this.dashboardCentreCharge.map((data: any) => data[27])
-        // let nonConforme = this.dashboardCentreCharge.map((data: any) => data[28])
+        let centre_charge = this.dashboardCentreCharge.map((data: any) => data[21])
         let date = this.dashboardCentreCharge.map((data: any) => data[9])
 
         var myChartLine = new Chart("myChartLineByCentreCharge", {
           type: 'bar',
           data: {
-            labels: date,
+            labels: centre_charge,
             datasets: [{
               label: 'Durée du fonctionnement',
               data: temp_fonctionnement,
@@ -244,7 +253,7 @@ export class DashboardComponent implements OnInit {
     }
 
     if (this.dateDeb == undefined) {
-      alert("Il faut choisir la date pour préparer le tableau de bordd")
+      alert("Il faut choisir la date pour préparer le tableau de bord")
     }
 
     if (this.testerID != null) {
@@ -387,7 +396,7 @@ export class DashboardComponent implements OnInit {
 
   ETL() {
     if (this.dateDeb == undefined) {
-      alert("Il faut choisir la date pour préparer le tableau de bordd")
+      alert("Il faut choisir la date pour préparer le tableau de bord")
     }
     this.dateDebutSeconde = new Date(this.dateDeb).getTime();
     this.dateFinSeconde = new Date(this.dateFin).getTime();
@@ -398,8 +407,13 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  refrech() {
+    setInterval(() => {
+      this.ETL(); // api call
+    }, 1000 * 60);
+  }
+
   ETLDate(date: any) {
-    this.isOK = false
     this.etl.ETLDEVP87(date).subscribe(() => { console.log(date + " ETL DEVP87 done! ") })
     this.etl.ETLSIRCOVER(date).subscribe(() => { console.log(date + " ETL SIRCOVER done! ") })
     this.etl.ETLFuserbloc(date).subscribe(() => { console.log(date + " ETL Fuserbloc done! ") })

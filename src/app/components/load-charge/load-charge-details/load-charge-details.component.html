@@ -37,7 +37,7 @@
                 <th> Name </th>
                 <th> Description </th>
                 <th> Centre de Charge </th>
-                <th> Réference </th>
+                <th *ngIf="isAdmin()"> Réference </th>
                 <th> Categorie </th>
                 <th *ngIf=isAdmin()> Actions </th>
             </tr>
@@ -47,7 +47,7 @@
                 <td>{{machine.machineName}}</td>
                 <td>{{machine.machineDescription}}</td>
                 <td>{{loadCharge.ccname}}</td>
-                <td>
+                <td *ngIf=isAdmin() >
                     <input class="form-check-input" type="checkbox" [checked]="machine.reference"
                         (change)="onChange($event, machine)">
                 </td>

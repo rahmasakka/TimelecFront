@@ -50,13 +50,11 @@ export class LoadChargeUpdateComponent implements OnInit {
 
 
   onSubmit() {
-    this.crudService.updateEntity("cc", this.id, this.centreCharge).subscribe(
-      data => {
-        this.goToLoadChargeList()
-        console.log(data)
-        this.isSuccessful = true
-        this.submitted = true
-      },
+    this.crudService.updateEntity("cc", this.id, this.centreCharge).subscribe(() => {
+      this.goToLoadChargeList()
+      this.isSuccessful = true
+      this.submitted = true
+    },
       err => {
         this.errorMessage = err.error.errorMessage
         this.isFailed = true

@@ -1,21 +1,23 @@
-<div class="row">
-  <div class="col-lg-8 col-md-6 col-sm-12"></div>
-  <div class=" card col-lg-3 col-md-6 col-sm-12 p-3 card1 text-warning text-one">
+<div class="container row col-lg-12">
+  <div class="col-lg-7 col-md-6 col-sm-12"> 
+    <!--img src="assets/logo iData H_Plan de travail 1 copie 3.png"-->
+  </div>
+  <div class="card col-lg-3 col-md-6 col-sm-12 p-3 card1 text-warning text-one">
 
-    <h1 class="text-one">Sign In</h1>
+    <h1 class="text-one">Se connecter</h1>
 
-    <form class="form-horizontal text-dark" *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"
-      novalidate>
+    <form class="form-horizontal text-dark" *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm" novalidate>
 
       <div class="form-group">
         <label class="control-label">
-          <h5 >Username:</h5>
+          <h5>Nom utilisateur:</h5>
         </label>
         <div>
           <input type="username" class="form-control" placeholder="Votre username" name="username"
             [(ngModel)]="form.username" required #username="ngModel">
           <div class="alert alert-danger" role="alert" *ngIf="f.submitted && username.invalid">
-            Username est obligatoire!
+            Le nom utilisateur est obligatoire!
           </div>
         </div>
       </div>

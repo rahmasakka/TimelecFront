@@ -32,7 +32,6 @@ export class MachineListComponent implements OnInit {
     this.crudService.getListEntity("machine").subscribe(
       data => {
         this.machines = data;
-        console.log(this.machines);
       }
     )
   }
@@ -77,6 +76,4 @@ export class MachineListComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
-
 }

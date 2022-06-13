@@ -1,33 +1,36 @@
 <div class="container card col-lg-8 col-md-10 col-sm-12 mt-4">
     <h2 class="pt-3 text-one"> List de centre de charge</h2>
-
-    <div class="input-group mt-3 mb-3">
-        <button class="btn col-4 col-md-4 col-sm-12 btn background-outline-yellow" (click)="open(content)" *ngIf=isAdmin()>
-            <span> Ajouter centre de charge</span>
-            <ng-template #content let-modal>
-                <div class="modal-header background-modal-title">
-                    <h4 class="modal-title text-one">Ajouter un nouveau centre de charge</h4>
-                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group-append">
-                        <app-create-load-charge></app-create-load-charge>
+    <div class="row input-group mt-3">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <button class="btn background-outline-yellow col-lg-12" (click)="open(content)" *ngIf=isAdmin()>
+                <span> Ajouter centre de charge</span>
+                <ng-template #content let-modal>
+                    <div class="modal-header background-modal-title">
+                        <h4 class="modal-title text-one">Ajouter un nouveau centre de charge</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-            </ng-template>
-        </button>
-        <input #myInput class="form-control border col-lg-8 col-md-6 col-sm-12" type="text"
-            placeholder="Saisir nom d'un centre de charge..." [(ngModel)]="ccname" [(ngModel)]="ccdescription"
-            (input)="Search()">
-        <span class="input-group-append">
-            <button class="btn background-outline-yellow" type="button">
-                <i class="fa fa-search"></i>
+                    <div class="modal-body">
+                        <div class="input-group-append">
+                            <app-create-load-charge></app-create-load-charge>
+                        </div>
+                    </div>
+                </ng-template>
             </button>
-        </span>
-    </div>
+        </div>
 
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <span class="input-group-append">
+                <input #myInput class="form-control border" type="text" placeholder="Saisir nom d'un centre de charge..."
+                [(ngModel)]="ccname" [(ngModel)]="ccdescription" (input)="Search()">
+                <button class="btn background-outline-yellow" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+    
     <table class="table table-striped">
         <thead>
             <tr class="text-one">
@@ -72,9 +75,6 @@
                                     Supprimer
                                 </button>
                             </div>
-                            <!--div class=" alert alert-success" *ngIf="isSuccessful">
-                                Suppression avec succées.
-                            </div-->
                             <div *ngIf=isDeletedFailed class="alert alert-danger">
                                 Ce centre de charge contient des machines. <br />
                                 Pour le supprimer, il faut supprimer toutes les machines qu'il compose.

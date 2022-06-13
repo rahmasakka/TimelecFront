@@ -2,16 +2,16 @@
     <form name="form" (ngSubmit)=" onSubmit()" class="pb-3 mt-4">
         <div class="form-group">
             <label class="control-label text-one">
-                <h5>Username:</h5>
+                <h5>Nom utilisateur:</h5>
             </label>
             <div style="width: 200%">
-                <input type="text" class="form-control" placeholder="Ton username" name="username" id="username"
+                <input type="text" class="form-control" placeholder="Ton nom utilisateur" name="username" id="username"
                     [(ngModel)]="form.username" required #username="ngModel" minlength="3">
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.invalid">
-                    L'username est obligatoire
+                    Le nom utilisateur est obligatoire
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="submitted && username.errors?.['minlength']">
-                    L'username doit contenir au moins 3 caractères
+                    Le nom utilisateur doit contenir au moins 3 caractères
                 </div>
             </div>
         </div>
