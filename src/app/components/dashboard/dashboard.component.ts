@@ -31,6 +31,7 @@ import { CrudGlobaleService } from 'src/app/services/crud-globale.service';
 import { UAP } from 'src/app/model/uap';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { EtlService } from 'src/app/services/etl.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -40,7 +41,11 @@ import { EtlService } from 'src/app/services/etl.service';
 
 export class DashboardComponent implements OnInit {
 
-  constructor(private dashboardService: DashboardService, private datePipe: DatePipe, private etl: EtlService, private crud: CrudGlobaleService) {
+  constructor(private dashboardService: DashboardService, 
+              private datePipe: DatePipe, 
+              private etl: EtlService, 
+              private crud: CrudGlobaleService, 
+              private token: TokenStorageService) {
     Chart.register(
       ArcElement,
       LineElement,
@@ -85,20 +90,16 @@ export class DashboardComponent implements OnInit {
   nbj = 0
   uaps!: UAP[]
 
+  msg1 =""
+  msg2 =""
+  msg3 =""
+  msg4 =""
+  msg5 =""
+
+  isAdmin() { return this.token.getUser().roles[0] == "ROLE_ADMIN" }
+
   ngOnInit(): void {
     this.listUAP()
-    //this.refrech()
-
-    var now: any = new Date();
-    var millisTill: any = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
-
-    console.log(millisTill);
-
-    if (millisTill < 0) {
-      millisTill += 86400000; // it's after 10am, try 10am tomorrow.
-    }
-
-    setTimeout(function () { alert("It's 10am!") }, millisTill);
 
   }
 
@@ -407,18 +408,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  refrech() {
-    setInterval(() => {
-      this.ETL(); // api call
-    }, 1000 * 60);
-  }
-
   ETLDate(date: any) {
-    this.etl.ETLDEVP87(date).subscribe(() => { console.log(date + " ETL DEVP87 done! ") })
-    this.etl.ETLSIRCOVER(date).subscribe(() => { console.log(date + " ETL SIRCOVER done! ") })
-    this.etl.ETLFuserbloc(date).subscribe(() => { console.log(date + " ETL Fuserbloc done! ") })
-    this.etl.ETLVM(date).subscribe(() => { console.log(date + " ETL VM done! ") })
-    this.etl.ETLP77(date).subscribe(() => { console.log(date + " ETL P77 done! ") })
+    this.etl.ETLDEVP87(date).subscribe(() => {this.msg1 = date + " ETL DEVP87 done! " })
+    this.etl.ETLSIRCOVER(date).subscribe(() => { this.msg2 = date + " ETL SIRCOVER done! " })
+    this.etl.ETLFuserbloc(date).subscribe(() => { this.msg3= date + " ETL Fuserbloc done! " })
+    this.etl.ETLVM(date).subscribe(() => { this.msg4 = date + " ETL VM done! " })
+    this.etl.ETLP77(date).subscribe(() => { this.msg5 = date + " ETL P77 done! " })
     this.isOK = true
   }
 
