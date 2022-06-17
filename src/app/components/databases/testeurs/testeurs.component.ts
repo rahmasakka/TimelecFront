@@ -167,4 +167,8 @@ export class TesteursComponent implements OnInit {
     this.thePageNumber = 1;
     this.listsummary()
   }
+
+  exportExcel(){
+    
+  }
 }

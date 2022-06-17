@@ -1,0 +1,79 @@
+<div class="container card mt-4 p-3 col-8">
+    <label>
+        <h1 class="text-one">Assemblage</h1>
+    </label>
+    <div class="row m-3">
+        <div class=" card col-lg-3 col-md-5 col-sm-11 p-1 m-2">
+            <label>
+                <h4 class="text-one"> Base de données </h4>
+            </label>
+            <select class="form-control" id="databaseId" name="databaseId" [(ngModel)]="databaseId">
+                <option value="0" selected disabled>--Choisissez une base de données --</option>
+                <option value="vm"> Sirco vm </option>
+                <option value="sircoSircover"> Sircover </option>
+                <option value="fuserbloc"> Fuserbloc </option>
+                <option value="p77"> P77 </option>
+                <option value="devP87"> P87 </option>
+            </select>
+        </div>
+
+        <div class=" card col-lg-3 col-md-5 col-sm-11 p-1 m-2">
+            <label>
+                <h4 class="text-one"> Ordre de fabrication </h4>
+            </label>
+            <input class="form-control" type="text" name="of" [(ngModel)]="of" required>
+        </div>
+
+        <div class="col-lg-2 col-md-10 col-sm-11 p-2 m-2">
+            <button class="btn background-outline-yellow  mt-4 w-100" (click)="getMechanical()" type="button">
+                Opérations
+            </button>
+        </div>
+    </div>
+    <div class="row test">
+        <div class="col-7">
+            <div class="row">
+                <div class="card col-5 m-1 dateDeb">
+                    <h4 class="text-one">Début </h4>
+                    <h5>{{dateDeb}}</h5><h5>{{timeDeb}}</h5>
+                    <br>
+                </div>
+                <div class="card col-5 m-1 dateFin">
+                    <h4 class="text-one">Fin </h4>
+                    <h5>{{dateFin}}</h5><h5>{{timeFin}}</h5>
+                    <br>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="card col-10 m-1 of">
+                    <h4 class="text-one">Ordre de fabrication</h4>
+                    <br>
+                    <h5>{{of}}</h5>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col-5 m-1 nonEmballe">
+                    <h4 class="text-one">Pièces Totales</h4>
+                    <br>
+                    <h5>{{sommePiece}}</h5>
+                    <br>
+                </div>
+    
+                <div class="card col-5 m-1 emballe">
+                    <h4 class="text-one">Pièces emballées </h4>
+                    <br>
+                    <h5>{{SommeEmballage}}</h5>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <div class="card col-lg-11 m-1">
+                <strong>Emballage pièces</strong>
+                <canvas id="myChartPieEmballage"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

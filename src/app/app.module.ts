@@ -37,6 +37,7 @@ import { DatePipe } from '@angular/common';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TesteursComponent } from './components/databases/testeurs/testeurs.component';
 import { GabariesComponent } from './components/databases/gabaries/gabaries.component';
+import { AssemblyComponent } from './components/databases/assembly/assembly.component';
 
 @NgModule({    
   declarations: [
@@ -70,6 +71,7 @@ import { GabariesComponent } from './components/databases/gabaries/gabaries.comp
     NotFoundComponent,
     TesteursComponent,
     GabariesComponent,
+    AssemblyComponent,
    ],
    
   imports: [

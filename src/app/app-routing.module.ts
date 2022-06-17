@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfilComponent } from './components/auth/profil/profil.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AssemblyComponent } from './components/databases/assembly/assembly.component';
 import { DatabasesComponent } from './components/databases/databases.component';
 import { GabariesComponent } from './components/databases/gabaries/gabaries.component';
 import { TesteursComponent } from './components/databases/testeurs/testeurs.component';
@@ -22,10 +23,13 @@ import { UapUpdateComponent } from './components/uap/uap-update/uap-update.compo
 import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
+import { mechanicalAssembly } from './model/mechanicalAssembly';
 import { TestComponent } from './test/test.component';
 
 
 const routes: Routes = [
+  { path: 'mechanical', component: AssemblyComponent},
+
   { path: 'dashboard', component: DashboardComponent},
   { path: 'databases/testeurs', component: TesteursComponent },
   { path: 'databases/gabaries', component: GabariesComponent },
